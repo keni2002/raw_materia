@@ -2,22 +2,31 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 const validate = values => {
     const errors = {};
+    if (!values.email) {
+        errors.email = 'Se require correo electrónico';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+    }
+    if (!values.password) {
+        errors.password = 'Se require contraseña';
+    }
 
+    return errors;
 
 }
 function FormLogin() {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-          email: '',
-          password: '',
+            email: '',
+            password: '',
         },
         validate,
         onSubmit: values => {
-          alert(JSON.stringify(values, null, 2));
-          navigate('/dashboard');
+            alert(JSON.stringify(values, null, 2));
+            navigate('/dashboard');
         },
-      });
+    });
 
 
 
@@ -40,12 +49,19 @@ function FormLogin() {
                             <label className="block text-sm font-medium leading-6 text-gray-900" for="email">Correo</label>
                             <div className="mt-2">
                                 <input autocomplete="email"
-                                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-950 sm:text-sm sm:leading-6"
                                     id="email" name="email" required
                                     type="email"
                                     value={formik.values.email}
-                                    />
+                                    onChange={formik.handleChange}
+                                    
+                                    onBlur={formik.handleBlur}
+                                />
                             </div>
+
+                        </div>
+                        <div className='mt-0 text-red-700'>
+                        {formik.errors.email ? `${ formik.errors.email }` : null}
                         </div>
                         <div>
                             <div className="flex items-center justify-between">
@@ -53,23 +69,29 @@ function FormLogin() {
                             </div>
                             <div className="mt-2">
                                 <input autocomplete="current-password"
-                                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-950-600 sm:text-sm sm:leading-6"
                                     id="password" name="password" required
                                     type="password"
-                                    value={formik.values.password} />
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur} />
                             </div>
                         </div>
+                        <div className='mt-0 text-red-700'>
+                        {formik.errors.password ? `${ formik.errors.password }` : null}
+                        </div>
+                        
                         <div>
                             <button className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 type="submit">
-                                Sign in
+                                Iniciar Sesión
                             </button>
                         </div>
                     </form>
 
 
                 </div>
-                
+
             </div>
         </div>
     )
