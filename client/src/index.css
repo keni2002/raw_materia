@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (min-width: 768px){
+    .main.active{
+      margin-left: 0px;
+      width: 100%;
+      
+    }
+  }
