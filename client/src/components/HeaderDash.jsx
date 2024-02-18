@@ -38,7 +38,7 @@ function HeaderDash({ toggleMenu }) {
                 </li>
                 <li className="dropdown ml-3">
                     <button type="button" className="dropdown-toggle flex items-center">
-                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
+                        <img src="/profiles/admin_profile.jpg" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                     </button>
                     <ul className="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
                         <li>
