@@ -3,7 +3,7 @@ import SidebarDash from "../components/SiderBarDash";
 import HeaderDash from "../components/HeaderDash";
 import { useState } from "react";
 const Dashboard = () => {
-  const [menuVisible, setMenuVisible] = useState(true)
+  const [menuVisible, setMenuVisible] = useState(false)
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);

@@ -1,5 +1,26 @@
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+const validate = values => {
+    const errors = {};
+
+
+}
 function FormLogin() {
+    const navigate = useNavigate();
+    const formik = useFormik({
+        initialValues: {
+          email: '',
+          password: '',
+        },
+        validate,
+        onSubmit: values => {
+          alert(JSON.stringify(values, null, 2));
+          navigate('/dashboard');
+        },
+      });
+
+
+
     return (
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-md bg-gray-100 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -14,14 +35,16 @@ function FormLogin() {
                     <h2 className=" pt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Iniciar Sesion</h2>
                 </div>
                 <div>
-                    <form action="#" className="space-y-6" method="POST">
+                    <form action="" onSubmit={formik.handleSubmit} className="space-y-6" method="POST">
                         <div>
                             <label className="block text-sm font-medium leading-6 text-gray-900" for="email">Correo</label>
                             <div className="mt-2">
                                 <input autocomplete="email"
                                     className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     id="email" name="email" required
-                                    type="email" />
+                                    type="email"
+                                    value={formik.values.email}
+                                    />
                             </div>
                         </div>
                         <div>
@@ -32,7 +55,8 @@ function FormLogin() {
                                 <input autocomplete="current-password"
                                     className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     id="password" name="password" required
-                                    type="password" />
+                                    type="password"
+                                    value={formik.values.password} />
                             </div>
                         </div>
                         <div>
