@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import  {toast} from 'react-hot-toast'
 const validate = values => {
     const errors = {};
     if (!values.email) {
@@ -22,8 +23,9 @@ function FormLogin() {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
             navigate('/dashboard');
+            toast.success('Usted inicio sesion correctamente')
         },
     });
 
@@ -47,7 +49,7 @@ function FormLogin() {
                         <div>
                             <label className="block text-sm font-medium leading-6 text-gray-900" htmlFor="email">Correo</label>
                             <div className="mt-2">
-                                <input autocomplete="email"
+                                <input autoComplete="email"
                                     className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-950 sm:text-sm sm:leading-6"
                                     id="email" name="email" required
                                     type="email"
@@ -64,10 +66,10 @@ function FormLogin() {
                         </div>
                         <div>
                             <div className="flex items-center justify-between">
-                                <label className="block text-sm font-medium leading-6 text-gray-900" for="password">Contraseña</label>
+                                <label className="block text-sm font-medium leading-6 text-gray-900" htmlFor="password">Contraseña</label>
                             </div>
                             <div className="mt-2">
-                                <input autocomplete="current-password"
+                                <input autoComplete="current-password"
                                     className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-950-600 sm:text-sm sm:leading-6"
                                     id="password" name="password" required
                                     type="password"
