@@ -10,7 +10,11 @@ function HeaderDash({ toggleMenu }) {
             </button>
             <ul className="flex items-center text-sm ml-4">
                 <li className="mr-2">
-                    <a href="#" className="text-gray-400 hover:text-gray-600 font-medium">AdminHome</a>
+                    <a href="#" className="text-gray-400 hover:text-gray-600 font-medium">AreaComercial</a>
+                </li>
+                <li className="text-gray-600 mr-2 font-medium">/</li>
+                <li className="mr-2">
+                    <a href="#" className="text-gray-400 hover:text-gray-600 font-medium">Admin</a>
                 </li>
                 <li className="text-gray-600 mr-2 font-medium">/</li>
                 <li className="text-gray-600 mr-2 font-medium">Contratos</li>
