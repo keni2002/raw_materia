@@ -55,15 +55,15 @@ function HeaderDash({ toggleMenu }) {
                     <button type="button" className="dropdown-toggle flex items-center">
                         <img src="/profiles/admin_profile.jpg" alt="" className="w-8 h-8 rounded block object-cover align-middle" onClick={loginMenuToggle}/>
                     </button>
-                    <ul class={`${showMenu ? '': 'hidden'} dropdown-menu shadow-md shadow-black/5 z-30 right-1 absolute py-1.5 rounded-md bg-white border border-gray-100`}>
+                    <ul className={`${showMenu ? '': 'hidden'} dropdown-menu shadow-md shadow-black/5 z-30 right-1 absolute py-1.5 rounded-md bg-white border border-gray-100`}>
                         <li>
-                            <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
+                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
+                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
+                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
                         </li>
                     </ul>
                 </li>

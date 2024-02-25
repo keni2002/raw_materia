@@ -1,0 +1,112 @@
+{
+   "compras": [
+    
+        {
+            "materia": "Materia faith",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia noob",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia lisi",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia feo",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia feo",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia feo",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia Feo",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        },
+        {
+            "materia": "Materia Feo",
+            "createAt": "2021-10-10",
+            "suministrador":" Microsoft",
+            "comercial":" Bill Gates"
+        }
+        
+    
+   ],
+   "contratos": [
+    {
+        "numberC": "contrato0001",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0002",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0003",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0004",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0005",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0006",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0007",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+
+    },
+    {
+        "numberC": "contrato0008",
+        "createAt": "2021-10-10",
+        "valid": "2021-10-10",
+        "state": "Pendiente"
+    }
+   ]
+}
