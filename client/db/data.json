@@ -1,112 +1,97 @@
 {
-   "compras": [
-    
-        {
-            "materia": "Materia faith",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia noob",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia lisi",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia feo",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia feo",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia feo",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia Feo",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        },
-        {
-            "materia": "Materia Feo",
-            "createAt": "2021-10-10",
-            "suministrador":" Microsoft",
-            "comercial":" Bill Gates"
-        }
-        
-    
-   ],
-   "contratos": [
+  "compras": [
     {
-        "numberC": "contrato0001",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
+      "materia": "Materia faith",
+      "createAt": "2021-10-10",
+      "suministrador": "SiMicrosoft",
+      "comercial": " Bill Gates",
+      "id": "6841"
     },
     {
-        "numberC": "contrato0002",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
-    },
-    {
-        "numberC": "contrato0003",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
-    },
-    {
-        "numberC": "contrato0004",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
-    },
-    {
-        "numberC": "contrato0005",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
-    },
-    {
-        "numberC": "contrato0006",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
-    },
-    {
-        "numberC": "contrato0007",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
-
-    },
-    {
-        "numberC": "contrato0008",
-        "createAt": "2021-10-10",
-        "valid": "2021-10-10",
-        "state": "Pendiente"
+      "materia": "Materia noob",
+      "createAt": "2021-10-10",
+      "suministrador": " Microsoft",
+      "comercial": " Bill Gates",
+      "id": "ea18"
     }
-   ]
+  ],
+  "contratos": [
+    {
+      "numberC": "contrato0001",
+      "createAt": "2021-10-10",
+      "valid": "2021-10-10",
+      "state": "Pendiente",
+      "id": "9d10"
+    },
+    {
+      "numberC": "contrato0002",
+      "createAt": "2021-10-10",
+      "valid": "2021-10-10",
+      "state": "Pendiente",
+      "id": "4498"
+    }
+  ],
+  "comerciales": [
+    {
+      "nombre": "Juan",
+      "apellido": "Perez",
+      "direccion": "Calle 123",
+      "fechaNacimiento": "2021-10-10",
+      "edad": 25,
+      "anioExperiencia": 5,
+      "cntContratos": 5,
+      "salario": 5000,
+      "evaluacion": 4,
+      "id": "69c1"
+    },
+    {
+      "nombre": "Juan",
+      "apellido": "Perez",
+      "direccion": "Calle 123",
+      "fechaNacimiento": "2021-10-10",
+      "edad": 25,
+      "anioExperiencia": 5,
+      "cntContratos": 5,
+      "salario": 5000,
+      "evaluacion": 5,
+      "id": "dde2"
+    }
+  ],
+  "suministradores": [
+    {
+      "nombre": "Microsoft",
+      "clasificacion": "Vegetal",
+      "direccion": "Calle 123, Vaqueria ,Bogota",
+      "salario": 5000,
+      "evaluacion": 4,
+      "id": "f9aa"
+    }
+  ],
+  "Asistentes": [
+    {
+      "nombre": "Susana",
+      "apellido": "Escobar",
+      "direccion": "Calle 123",
+      "fechaNacimiento": "2021-10-10",
+      "edad": 25,
+      "anioExperiencia": 5,
+      "nivelEscolar": "Universitario",
+      "salario": 5000,
+      "evaluacion": 4,
+      "id": "dcb6"
+    }
+  ],
+  "Directores": [
+    {
+      "id": "1",
+      "email": "enr@gmail.com",
+      "password": "1111",
+      "nombre": "Enrique",
+      "apellido": "Perez",
+      "direccion": "Calle 123",
+      "fechaNacimiento": "2021-10-10",
+      "edad": 25,
+      "Grado Academico": "Universitario"
+    }
+  ]
 }

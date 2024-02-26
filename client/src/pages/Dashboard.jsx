@@ -4,7 +4,7 @@ import HeaderDash from "../components/HeaderDash";
 import { useState } from "react";
 const Dashboard = () => {
   const [menuVisible, setMenuVisible] = useState(false)
-  
+
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
@@ -14,14 +14,17 @@ const Dashboard = () => {
 
 
   return (
-    
+
     <div className="">
-      
-      <SidebarDash closeMenu={closeMenu} menuVisible={menuVisible}/>
-    
-      <main className={`w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main ${menuVisible ? '':'active'}`}>
-          <HeaderDash toggleMenu={toggleMenu} menuVisible={menuVisible} />
-          <ContentDash/>
+
+      <SidebarDash closeMenu={closeMenu} menuVisible={menuVisible} />
+
+      <main className={`w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main ${menuVisible ? '' : 'active'}`}>
+        <HeaderDash toggleMenu={toggleMenu} menuVisible={menuVisible} />
+
+        <ContentDash />
+
+
       </main>
     </div>
   );

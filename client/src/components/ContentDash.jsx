@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import {setCurrentTable} from '../features/tablaSlice.jsx'
 import Table from './Table'
 import FormEvaluate from './FormEvaluate'
-import { useGetComprasQuery, useGetContratosQuery } from '../services/apiTable';
+import { useGetComprasQuery, useGetContratosQuery,useGetComercialesQuery  } from '../services/apiTable';
 import toast from 'react-hot-toast';
 
 
@@ -15,18 +15,18 @@ const ContentDash = () => {
   
   const {data: dataCompras,isError:cperr,error:errcp} = useGetComprasQuery();
   const {data: dataContratos,isError:cnterr,error:errcnt} = useGetContratosQuery();
-  if(cperr || cnterr){
-    toast.error('Server Error')
-  } 
+  const {data: dataComerciales,isError:cmerr,error:errcm} = useGetComercialesQuery();
+  
 
   const location = useLocation();
   const dispatch = useDispatch();
   useEffect(()=>{
     if(location.pathname === '/dashboard/contratos'){
-      console.log("MIERDA")
       dispatch(setCurrentTable(['contratos',dataContratos]))
     } else if(location.pathname === '/dashboard/compras'){
       dispatch(setCurrentTable(['compras',dataCompras]))
+    } else if(location.pathname === '/dashboard/comerciales'){
+      dispatch(setCurrentTable(['comerciales',dataComerciales]))
     }
   },[dataCompras,dataContratos,location.pathname,dispatch])
 
@@ -34,13 +34,15 @@ const ContentDash = () => {
 
   return (
 
-    <div className=" flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <Routes>
       <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
-        <Route path="/contratos"  element={<Table/>} />
-        <Route path='/compras' element={<Table/>}/>
-        <Route path='/evaluar' element={<FormEvaluate/>}/>
+        <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
+        <Route path='/compras' element={<Table quito={'evaluar'}/>}/>
+        <Route path='/comerciales' element={<Table/>}/>
+
         
+        <Route path='/evaluar' element={<FormEvaluate/>}/>
       </Routes>
     </div>
 

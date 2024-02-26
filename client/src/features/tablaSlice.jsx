@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { createSlice } from '@reduxjs/toolkit';
 
 
+  
+
 
 
 //Los datos que quiero cargarme en tabla
@@ -49,23 +51,54 @@ const initialState = {
             {
                 name: 'Numero de Contrato',
                 selector: row => row.numberC,
-              },
-              {
+            },
+            {
                 name: 'Fecha de Creación',
                 selector: row => row.createAt,
-              },
-              {
+            },
+            {
                 name: 'Fecha de Validez',
                 selector: row => row.valid,
-              },
-              {
+            },
+            {
                 name: 'Estado',
                 selector: row => row.state
-              },
+            },
         ],
+        comerciales: [
+            {
+                name: "Nombre",
+                selector: row => row.nombre
+            },
+            {
+                name: "Apellido",
+                selector: row => row.apellido
+
+            },
+            {
+                name: "Dirección",
+                selector: row => row.direccion
+            }
+            , {
+                name: "Contratos",
+                selector: row => row.cntContratos
+            }
+            , {
+                name: "Salario",
+                selector: row => row.salario
+            },
+            {
+                name: "Evaluación",
+                selector: row => row.evaluacion
+            },
+            {
+                name: "Salario Final",
+                selector: row => row.sfinal
+            }
+        ]
     },
     currentTable: 'contratos',
-    data:[]
+    data: []
 };
 
 
@@ -75,11 +108,9 @@ const tableSlice = createSlice({
     initialState,
     reducers: {
         setCurrentTable: (state, action) => {
-            console.log(action.payload[0]);
-            //el 0 significa las columnas
-            //el 1 significa los datos
             state.currentTable = action.payload[0];
             state.data = action.payload[1];
+            
         },
     },
 });
