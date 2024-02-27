@@ -41,7 +41,7 @@
       "anioExperiencia": 5,
       "cntContratos": 5,
       "salario": 5000,
-      "evaluacion": 4,
+      "evaluacion": 5,
       "id": "69c1"
     },
     {
@@ -53,7 +53,7 @@
       "anioExperiencia": 5,
       "cntContratos": 5,
       "salario": 5000,
-      "evaluacion": 5,
+      "evaluacion": 2,
       "id": "dde2"
     }
   ],
@@ -62,12 +62,10 @@
       "nombre": "Microsoft",
       "clasificacion": "Vegetal",
       "direccion": "Calle 123, Vaqueria ,Bogota",
-      "salario": 5000,
-      "evaluacion": 4,
       "id": "f9aa"
     }
   ],
-  "Asistentes": [
+  "asistentes": [
     {
       "nombre": "Susana",
       "apellido": "Escobar",
@@ -77,7 +75,7 @@
       "anioExperiencia": 5,
       "nivelEscolar": "Universitario",
       "salario": 5000,
-      "evaluacion": 4,
+      "evaluacion": 2,
       "id": "dcb6"
     }
   ],

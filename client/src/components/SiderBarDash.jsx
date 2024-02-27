@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 const SidebarDash = ({ closeMenu, menuVisible }) => {
     const [dropdowns, setDropdowns] = useState({});
@@ -24,7 +24,7 @@ const SidebarDash = ({ closeMenu, menuVisible }) => {
                 </a>
                 <ul className="mt-4">
                     <li className="mb-1 group active">
-                        <Link to='/dashboard/contratos'>
+                        <Link to='/contratos'>
                             <a href="#" className="flex items-center gap-2 py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
 
 
@@ -35,7 +35,7 @@ const SidebarDash = ({ closeMenu, menuVisible }) => {
                         </Link>
                     </li>
                     <li className="mb-1 group">
-                        <Link to='/dashboard/compras'>
+                        <Link to='/compras'>
                             <a href="#" className="flex gap-2 items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
 
 
@@ -59,17 +59,17 @@ const SidebarDash = ({ closeMenu, menuVisible }) => {
                             <ul className="pl-7 mt-2 group-[.selected]:block">
 
                                 <li className="mb-4">
-                                    <Link to='/dashboard/comerciales'>
+                                    <Link to='/comerciales'>
                                         <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Comerciales</a>
                                     </Link>
                                 </li>
                                 <li className="mb-4">
-                                    <Link to='/dashboard/asistentes'>
+                                    <Link to='/asistentes'>
                                         <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Asistentes de Control</a>
                                     </Link>
                                 </li>
                                 <li className="mb-4">
-                                    <Link to='/dashboard/suministradores'>
+                                    <Link to='/suministradores'>
                                         <a href="#" className="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Suministradores</a>
                                     </Link>
                                 </li>

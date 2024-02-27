@@ -34,19 +34,12 @@ const ContentDash = () => {
 
   return (
 
-    <div className="flex flex-col items-center">
-      <Routes>
-      <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
-        <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
-        <Route path='/compras' element={<Table quito={'evaluar'}/>}/>
-        <Route path='/comerciales' element={<Table/>}/>
+    
 
-        
-        <Route path='/evaluar' element={<FormEvaluate/>}/>
-      </Routes>
-    </div>
+    
+   
 
-  )
+  
 };
 
 export default ContentDash;

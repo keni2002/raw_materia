@@ -5,6 +5,7 @@ export const apiTable = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3001/'
     }),
+    tagTypes: ['Comerciales'],
     endpoints: (builder) => ({
         //COMPRAS
         getCompras: builder.query({
@@ -30,9 +31,39 @@ export const apiTable = createApi({
                 url: `comerciales/${updateInfo.id}`,
                 method: 'PATCH',
                 body: updateInfo,
-            }),invalidatesTags: ["Comerciales"],
+            }),
+           invalidatesTags : ["Comerciales"],
             
         }),
+
+        //Asistentes
+        getAsistentes: builder.query({
+            query: () => 'asistentes/',
+            providesTags: ["Asistentes"],
+        }),
+        updateAsistente: builder.mutation({
+            query: (updateInfo) => ({
+                url: `asistentes/${updateInfo.id}`,
+                method: 'PATCH',
+                body: updateInfo,
+            }),
+            invalidatesTags: ["Asistentes"],
+        }),
+
+        //Suministradores
+        getSuministradores: builder.query({
+            query: () => 'suministradores/',
+            providesTags: ["Suministradores"],
+        }),
+        updateSuministrador: builder.mutation({
+            query: (updateInfo) => ({
+                url: `suministradores/${updateInfo.id}`,
+                method: 'PATCH',
+                body: updateInfo,
+            }),
+            invalidatesTags: ["Suministradores"],
+        }),
+
         
     }),
 })
@@ -41,4 +72,8 @@ export const {
     useGetContratosQuery,
     useGetComercialesQuery,
     useUpdateComercialMutation,
+    useGetAsistentesQuery,
+    useUpdateAsistenteMutation,
+    useGetSuministradoresQuery
+
     } = apiTable

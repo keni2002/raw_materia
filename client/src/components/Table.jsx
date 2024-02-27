@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Evaluar from './Evaluar';
+import { useGetComprasQuery } from '../services/apiTable';
 //quito son los iconos que voy quitando en  dependencia de la vista
 export default function Table({ quito }) {
   const [id, setId] = useState();
@@ -54,7 +55,7 @@ export default function Table({ quito }) {
 
   const crt = useSelector(state => state.colTable.currentTable);
   let columns = useSelector(state => state.colTable.columns[crt]);
-  const data = useSelector(state => state.colTable.data);
+  const {data:dCompras,isError:errCompras } = useGetComprasQuery
 
   // ...
   const modifiedData = data?.map(item => {

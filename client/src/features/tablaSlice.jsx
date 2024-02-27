@@ -1,11 +1,5 @@
 import { Link } from 'react-router-dom';
 import { createSlice } from '@reduxjs/toolkit';
-
-
-  
-
-
-
 //Los datos que quiero cargarme en tabla
 const initialState = {
     columns: {
@@ -78,12 +72,13 @@ const initialState = {
             {
                 name: "Dirección",
                 selector: row => row.direccion
-            }
-            , {
-                name: "Contratos",
-                selector: row => row.cntContratos
-            }
-            , {
+            },
+            {
+                name: "Exp",
+                selector: row => row.anioExperiencia
+            },
+            
+            {
                 name: "Salario",
                 selector: row => row.salario
             },
@@ -95,10 +90,58 @@ const initialState = {
                 name: "Salario Final",
                 selector: row => row.sfinal
             }
+        ],
+        asistentes: [
+            {
+                name: "Nombre",
+                selector: row => row.nombre
+            },
+            {
+                name: "Apellido",
+                selector: row => row.apellido
+
+            },
+            {
+                name: "Dirección",
+                selector: row => row.direccion
+            },
+            {
+                name: "Exp",
+                selector: row => row.anioExperiencia
+            },
+            {
+                name: "nivel escolar",
+                selector: row => row.nivelEscolar
+            },
+            {
+                name: "Salario",
+                selector: row => row.salario
+            },
+            {
+                name: "Evaluación",
+                selector: row => row.evaluacion
+            },
+            {
+                name: "Salario Final",
+                selector: row => row.sfinal
+            }
+        ],
+        suministradores:   [
+            {
+                name: "Nombre",
+                selector: row => row.nombre
+            },
+            {
+                name: "Dirección",
+                selector: row => row.direccion
+            },
+            {
+                name: "Clasificación",
+                selector: row => row.clasificacion
+            }
         ]
     },
-    currentTable: 'contratos',
-    data: []
+    //urrentTable: 'contratos'
 };
 
 
@@ -108,9 +151,7 @@ const tableSlice = createSlice({
     initialState,
     reducers: {
         setCurrentTable: (state, action) => {
-            state.currentTable = action.payload[0];
-            state.data = action.payload[1];
-            
+            // state.currentTable = action.payload;
         },
     },
 });
