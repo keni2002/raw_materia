@@ -1,11 +1,14 @@
 import { useGetComercialesQuery } from "../services/apiTable";
 import { useSelector } from "react-redux";
 import Tables from "./Tables";
+
 import Evaluar from "./Evaluar";
 import { useState } from "react";
+import AddCom from "./AddCom";
 export default function Comerciales() {
     // hooks para abrir y cerrar el modal
     const [isOpen, setIsopen] = useState(false);
+    const [isOpenAdd, setIsopenAdd] = useState(false);
     const [id, setId] = useState('');
     let getColumns = useSelector(state => state.colTable.columns['comerciales']);
     const actiones = {
@@ -45,9 +48,9 @@ export default function Comerciales() {
 
 
     }
-    
+
     const columns = [...getColumns, actiones]
-    
+
     const { data, isSuccess } = useGetComercialesQuery()
     //Transformamos los salario y evaluacion
     const modifiedData = data?.map(item => {
@@ -91,13 +94,32 @@ export default function Comerciales() {
                 isSuccess &&
                 <Tables data={modifiedData} columns={columns} name={'Comerciales'} />
             }
+            <button
+                title="Agregar un comercial" 
+                className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
+                onClick={() => setIsopenAdd(true)}
+            >
+                <svg
+                    fill="#fff"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    width="40"
+                >
+
+                    <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
+                </svg>
+            </button>
+
             <Evaluar
                 isOpen={isOpen}
-                setIsopen={setIsopen}
+                setIsopen={setIsopen} 
+                
                 id={id}
                 data={data?.filter(t => t.id === id)[0]}
                 tipo={'comercial'}
             />
+            <AddCom isOpen={isOpenAdd} setIsopen={setIsopenAdd} id={3} data={[]} tipo={'comercial'}/>
+            
         </>
     )
 }

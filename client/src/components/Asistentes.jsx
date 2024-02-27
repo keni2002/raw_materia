@@ -89,6 +89,22 @@ export default function Asistentes() {
                 isSuccess &&
                 <Tables data={modifiedData} columns={columns} name={'Asistentes de control'} />
             }
+            <button title="agregar nuevo asistente"
+                className="fixed bottom-10 right-10  bg-gray-500 rounded-full shadow-gray-600 shadow-md p-2"
+                onClick={() => {
+                    // Add your logic here
+                }}
+            >
+                <svg
+                    fill="#fff"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    width="40"
+                >
+
+                    <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
+                </svg>
+            </button>
             <Evaluar
                 isOpen={isOpen}
                 setIsopen={setIsopen}
