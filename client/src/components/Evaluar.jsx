@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
+import { useSelector,useDispatch } from "react-redux";
+import { 
+    useUpdateComercialMutation,
+    useUpdateAsistenteMutation 
 
-import { useUpdateComercialMutation,useUpdateAsistenteMutation } from "../services/apiTable";
+} from "../services/apiTable";
+
+
 import toast from "react-hot-toast";
+import { setIsOpenModalEvaluar } from "../features/booleanos";
 
-export default function Evaluar({ setIsopen, isOpen, id,data, tipo }) {
+export default function Evaluar({id,data, tipo }) {
+    const dispatch = useDispatch();
+    const {isOpenModalEvaluar} = useSelector(state => state.booleanos);
+    console.log(isOpenModalEvaluar)
     const [updateComercial] = useUpdateComercialMutation();
     const [updateAsistente] = useUpdateAsistenteMutation();
     const [selectEval, setSelectEval] = useState("0");
@@ -13,7 +23,7 @@ export default function Evaluar({ setIsopen, isOpen, id,data, tipo }) {
         setSelectEval(data?.evaluacion);
         
         setNombre(data?.nombre)
-    }, [isOpen])//solo si se abre cargamos los datos mongos
+    }, [isOpenModalEvaluar])//solo si se abre cargamos los datos mongos
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(selectEval);
@@ -27,19 +37,18 @@ export default function Evaluar({ setIsopen, isOpen, id,data, tipo }) {
         toast.success('Evaluación realizada')
 
 
-        setIsopen(false)
+        dispatch(setIsOpenModalEvaluar(false))
     }
     const onChange = (e) => {
         setSelectEval(e.target.value)
     }
     return (
         <>
-            {isOpen && <div className=' fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center '>
+            {isOpenModalEvaluar && <div className=' fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center '>
                 <div className='  bg-white p-5 rounded flex flex-col justify-center items-center gap-5 lg:w-96 md:w-80 sm:w-10/12'>
                     <div className='flex w-full justify-between items-center'>
                         <h2 className='text-2xl lg:text-3xl'>Evaluar a {nombre}</h2>
-                        <button onClick={() => setIsopen(false)}>
-
+                        <button onClick={() => dispatch(setIsOpenModalEvaluar(false))}>
                             <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
                         </button>
                     </div>
@@ -54,11 +63,9 @@ export default function Evaluar({ setIsopen, isOpen, id,data, tipo }) {
                                 <option value="2">Mal</option>
                             </select>
                         </div>
-
-
                         <div className='mt-9 flex w-full justify-end'>
                             <button type="submit" className=" text-white inline-flex items-center bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                                <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                                 Evaluar
                             </button>
                         </div>

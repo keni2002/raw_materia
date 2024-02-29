@@ -60,36 +60,7 @@ const initialState = {
             },
         ],
         comerciales: [
-            {
-                name: "Nombre",
-                selector: row => row.nombre
-            },
-            {
-                name: "Apellido",
-                selector: row => row.apellido
-
-            },
-            {
-                name: "Dirección",
-                selector: row => row.direccion
-            },
-            {
-                name: "Exp",
-                selector: row => row.anioExperiencia
-            },
             
-            {
-                name: "Salario",
-                selector: row => row.salario
-            },
-            {
-                name: "Evaluación",
-                selector: row => row.evaluacion
-            },
-            {
-                name: "Salario Final",
-                selector: row => row.sfinal
-            }
         ],
         asistentes: [
             {
@@ -155,7 +126,18 @@ const tableSlice = createSlice({
         },
     },
 });
+const booleanos = createSlice({
+    name: 'booleanos',
+    initialState: {
+        isOpenModalEvaluar: false,
+    },
+    reducers: {
+        setIsOpenModalEvaluar: (state, action) => {
+            state.isOpenModalEvaluar = action.payload;
+        },
+    },
+});
 
-export const { setCurrentTable } = tableSlice.actions;
 
-export default tableSlice.reducer;
+export const { setIsOpenModalEvaluar } = booleanos.actions;
+export default booleanos.reducer;
