@@ -10,9 +10,9 @@ import {
 import toast from "react-hot-toast";
 import { setIsOpenModalEvaluar } from "../features/booleanos";
 
-export default function Evaluar({id,data, tipo }) {
+export default function Evaluar({data, tipo }) {
     const dispatch = useDispatch();
-    const {isOpenModalEvaluar} = useSelector(state => state.booleanos);
+    const {isOpenModalEvaluar,iD:id} = useSelector(state => state.booleanos);
     console.log(isOpenModalEvaluar)
     const [updateComercial] = useUpdateComercialMutation();
     const [updateAsistente] = useUpdateAsistenteMutation();

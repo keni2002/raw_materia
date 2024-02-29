@@ -129,15 +129,19 @@ const tableSlice = createSlice({
 const booleanos = createSlice({
     name: 'booleanos',
     initialState: {
+        iD: '',
         isOpenModalEvaluar: false,
     },
     reducers: {
         setIsOpenModalEvaluar: (state, action) => {
             state.isOpenModalEvaluar = action.payload;
         },
+        setId: (state, action) => { 
+            state.iD = action.payload;
+        }
     },
 });
 
 
-export const { setIsOpenModalEvaluar } = booleanos.actions;
+export const { setIsOpenModalEvaluar,setId } = booleanos.actions;
 export default booleanos.reducer;

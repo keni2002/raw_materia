@@ -3,12 +3,12 @@ import Tables from "./Tables";
 import Evaluar from "./Evaluar";
 import { useState } from "react";
 import AddCom from "./AddCom";
-
+import { useSelector } from "react-redux";
 export default function Comerciales() {
     // hooks para abrir y cerrar el modal
  
     const [isOpenAdd, setIsopenAdd] = useState(false);
-    
+    const {iD:id} = useSelector(state => state.booleanos);
     const columns = [
         {
             name: "Nombre",
@@ -91,7 +91,6 @@ export default function Comerciales() {
             </button>
 
             <Evaluar
-                id={id}
                 data={data?.filter(t => t.id === id)[0]}
                 tipo={'comercial'}
             />
