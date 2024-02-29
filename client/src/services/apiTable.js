@@ -25,7 +25,10 @@ export const apiTable = createApi({
             providesTags: ["Comerciales"],
         }),
 
-        
+        getComercial: builder.query({  //Para obtener un solo comercial
+            query: (id) => `comerciales/${id}`,
+            providesTags: ["Comerciales"]
+        }),
         updateComercial: builder.mutation({
             query: (updateInfo) => ({
                 url: `comerciales/${updateInfo.id}`,
@@ -34,6 +37,13 @@ export const apiTable = createApi({
             }),
            invalidatesTags : ["Comerciales"],
             
+        }),
+        deleteComercial: builder.mutation({
+            query: (id) => ({
+                url: `comerciales/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ["Comerciales"],
         }),
 
         //Asistentes
@@ -74,6 +84,8 @@ export const {
     useUpdateComercialMutation,
     useGetAsistentesQuery,
     useUpdateAsistenteMutation,
-    useGetSuministradoresQuery
+    useGetSuministradoresQuery,
+    useGetComercialQuery,
+    useDeleteComercialMutation,
 
     } = apiTable

@@ -130,11 +130,24 @@ const booleanos = createSlice({
     name: 'booleanos',
     initialState: {
         iD: '',
+        type: '', //tipo de tabla
         isOpenModalEvaluar: false,
+        isOpenInfo: false,
+        isOpenModalConfirm: false,
     },
     reducers: {
         setIsOpenModalEvaluar: (state, action) => {
             state.isOpenModalEvaluar = action.payload;
+        },
+        setType: (state, action) => {
+            state.type = action.payload;
+        },
+
+        setIsOpenInfo: (state, action) => {
+            state.isOpenInfo = action.payload;
+        },
+        setIsOpenModalConfirm: (state, action) => {
+            state.isOpenModalConfirm = action.payload;
         },
         setId: (state, action) => { 
             state.iD = action.payload;
@@ -143,5 +156,5 @@ const booleanos = createSlice({
 });
 
 
-export const { setIsOpenModalEvaluar,setId } = booleanos.actions;
+export const { setIsOpenModalEvaluar,setId,setIsOpenInfo,setType,setIsOpenModalConfirm } = booleanos.actions;
 export default booleanos.reducer;

@@ -3,7 +3,9 @@ import Tables from "./Tables";
 import Evaluar from "./Evaluar";
 import { useState } from "react";
 import AddCom from "./AddCom";
+import Info from "./Info";
 import { useSelector } from "react-redux";
+import ModalConfirm from "./ModalConfirm";
 export default function Comerciales() {
     // hooks para abrir y cerrar el modal
  
@@ -94,8 +96,9 @@ export default function Comerciales() {
                 data={data?.filter(t => t.id === id)[0]}
                 tipo={'comercial'}
             />
+            <Info/>
             <AddCom isOpen={isOpenAdd} setIsopen={setIsopenAdd} id={3} data={[]} tipo={'comercial'} />
-
+            <ModalConfirm/>
         </>
     )
 }

@@ -13,7 +13,7 @@ import { setIsOpenModalEvaluar } from "../features/booleanos";
 export default function Evaluar({data, tipo }) {
     const dispatch = useDispatch();
     const {isOpenModalEvaluar,iD:id} = useSelector(state => state.booleanos);
-    console.log(isOpenModalEvaluar)
+    
     const [updateComercial] = useUpdateComercialMutation();
     const [updateAsistente] = useUpdateAsistenteMutation();
     const [selectEval, setSelectEval] = useState("0");
@@ -26,7 +26,7 @@ export default function Evaluar({data, tipo }) {
     }, [isOpenModalEvaluar])//solo si se abre cargamos los datos mongos
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(selectEval);
+        
         if (selectEval == '0')
             return toast.error('Seleccione una evaluación')
 
