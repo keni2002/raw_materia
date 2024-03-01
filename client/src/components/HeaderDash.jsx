@@ -17,7 +17,7 @@ function HeaderDash({ toggleMenu }) {
 
 
             </button>
-            <ul className="flex items-center text-sm ml-4">
+            {/* <ul className="flex items-center text-sm ml-4">
                 <li className="mr-2">
                     <a href="#" className="text-gray-400 hover:text-gray-600 font-medium">AreaComercial</a>
                 </li>
@@ -27,9 +27,9 @@ function HeaderDash({ toggleMenu }) {
                 </li>
                 <li className="text-gray-600 mr-2 font-medium">/</li>
                 <li className="text-gray-600 mr-2 font-medium">Contratos</li>
-            </ul>
+            </ul> */}
             <ul className="ml-auto flex items-center">
-                <li className="mr-1 dropdown relative" >
+                {/* <li className="mr-1 dropdown relative" >
                     <button type="button" className="dropdown-toggle text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"  onClick={searchMenuToggle}>
 
                         <svg fill="black" height="24" viewBox="0 -960 960 960" width="24"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" /></svg>
@@ -44,28 +44,34 @@ function HeaderDash({ toggleMenu }) {
                         </form>
 
                     </div>
-                </li>
-                <li className="dropdown">
-                    <button type="button" className="dropdown-toggle text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600">
-                        <i className="ri-notification-3-line"></i>
-                    </button>
-                    {/* <!--Opciones campanita--> */}
-                </li>
+                </li> */}
+            
                 <li className="dropdown relative ml-3">
-                    <button type="button" className="dropdown-toggle flex items-center">
-                        <img src="/profiles/admin_profile.jpg" alt="" className="w-8 h-8 rounded block object-cover align-middle" onClick={loginMenuToggle}/>
-                    </button>
-                    <ul className={`${showMenu ? '': 'hidden'} dropdown-menu shadow-md shadow-black/5 z-30 right-1 absolute py-1.5 rounded-md bg-white border border-gray-100`}>
-                        <li>
-                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
-                        </li>
-                    </ul>
+                    
+<img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="/docs/images/people/profile-picture-5.jpg" alt="User dropdown"/>
+
+{/* <!-- Dropdown menu --> */}
+<div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div>Bonnie Green</div>
+      <div class="font-medium truncate">name@flowbite.com</div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+      </li>
+    </ul>
+    <div class="py-1">
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+    </div>
+</div>
+
                 </li>
             </ul>
         </div>

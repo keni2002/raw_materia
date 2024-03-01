@@ -2,15 +2,25 @@ import { useGetComercialesQuery } from "../services/apiTable";
 import Tables from "./Tables";
 import Evaluar from "./Evaluar";
 import { useState } from "react";
-import AddCom from "./AddCom";
+import AddPersona from "./AddPersona";
 import Info from "./Info";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalConfirm from "./ModalConfirm";
+import { setFuncion, setType } from "../features/booleanos";
+import { useEffect } from "react";
 export default function Comerciales() {
+    const dispatch = useDispatch()
     // hooks para abrir y cerrar el modal
- 
+
+    //Las tablas cambian:
+    useEffect(() => {
+        dispatch(setType('comerciales'))
+    }, [])
+
+    
     const [isOpenAdd, setIsopenAdd] = useState(false);
-    const {iD:id} = useSelector(state => state.booleanos);
+    
+    const {iD:id,funcion} = useSelector(state => state.booleanos);
     const columns = [
         {
             name: "Nombre",
@@ -86,7 +96,7 @@ export default function Comerciales() {
             <button
                 title="Agregar un comercial"
                 className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                onClick={() => setIsopenAdd(true)}
+                onClick={() => {setIsopenAdd(true);dispatch(setFuncion('add'))}}
             ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
                     <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                 </svg>
@@ -94,10 +104,9 @@ export default function Comerciales() {
 
             <Evaluar
                 data={data?.filter(t => t.id === id)[0]}
-                tipo={'comercial'}
             />
             <Info/>
-            <AddCom isOpen={isOpenAdd} setIsopen={setIsopenAdd} id={3} data={[]} tipo={'comercial'} />
+            <AddPersona func={funcion} isOpenAdd={isOpenAdd} setIsopenAdd={setIsopenAdd} id={id}  />
             <ModalConfirm/>
         </>
     )

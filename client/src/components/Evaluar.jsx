@@ -10,7 +10,9 @@ import {
 import toast from "react-hot-toast";
 import { setIsOpenModalEvaluar } from "../features/booleanos";
 
-export default function Evaluar({data, tipo }) {
+export default function Evaluar({data}) {
+    const {tipo} = useSelector(state => state.booleanos);
+    
     const dispatch = useDispatch();
     const {isOpenModalEvaluar,iD:id} = useSelector(state => state.booleanos);
     
@@ -30,9 +32,9 @@ export default function Evaluar({data, tipo }) {
         if (selectEval == '0')
             return toast.error('Seleccione una evaluación')
 
-        if (tipo === 'asistente')
+        if (tipo === 'asistentes')
             updateAsistente({ id, evaluacion: parseInt(selectEval) })
-        else if (tipo === 'comercial')
+        else if (tipo === 'comerciales')
             updateComercial({ id, evaluacion: parseInt(selectEval) })
         toast.success('Evaluación realizada')
 

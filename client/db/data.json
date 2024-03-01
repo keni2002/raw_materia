@@ -36,7 +36,7 @@
       "nombre": "Juan",
       "apellido": "Perez",
       "direccion": "Calle 123",
-      "fechaNacimiento": "2021-10-10",
+      "fechaNacimiento": "2002-01-01",
       "edad": 25,
       "anioExperiencia": 5,
       "cntContratos": 5,
@@ -53,7 +53,7 @@
       "anioExperiencia": 5,
       "cntContratos": 5,
       "salario": 5000,
-      "evaluacion": 3,
+      "evaluacion": 5,
       "id": "dde2"
     }
   ],
@@ -89,7 +89,7 @@
       "direccion": "Calle 123",
       "fechaNacimiento": "2021-10-10",
       "edad": 25,
-      "Grado Academico": "Universitario"
+      "gradoAcademico": "Universitario"
     }
   ]
 }
