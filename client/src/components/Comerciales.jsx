@@ -6,21 +6,22 @@ import AddPersona from "./AddPersona";
 import Info from "./Info";
 import { useDispatch, useSelector } from "react-redux";
 import ModalConfirm from "./ModalConfirm";
-import { setFuncion, setType } from "../features/booleanos";
+import { setFuncion, setType,setIsopenAdd } from "../features/booleanos";
 import { useEffect } from "react";
 export default function Comerciales() {
     const dispatch = useDispatch()
     // hooks para abrir y cerrar el modal
 
-    //Las tablas cambian:
+    //Las tablas cambian://////
     useEffect(() => {
         dispatch(setType('comerciales'))
     }, [])
-
+    //////////////////////////
     
-    const [isOpenAdd, setIsopenAdd] = useState(false);
     
-    const {iD:id,funcion} = useSelector(state => state.booleanos);
+    
+    const {iD:id, isOpenAdd,funcion} = useSelector(state => state.booleanos);
+    
     const columns = [
         {
             name: "Nombre",
@@ -32,8 +33,8 @@ export default function Comerciales() {
 
         },
         {
-            name: "Dirección",
-            selector: row => row.direccion
+            name: "Contratos",
+            selector: row => row.cntContratos
         },
         {
             name: "Exp",
@@ -96,7 +97,7 @@ export default function Comerciales() {
             <button
                 title="Agregar un comercial"
                 className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                onClick={() => {setIsopenAdd(true);dispatch(setFuncion('add'))}}
+                onClick={() => {dispatch(setIsopenAdd(true));dispatch(setFuncion('add'))}}
             ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
                     <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                 </svg>
@@ -106,7 +107,7 @@ export default function Comerciales() {
                 data={data?.filter(t => t.id === id)[0]}
             />
             <Info/>
-            <AddPersona func={funcion} isOpenAdd={isOpenAdd} setIsopenAdd={setIsopenAdd} id={id}  />
+            <AddPersona id={id}  />
             <ModalConfirm/>
         </>
     )

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useUpdateComercialMutation, useUpdateAsistenteMutation } from "../services/apiTable";
+import { useUpdateComercialMutation, useUpdateAsistenteMutation,useGetComercialQuery } from "../services/apiTable";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
-
+import { setIsopenAdd } from "../features/booleanos";
 const validationSchema = Yup.object().shape({
     nombre: Yup.string().required('Se requiere un nombre'),
     apellido: Yup.string(),
@@ -18,8 +18,15 @@ const validationSchema = Yup.object().shape({
     nivelEscolar: Yup.string().required('Se requiere un nivel escolar'),
     gradoAcademico: Yup.string().required('Se requiere un grado academico'),
 });
-export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) {
-    const { tipo } = useSelector(state => state.booleanos);
+export default function AddPersona({id}) {
+
+   
+    const dispatch = useDispatch();
+    const { tipo, funcion,isOpenAdd } = useSelector(state => state.booleanos);
+    
+    const { data } = useGetComercialQuery(id)
+
+    console.log(id)
     return (
         <>
             {isOpenAdd && <div className=' fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
@@ -27,27 +34,28 @@ export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) 
                     <div className='flex w-full justify-between items-center'>
                         <h2 className='text-2xl lg:text-3xl'>
                             {
-                                func === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
+                                funcion === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
                             }
                         </h2>
-                        <button onClick={() => setIsopenAdd(false)}>
+                        <button onClick={() => dispatch(setIsopenAdd(false))}>
 
                             <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
                         </button>
                     </div>
                     <Formik
+                        
                         initialValues={{
-                            nombre: '',
-                            apellido: '',
-                            direccion: '',
-                            fechaNacimiento: '',
-                            anioExperiencia: '',
-                            salario: '',
-                            email: '',
+                            nombre: funcion=='edit'? data?.nombre : '',
+                            apellido: funcion=='edit'? data?.apellido : '',
+                            direccion:funcion=='edit'? data?.direccion : '' ,
+                            fechaNacimiento: funcion=='edit'? data?.fechaNacimiento : '',
+                            anioExperiencia: funcion=='edit'? data?.anioExperiencia : '',
+                            salario: funcion=='edit'? data?.salario : '',
+                            email: funcion=='edit'? data?.email : '',
                             password: '',
                             repeatPassword: '',
-                            nivelEscolar: '',
-                            gradoAcademico: '',
+                            nivelEscolar: funcion=='edit'? data?.nivelEscolar : '',
+                            gradoAcademico: funcion=='edit'? data?.gradoAcademico : '',
                         }}
                         validationSchema={validationSchema}
                         onSubmit={async (values, { setSubmitting, resetForm }) => {
@@ -98,7 +106,7 @@ export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) 
                             </div>
                             <ErrorMessage name="anioExperiencia" component="div" className="text-red-500 text-sm" />
                             <div className="mb-5"></div>
-                            <div>
+                            {tipo=='directores' && (<><div>
                                 <label htmlFor="gradoAcademico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado Académico</label>
 
                                 <Field type="text" id="gradoAcademico" name='gradoAcademico' as="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -110,8 +118,8 @@ export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) 
                                 </Field>
                             </div>
                             <ErrorMessage name="gradoAcademico" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
+                            <div className="mb-5"></div></>)}
+                            {tipo=='asistentes' && (<><div>
                                 <label htmlFor="gradoAcademico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel Escolar</label>
 
                                 <Field type="text" id="nivelEscolar" name='nivelEscolar' as="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -123,7 +131,7 @@ export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) 
                                 </Field>
                             </div>
                             <ErrorMessage name="nivelEscolar" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
+                            <div className="mb-5"></div></>)}
                             <div>
                                 <label htmlFor="salario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salario</label>
                                 <div class="relative">
@@ -132,7 +140,7 @@ export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) 
                                         <svg height="24" fill="gray" viewBox="0 -960 960 960" width="24"><path d="M441-120v-86q-53-12-91.5-46T293-348l74-30q15 48 44.5 73t77.5 25q41 0 69.5-18.5T587-356q0-35-22-55.5T463-458q-86-27-118-64.5T313-614q0-65 42-101t86-41v-84h80v84q50 8 82.5 36.5T651-650l-74 32q-12-32-34-48t-60-16q-44 0-67 19.5T393-614q0 33 30 52t104 40q69 20 104.5 63.5T667-358q0 71-42 108t-104 46v84h-80Z" /></svg>
                                     </div>
                                 </div>
-                                <Field min='0' type="number" id="salario" name='salario' className="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
+                                <Field min='0' step="0.01" type="number" id="salario" name='salario' className="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
                             </div>
                             <ErrorMessage name="salario" component="div" className="text-red-500 text-sm" />
                             <div className="mb-5"></div>
@@ -156,7 +164,7 @@ export default function AddPersona({ setIsopenAdd, isOpenAdd, id, data, func }) 
                             <div className="mb-5"></div>
 
                             <button type="submit" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">{
-                                func === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
+                                funcion === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
                             }</button>
 
                         </Form>

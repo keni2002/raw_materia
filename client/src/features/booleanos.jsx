@@ -133,8 +133,10 @@ const booleanos = createSlice({
         tipo: '', //tipo de tabla
         isOpenModalEvaluar: false,
         isOpenInfo: false,
+        isOpenAdd: false,
         isOpenModalConfirm: false,
         funcion: ''
+
     },
     reducers: {
         setIsOpenModalEvaluar: (state, action) => {
@@ -155,10 +157,21 @@ const booleanos = createSlice({
         },
         setFuncion: (state, action) => {  
             state.funcion = action.payload;
+        },
+        setIsopenAdd : (state, action) => {
+            state.isOpenAdd = action.payload;
         }
     },
 });
 
 
-export const { setIsOpenModalEvaluar,setId,setIsOpenInfo,setType,setIsOpenModalConfirm,setFuncion } = booleanos.actions;
+export const {
+     setIsOpenModalEvaluar,
+     setId,
+     setIsOpenInfo,
+     setType,
+     setIsOpenModalConfirm,
+     setFuncion,
+     setIsopenAdd
+} = booleanos.actions;
 export default booleanos.reducer;
