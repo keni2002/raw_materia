@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useUpdateComercialMutation, useUpdateAsistenteMutation,useGetComercialQuery } from "../services/apiTable";
+
+import { useUpdateComercialMutation, 
+    useUpdateAsistenteMutation,
+    useGetComercialQuery, 
+    useCreateComercialMutation 
+} from "../services/apiTable";
+
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { setIsopenAdd } from "../features/booleanos";
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object({
     nombre: Yup.string().required('Se requiere un nombre'),
     apellido: Yup.string(),
     direccion: Yup.string().required('Se requiere una dirección'),
@@ -19,13 +25,35 @@ const validationSchema = Yup.object().shape({
     gradoAcademico: Yup.string().required('Se requiere un grado academico'),
 });
 export default function AddPersona({id}) {
-
-   
+    const [ createComercial ] = useCreateComercialMutation()
+    
     const dispatch = useDispatch();
     const { tipo, funcion,isOpenAdd } = useSelector(state => state.booleanos);
     
     const { data } = useGetComercialQuery(id)
-
+    const  handleSubmit = async (values, { setSubmitting }) => {
+        console.log(values) 
+        setSubmitting(true)
+        if (funcion === 'add') {
+            const { repeatPassword, ...rest } = values;
+            const { data, error } = await createComercial(rest)
+            if (data) {
+                toast.success('Registro exitoso')
+                dispatch(setIsopenAdd(false))
+            } else {
+                toast.error('Error al registrar',error)
+            }
+        } else {
+            const { repeatPassword, ...rest } = values;
+            const { data, error } = await updateComercial(rest)
+            if (data) {
+                toast.success('Edición exitosa')
+                dispatch(setIsopenAdd(false))
+            } else {
+                toast.error('Error al editar',error)
+            }
+        }
+    }
     console.log(id)
     return (
         <>
@@ -58,18 +86,13 @@ export default function AddPersona({id}) {
                             gradoAcademico: funcion=='edit'? data?.gradoAcademico : '',
                         }}
                         validationSchema={validationSchema}
-                        onSubmit={async (values, { setSubmitting, resetForm }) => {
-                            try {
-                                //await createTodo(values);
-                                console.log(values);
-                                resetForm();
-                            } catch (error) {
-                                toast.error('Error al enviar el formulario');
-                            } finally {
-                                setSubmitting(false);
-                            }
-                        }}
+                        onSubmit={handleSubmit}
                     >
+                     {({
+       
+         isSubmitting,
+         /* and other goodies */
+       }) => (
                         <Form className='max-w-sm w-full sm:h-full lg:h-96 overflow-auto pr-3'>
                             <div>
                                 <label htmlFor="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
@@ -109,7 +132,7 @@ export default function AddPersona({id}) {
                             {tipo=='directores' && (<><div>
                                 <label htmlFor="gradoAcademico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado Académico</label>
 
-                                <Field type="text" id="gradoAcademico" name='gradoAcademico' as="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <Field type="text" id="gradoAcademico" name='gradoAcademico' component="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option defaultValue={0} value="0">Seleccione:</option>
                                     <option value="bachiller">Bachiller</option>
                                     <option value="licenciado">Licenciado</option>
@@ -122,7 +145,7 @@ export default function AddPersona({id}) {
                             {tipo=='asistentes' && (<><div>
                                 <label htmlFor="gradoAcademico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel Escolar</label>
 
-                                <Field type="text" id="nivelEscolar" name='nivelEscolar' as="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <Field   type="text" id="nivelEscolar" name='nivelEscolar' component="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option defaultValue={0} value="0">Seleccione:</option>
                                     <option value="primaria">Primaria</option>
                                     <option value="secundaria">Secundaria</option>
@@ -163,11 +186,13 @@ export default function AddPersona({id}) {
                             <ErrorMessage name="repeatPassword" component="div" className="text-red-500 text-sm" />
                             <div className="mb-5"></div>
 
-                            <button type="submit" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">{
+                            <button type="submit"  disabled={isSubmitting} class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">{
                                 funcion === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
                             }</button>
+            
 
                         </Form>
+                        )}
                     </Formik >
 
                 </div>
