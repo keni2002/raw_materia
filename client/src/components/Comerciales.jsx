@@ -10,14 +10,7 @@ import { setFuncion, setType,setIsopenAdd } from "../features/booleanos";
 import { useEffect } from "react";
 export default function Comerciales() {
     const dispatch = useDispatch()
-    // hooks para abrir y cerrar el modal
-
-    //Las tablas cambian://////
-    useEffect(() => {
-        dispatch(setType('comerciales'))
-    }, [])
-    //////////////////////////
-    
+   
     
     
     const {iD:id, isOpenAdd,funcion} = useSelector(state => state.booleanos);

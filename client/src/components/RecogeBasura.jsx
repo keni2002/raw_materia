@@ -16,7 +16,7 @@ import * as Yup from 'yup';
 import { setIsopenAdd } from "../features/booleanos";
 
 export default function AddPersona({ id }) {
-    const { tipo, funcion, isOpenAdd } = useSelector(state => state.booleanos); 
+    const { funcion, isOpenAdd } = useSelector(state => state.booleanos); 
     const [isLoading, setIsLoading] = useState(funcion === 'edit');
     const [initialValues, setInitialValues] = useState({
         nombre: '',
@@ -236,3 +236,7 @@ export default function AddPersona({ id }) {
         </>
     )
 }
+
+
+
+

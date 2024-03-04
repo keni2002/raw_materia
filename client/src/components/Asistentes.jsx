@@ -1,7 +1,7 @@
 import { useGetAsistentesQuery } from "../services/apiTable";
 import Tables from "./Tables";
 import Evaluar from "./Evaluar";
-import AddPersona from "./AddPersona";
+import AddPersona from "./FormComerciales";
 import Info from "./Info";
 import { useDispatch, useSelector } from "react-redux";
 import ModalConfirm from "./ModalConfirm";
