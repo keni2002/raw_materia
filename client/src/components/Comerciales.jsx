@@ -25,11 +25,13 @@ export default function Comerciales() {
     const columns = [
         {
             name: "Nombre",
-            selector: row => row.nombre
+            selector: row => row.nombre,
+            sortable: true
         },
         {
             name: "Apellido",
-            selector: row => row.apellido
+            selector: row => row.apellido,
+            sortable: true
 
         },
         {
@@ -43,7 +45,8 @@ export default function Comerciales() {
         
         {
             name: "Salario",
-            selector: row => row.salario
+            selector: row => row.salario,
+            sortable: true
         },
         {
             name: "Evaluación",
@@ -80,6 +83,7 @@ export default function Comerciales() {
         }
         return {
             ...item,
+            cntContratos: data.cntContratos ? data.cntContratos : 0,
             evaluacion: modifiedEvaluacion,
             sfinal: '$' + modifiedSalario,
             salario: '$' + salario
@@ -90,7 +94,6 @@ export default function Comerciales() {
     return (
         <>
             <Tables data={modifiedData} columns={columns}
-            name={'Comerciales'}
             mostrarBotonEvaluar={true}
             />
 

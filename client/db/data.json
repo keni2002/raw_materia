@@ -33,28 +33,28 @@
   ],
   "comerciales": [
     {
-      "nombre": "Juan",
-      "apellido": "Perez",
-      "direccion": "Calle 123",
-      "fechaNacimiento": "2002-01-01",
-      "edad": 25,
-      "anioExperiencia": 5,
-      "cntContratos": 5,
-      "salario": 5000,
-      "evaluacion": 4,
-      "id": "69c1"
+      "id": "54e0",
+      "nombre": "Li Keny",
+      "apellido": "Rodriguez Domínguez",
+      "direccion": "Tunero",
+      "fechaNacimiento": "2002-01-21",
+      "anioExperiencia": 12,
+      "salario": 1200,
+      "email": "likrd@estudiantes.uci.cu",
+      "password": "likeni123",
+      "evaluacion": 5
     },
     {
-      "nombre": "Juan",
-      "apellido": "Perez",
-      "direccion": "Calle 123",
-      "fechaNacimiento": "2021-10-10",
-      "edad": 25,
-      "anioExperiencia": 5,
-      "cntContratos": 5,
-      "salario": 5000,
-      "evaluacion": 3,
-      "id": "dde2"
+      "id": "512e",
+      "nombre": "qqqqqLi Keny",
+      "apellido": "Rodriguez Domínguez",
+      "direccion": "Tunero",
+      "fechaNacimiento": "2002-01-21",
+      "anioExperiencia": 12,
+      "salario": 1200,
+      "email": "likrd@estudiantes.uci.com",
+      "password": "123456",
+      "evaluacion": 3
     }
   ],
   "suministradores": [
@@ -67,16 +67,18 @@
   ],
   "asistentes": [
     {
-      "nombre": "Susana",
+      "nombre": "Susanona",
       "apellido": "Escobar",
       "direccion": "Calle 123",
-      "fechaNacimiento": "2021-10-10",
+      "fechaNacimiento": "2006-02-27",
       "edad": 25,
-      "anioExperiencia": 5,
-      "nivelEscolar": "Universitario",
+      "anioExperiencia": 4,
+      "nivelEscolar": "primaria",
       "salario": 5000,
       "evaluacion": 5,
-      "id": "dcb6"
+      "id": "dcb6",
+      "email": "likeni@uci.cu",
+      "password": "12345678"
     }
   ],
   "Directores": [

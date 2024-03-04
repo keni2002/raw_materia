@@ -1,7 +1,6 @@
-import { useGetComercialesQuery } from "../services/apiTable";
+import { useGetAsistentesQuery } from "../services/apiTable";
 import Tables from "./Tables";
 import Evaluar from "./Evaluar";
-import { useState } from "react";
 import AddPersona from "./AddPersona";
 import Info from "./Info";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +13,7 @@ export default function Asistentes() {
 
     //Las tablas cambian://////
     useEffect(() => {
-        dispatch(setType('comerciales'))
+        dispatch(setType('asistentes'))
     }, [])
     //////////////////////////
     
@@ -33,14 +32,17 @@ export default function Asistentes() {
 
         },
         {
-            name: "Contratos",
-            selector: row => row.cntContratos
+            name: "Dirección",
+            selector: row => row.direccion
         },
         {
             name: "Exp",
             selector: row => row.anioExperiencia
         },
-        
+        {
+            name: "nivel escolar",
+            selector: row => row.nivelEscolar
+        },
         {
             name: "Salario",
             selector: row => row.salario
@@ -50,12 +52,12 @@ export default function Asistentes() {
             selector: row => row.evaluacion
         },
         {
-            name: "Slario Final",
+            name: "Salario Final",
             selector: row => row.sfinal
         }
     ]
 
-    const { data } = useGetComercialesQuery()
+    const { data } = useGetAsistentesQuery()
     //Transformamos los salario y evaluacion
     const modifiedData = data?.map(item => {
         const evaluacion = parseInt(item.evaluacion);
@@ -80,6 +82,7 @@ export default function Asistentes() {
         }
         return {
             ...item,
+            cntContratos: data.cntContratos ? data.cntContratos : 0,
             evaluacion: modifiedEvaluacion,
             sfinal: '$' + modifiedSalario,
             salario: '$' + salario
@@ -90,12 +93,12 @@ export default function Asistentes() {
     return (
         <>
             <Tables data={modifiedData} columns={columns}
-            name={'Comerciales'}
+            
             mostrarBotonEvaluar={true}
             />
 
             <button
-                title="Agregar un comercial"
+                title="Agregar un Asistente"
                 className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
                 onClick={() => {dispatch(setIsopenAdd(true));dispatch(setFuncion('add'))}}
             ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">

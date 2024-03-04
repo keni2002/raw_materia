@@ -1,8 +1,9 @@
 import { useDispatch,useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
 import { setId, setIsOpenModalEvaluar,setIsOpenModalConfirm,setIsOpenInfo, setFuncion,setIsopenAdd } from '../features/booleanos';
-export default function Tables({ columns, data, name, mostrarBotonEvaluar}) {
+export default function Tables({ columns, data, mostrarBotonEvaluar}) {
     const dispatch = useDispatch();
+    const { tipo } = useSelector(state => state.booleanos);
     const actiones = {
         name: 'Acciones',
         cell: row => (
@@ -27,7 +28,8 @@ export default function Tables({ columns, data, name, mostrarBotonEvaluar}) {
         <>
             <div className='mt-3 sm:w-full md:w-11/12 shadow-md bg-gray-300 '>
                 <DataTable
-                    type={name}
+
+                    title={tipo}
                     columns={[...columns, actiones]}
                     data={data}
                 />

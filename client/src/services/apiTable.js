@@ -68,6 +68,19 @@ export const apiTable = createApi({
             }),
             invalidatesTags: ["Asistentes"],
         }),
+        createAsistente: builder.mutation({
+            query: (asistente) => ({
+                url: 'asistentes/',
+                method: 'POST',
+                body: asistente,
+            }),
+            invalidatesTags: ["Asistentes"],
+        }),
+        getAsistente: builder.query({
+            query: (id) => `asistentes/${id}`,
+            providesTags: ["Asistentes"],
+        }),
+
 
         //Suministradores
         getSuministradores: builder.query({
@@ -82,7 +95,7 @@ export const apiTable = createApi({
             }),
             invalidatesTags: ["Suministradores"],
         }),
-
+        
         
     }),
 })
@@ -96,6 +109,8 @@ export const {
     useGetSuministradoresQuery,
     useGetComercialQuery,
     useDeleteComercialMutation,
-    useCreateComercialMutation
+    useCreateComercialMutation,
+    useCreateAsistenteMutation,
+    useGetAsistenteQuery,
 
     } = apiTable

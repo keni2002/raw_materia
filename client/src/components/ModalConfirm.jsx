@@ -7,7 +7,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 
 export default function ModalConfirm() {
     const { iD: id } = useSelector(state => state.booleanos);
-    console.log(id)
+    
     const [deleteComercial, { isSuccess }] = useDeleteComercialMutation();
     const [text, setText] = useState('');
     const [disabled, setDisabled] = useState(true);

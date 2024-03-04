@@ -45,6 +45,9 @@ export default function Info() {
                         <p><span className="font-bold text-gray-900">Nombre y Apellidos: </span>
                             {data?.nombre} {data?.apellido}
                         </p>
+                        <p><span className="font-bold text-gray-900">Correo: </span>
+                            <a className="font-serif text-blue-600" href={`mailto:${data?.email}`}>{data?.email}</a>
+                        </p>
                         <p><span className="font-bold text-gray-900">Dirección: </span>
                             {data?.direccion}
                         </p>
@@ -61,7 +64,7 @@ export default function Info() {
                             {data?.nivelEscolar}
                         </p>}
                         {tipo == 'comerciales' && <p><span className="font-bold text-gray-900">Cantidad de Contratos </span>
-                            {data?.cntContratos}
+                            {data.cntContratos ? data.cntContratos : 0}
                         </p>}
                         {tipo == 'directores' && <p><span className="font-bold text-gray-900">Grado Académico: </span>
                             {data?.gradoAcademico}
