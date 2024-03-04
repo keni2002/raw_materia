@@ -1,10 +1,10 @@
 import { useGetAsistentesQuery } from "../services/apiTable";
 import Tables from "./Tables";
-import Evaluar from "./Evaluar";
-import AddPersona from "./FormComerciales";
-import Info from "./Info";
+import Evaluar from "./Comerciales/Evaluar";
+import AddPersona from "./Comerciales/FormComerciales";
+import Info from "./Comerciales/Info";
 import { useDispatch, useSelector } from "react-redux";
-import ModalConfirm from "./ModalConfirm";
+import ModalConfirm from "./Comerciales/ModalConfirm";
 import { setFuncion, setType,setIsopenAdd } from "../features/booleanos";
 import { useEffect } from "react";
 export default function Asistentes() {

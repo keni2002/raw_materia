@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useDeleteComercialMutation } from "../services/apiTable";
+import { useDeleteComercialMutation } from "../../services/apiTable";
 import toast from "react-hot-toast";
-import { setIsOpenModalConfirm } from "../features/booleanos";
+import { setIsOpenModalConfirm } from "../../features/booleanos";
 import { useEffect, useState } from "react";
 import { unwrapResult } from "@reduxjs/toolkit";
 

@@ -1,7 +1,7 @@
 import { useGetAsistentesQuery,useGetSuministradoresQuery } from "../services/apiTable";
 import { useSelector } from "react-redux";
 import Tables from "./Tables";
-import Evaluar from "./Evaluar";
+import Evaluar from "./Comerciales/Evaluar";
 import { useState } from "react";
 
 export default function Suministradores() {

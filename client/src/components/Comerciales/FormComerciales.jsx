@@ -8,86 +8,49 @@ import {
     useCreateComercialMutation,
     useCreateAsistenteMutation,
     useGetAsistenteQuery
-} from "../services/apiTable";
+} from "../../services/apiTable";
 
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
-import { setIsopenAdd } from "../features/booleanos";
+import { setIsopenAdd } from "../../features/booleanos";
 
-export default function FormComerciales({ id }) {
-    const { funcion, isOpenAdd } = useSelector(state => state.booleanos); 
-    const [isLoading, setIsLoading] = useState(funcion === 'edit');
-    const [initialValues, setInitialValues] = useState({
-        nombre: '',
-        apellido: '',
-        direccion: '',
-        fechaNacimiento: '',
-        anioExperiencia: '',
-        salario: '',
-        email: '',
-        password: '',
-        repeatPassword: '',
-        nivelEscolar: '',
-        gradoAcademico: '',
-    });
-    console.log(id)
-    const [createComercial] = useCreateComercialMutation()
-    const [updateAsistente] = useUpdateAsistenteMutation()
-    // const { data: dataC } = useGetComercialQuery(id)
- 
-    const dispatch = useDispatch();
-    const { data } = useGetAsistenteQuery(id)
-    useEffect(() => {
-        if (funcion === 'edit') {
-          // Simula la carga de datos desde una API
-          const loadData = async () => {
-            
-            
-            await setInitialValues(data);
-            setIsLoading(false);
-          };
-    
-          loadData();
-        }
-      }, [id, funcion]);
-    
-      if (isLoading) {
-        return <div>Loading...</div>;
-      }
-    
 
+export default function FormComerciales() {
+    const dispatch = useDispatch(); //usos:modal,funcion, tipo, id
+    //Para crear:
+    const [createComercial] = useCreateComercialMutation();
+
+    //Para editar:
+    const [updateComercial] = useUpdateComercialMutation();
+    
+    //valores globales
+    const { funcion, isOpenAdd,tipo,iD:id } = useSelector(state => state.booleanos);
+
+    //Para obtener los datos por id
+    const {data} = useGetComercialQuery(id);
 
 
     const handleSubmit = async (values, { setSubmitting }) => {
-
-        setSubmitting(true)
+        setSubmitting(true);
         const { repeatPassword, ...rest } = values;
-        if (tipo == 'comerciales') {
-            delete rest.nivelEscolar,
-                delete rest.gradoAcademico
-        } else if (tipo == 'asistentes') {
-            delete rest.gradoAcademico
-        }
         if (funcion === 'add') {
-
-
-            const { data, error } = await tipo == "comerciales" ? createComercial(rest) : tipo == "asistentes" ? createAsistente(rest) : 'wait for more types'
+            const { data, error } = await createComercial(rest);
             if (data) {
                 toast.success('Registro exitoso')
-                dispatch(setIsopenAdd(false))
+                dispatch(setIsopenAdd(false));
             } else {
-                toast.error('Error al registrar', error)
+                toast.error('Error al registrar', error);
             }
-        } else {
-            console.log(tipo)
-            rest['id'] = id
-            const { data, error } = await tipo == 'comerciales' ? updateComercial(rest) : tipo == 'asistentes' ? updateAsistente(rest) : 'wait for more types'
+        } else if (funcion === 'edit') {
+
+            rest['id'] = id;
+            const { data, error } = await updateComercial(rest);
             if (data) {
-                toast.success('Edición exitosa')
-                dispatch(setIsopenAdd(false))
+                toast.success('Edición exitosa');
+                dispatch(setIsopenAdd(false));
             } else {
-                toast.error('Error al editar', error)
+                toast.error('Error al editar', error);
             }
         }
     }
@@ -109,7 +72,17 @@ export default function FormComerciales({ id }) {
                     </div>
                     <Formik
 
-                        initialValues={initialValues}
+                        initialValues={{
+                            nombre: data?.nombre || '',
+                            apellido: data?.apellido || '',
+                            direccion: data?.direccion || '',
+                            fechaNacimiento: data?.fechaNacimiento || '',
+                            anioExperiencia: data?.anioExperiencia || '',
+                            salario: data?.salario || '',
+                            email: data?.email || '',
+                            password: '',
+                            repeatPassword: '',
+                        }}
                         validationSchema={
                             Yup.object({
                                 nombre: Yup.string().required('Se requiere un nombre'),

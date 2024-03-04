@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useGetComercialQuery } from "../services/apiTable";
-import { setIsOpenInfo } from "../features/booleanos";
+import { useGetComercialQuery } from "../../services/apiTable";
+import { setIsOpenInfo } from "../../features/booleanos";
 
 export default function Info() {
     const { tipo } = useSelector(state => state.booleanos);

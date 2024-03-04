@@ -4,11 +4,11 @@ import {
     useUpdateComercialMutation,
     useUpdateAsistenteMutation 
 
-} from "../services/apiTable";
+} from "../../services/apiTable";
 
 
 import toast from "react-hot-toast";
-import { setIsOpenModalEvaluar } from "../features/booleanos";
+import { setIsOpenModalEvaluar } from "../../features/booleanos";
 
 export default function Evaluar({data}) {
     const {tipo} = useSelector(state => state.booleanos);

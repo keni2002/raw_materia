@@ -6,10 +6,10 @@ import { Provider } from 'react-redux';
 import {store} from './app/store'
 import Contratos from './components/Contratos';
 import Compras from './components/Compras';
-import Comerciales from './components/Comerciales';
+import Comerciales from './components/Comerciales/Comerciales';
 import Asistentes from './components/Asistentes';
 import Suministradores from './components/Suministradores';
-import FormEvaluate from './components/FormEvaluate';
+
 
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
             <Route path='/comerciales' element={<Comerciales/>}/>
             <Route path='/asistentes' element={<Asistentes/>}/>
             <Route path='/suministradores' element={<Suministradores/>}/>
-            <Route path='/test' element={<FormEvaluate/>}/>
+            
             {/* <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
             <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
             <Route path='/compras' element={<Table quito={'evaluar'}/>}/>
