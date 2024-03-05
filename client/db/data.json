@@ -41,8 +41,9 @@
       "anioExperiencia": 12,
       "salario": 1200,
       "email": "likrd@estudiantes.uci.cu",
-      "password": "likeni123",
-      "evaluacion": 5
+      "password": "12345678",
+      "evaluacion": 5,
+      "confirmPassword": "12345678"
     },
     {
       "id": "512e",
@@ -55,6 +56,30 @@
       "email": "likrd@estudiantes.uci.com",
       "password": "123456",
       "evaluacion": 3
+    },
+    {
+      "id": "2c77",
+      "nombre": "Andreo",
+      "apellido": "Bocelli",
+      "direccion": "calle fea",
+      "fechaNacimiento": "1930-02-21",
+      "anioExperiencia": 1,
+      "salario": 12005,
+      "email": "andrea@uci.cu",
+      "password": "12345678",
+      "confirmPassword": "12345678"
+    },
+    {
+      "id": "8d4b",
+      "nombre": "Morge",
+      "apellido": "Born",
+      "direccion": "calle 21, havana",
+      "fechaNacimiento": "2002-01-21",
+      "anioExperiencia": 1,
+      "salario": 12245,
+      "email": "james@uci.cu",
+      "password": "12345678",
+      "confirmPassword": "12345678"
     }
   ],
   "suministradores": [
