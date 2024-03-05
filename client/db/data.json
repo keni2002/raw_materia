@@ -80,6 +80,18 @@
       "email": "james@uci.cu",
       "password": "12345678",
       "confirmPassword": "12345678"
+    },
+    {
+      "id": "bfaa",
+      "nombre": "Xeono",
+      "apellido": "QW",
+      "direccion": "call",
+      "fechaNacimiento": "2002-02-21",
+      "anioExperiencia": 1,
+      "salario": 12345,
+      "email": "qq@qq.cu",
+      "password": "12345678",
+      "confirmPassword": "12345678"
     }
   ],
   "suministradores": [
