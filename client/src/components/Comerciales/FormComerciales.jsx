@@ -7,7 +7,8 @@ import {
     useGetComercialQuery,
     useCreateComercialMutation,
     useCreateAsistenteMutation,
-    useGetAsistenteQuery
+    useGetAsistenteQuery,
+    useLazyGetComercialQuery
 } from "../../services/apiTable";
 
 import toast from "react-hot-toast";
@@ -16,19 +17,19 @@ import * as Yup from 'yup';
 import { setIsopenAdd } from "../../features/booleanos";
 
 
-export default function FormComerciales() {
+export default function FormComerciales({ data }) {
     const dispatch = useDispatch(); //usos:modal,funcion, tipo, id
     //Para crear:
     const [createComercial] = useCreateComercialMutation();
 
     //Para editar:
     const [updateComercial] = useUpdateComercialMutation();
-    
-    //valores globales
-    const { funcion, isOpenAdd,tipo,iD:id } = useSelector(state => state.booleanos);
+    const [getComercialById] = useLazyGetComercialQuery();
 
-    //Para obtener los datos por id
-    const {data} = useGetComercialQuery(id);
+    //valores globales
+    const { funcion, isOpenAdd, tipo, iD: id } = useSelector(state => state.booleanos);
+
+
 
 
     const handleSubmit = async (values, { setSubmitting }) => {
@@ -73,15 +74,15 @@ export default function FormComerciales() {
                     <Formik
 
                         initialValues={{
-                            nombre: data?.nombre || '',
-                            apellido: data?.apellido || '',
-                            direccion: data?.direccion || '',
-                            fechaNacimiento: data?.fechaNacimiento || '',
-                            anioExperiencia: data?.anioExperiencia || '',
-                            salario: data?.salario || '',
-                            email: data?.email || '',
+                            nombre: '',
+                            apellido: '',
+                            direccion: '',
+                            fechaNacimiento: '',
+                            anioExperiencia: '',
+                            salario: '',
+                            email: '',
                             password: '',
-                            repeatPassword: '',
+                            repeatPassword: ''
                         }}
                         validationSchema={
                             Yup.object({
@@ -100,106 +101,96 @@ export default function FormComerciales() {
                         }
                         onSubmit={handleSubmit}
                     >
+                        {({setFieldValue,values,errors,touched,isValid, handleChange,handleBlur}) => {
+                            useEffect(()=>{
+                                if(data.id){
+                                    getComercialById(data.id).unwrap().then((res)=> {
+                                            setFieldValue("nombre", res.nombre)
+                                            setFieldValue("apellido", res.apellido)
+                                            setFieldValue("direccion", res.direccion)
+                                            setFieldValue("fechaNacimiento", res.fechaNacimiento)
+                                            setFieldValue("anioExperiencia", res.anioExperiencia)
+                                            setFieldValue("salario", res.salario)
+                                            setFieldValue("email", res.email)
 
-                        <Form className='max-w-sm w-full sm:h-full lg:h-96 overflow-auto pr-3'>
-                            <div>
-                                <label htmlFor="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-                                <Field type="text" name='nombre' className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="Selena" />
-                            </div>
-                            <ErrorMessage name="nombre" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-                                <label htmlFor="apellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
-                                <Field type="text" name='apellido' className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="Gomez" />
-                            </div>
-                            <ErrorMessage name="apellido" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-                                <label htmlFor="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
-                                <Field type="text" name='direccion' className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="Suite 960, Las Tunas" />
-                            </div>
-                            <ErrorMessage name="direccion" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-                                <label htmlFor="fechaNacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
-                                <Field max={(() => {
-                                    const date = new Date();
-                                    date.setFullYear(date.getFullYear() - 18);
-                                    return date.toISOString().split('T')[0];
-                                })()} type="date" name="fechaNacimiento" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
-                            </div>
-                            <ErrorMessage name="fechaNacimiento" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-
-                                <label htmlFor="anioExperiencia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Años de Experiencia</label>
-                                <Field min='0' type="number" name="anioExperiencia" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light"></Field>
-                            </div>
-                            <ErrorMessage name="anioExperiencia" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            {tipo == 'directores' && (<><div>
-                                <label htmlFor="gradoAcademico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado Académico</label>
-
-                                <Field type="text" name='gradoAcademico' component="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option defaultValue={0} value="0">Seleccione:</option>
-                                    <option value="bachiller">Bachiller</option>
-                                    <option value="licenciado">Licenciado</option>
-                                    <option value="master">Máster</option>
-                                    <option value="doctorado">Doctorado</option>
-                                </Field>
-                            </div>
-                                <ErrorMessage name="gradoAcademico" component="div" className="text-red-500 text-sm" />
-                                <div className="mb-5"></div></>)}
-                            {tipo == 'asistentes' && (<><div>
-                                <label htmlFor="nivelEscolar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel Escolar</label>
-
-                                <Field type="text" name='nivelEscolar' component="select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option defaultValue={0} value="0">Seleccione:</option>
-                                    <option value="primaria">Primaria</option>
-                                    <option value="secundaria">Secundaria</option>
-                                    <option value="bachillerato">Bachillerato</option>
-                                    <option value="universidad">Universidad</option>
-                                </Field>
-                            </div>
-                                <ErrorMessage name="nivelEscolar" component="div" className="text-red-500 text-sm" />
-                                <div className="mb-5"></div></>)}
-                            <div>
-                                <label htmlFor="salario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salario</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 ps-2 top-5 flex items-center pointer-events-none">
-
-                                        <svg height="24" fill="gray" viewBox="0 -960 960 960" width="24"><path d="M441-120v-86q-53-12-91.5-46T293-348l74-30q15 48 44.5 73t77.5 25q41 0 69.5-18.5T587-356q0-35-22-55.5T463-458q-86-27-118-64.5T313-614q0-65 42-101t86-41v-84h80v84q50 8 82.5 36.5T651-650l-74 32q-12-32-34-48t-60-16q-44 0-67 19.5T393-614q0 33 30 52t104 40q69 20 104.5 63.5T667-358q0 71-42 108t-104 46v84h-80Z" /></svg>
-                                    </div>
+                                        })
+                                }
+                            },[])
+                            return (<Form className='max-w-sm w-full sm:h-full lg:h-96 overflow-auto pr-3'>
+                                <div>
+                                    <label htmlFor="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                                    <Field type="text" name='nombre' className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="Selena" />
                                 </div>
-                                <Field min='0' step="0.01" type="number" name='salario' className="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
-                            </div>
-                            <ErrorMessage name="salario" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-                                <label htmlFor="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                <Field type="email" name="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="name@rowmateria.com" />
-                            </div>
-                            <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-                                <label htmlFor="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                                <Field type="password" name='password' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
-                            </div>
-                            <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
-                            <div>
-                                <label for="repeatPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repetir Contraseña</label>
-                                <Field type="password" name="repeatPassword" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
-                            </div>
-                            <ErrorMessage name="repeatPassword" component="div" className="text-red-500 text-sm" />
-                            <div className="mb-5"></div>
+                                <ErrorMessage name="nombre" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label htmlFor="apellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+                                    <Field type="text" name='apellido' className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="Gomez" />
+                                </div>
+                                <ErrorMessage name="apellido" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label htmlFor="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+                                    <Field type="text" name='direccion' className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="Suite 960, Las Tunas" />
+                                </div>
+                                <ErrorMessage name="direccion" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label htmlFor="fechaNacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
+                                    <Field max={(() => {
+                                        const date = new Date();
+                                        date.setFullYear(date.getFullYear() - 18);
+                                        return date.toISOString().split('T')[0];
+                                    })()} type="date" name="fechaNacimiento" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
+                                </div>
+                                <ErrorMessage name="fechaNacimiento" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
 
-                            <button type="submit" className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">{
-                                funcion === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
-                            }</button>
+                                    <label htmlFor="anioExperiencia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Años de Experiencia</label>
+                                    <Field min='0' type="number" name="anioExperiencia" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light"></Field>
+                                </div>
+                                <ErrorMessage name="anioExperiencia" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label htmlFor="salario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salario</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 start-0 ps-2 top-5 flex items-center pointer-events-none">
+
+                                            <svg height="24" fill="gray" viewBox="0 -960 960 960" width="24"><path d="M441-120v-86q-53-12-91.5-46T293-348l74-30q15 48 44.5 73t77.5 25q41 0 69.5-18.5T587-356q0-35-22-55.5T463-458q-86-27-118-64.5T313-614q0-65 42-101t86-41v-84h80v84q50 8 82.5 36.5T651-650l-74 32q-12-32-34-48t-60-16q-44 0-67 19.5T393-614q0 33 30 52t104 40q69 20 104.5 63.5T667-358q0 71-42 108t-104 46v84h-80Z" /></svg>
+                                        </div>
+                                    </div>
+                                    <Field min='0' step="0.01" type="number" name='salario' className="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
+                                </div>
+                                <ErrorMessage name="salario" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label htmlFor="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <Field type="email" name="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" placeholder="name@rowmateria.com" />
+                                </div>
+                                <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label htmlFor="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                                    <Field type="password" name='password' class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
+                                </div>
+                                <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+                                <div>
+                                    <label for="repeatPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repetir Contraseña</label>
+                                    <Field type="password" name="repeatPassword" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 dark:shadow-sm-light" />
+                                </div>
+                                <ErrorMessage name="repeatPassword" component="div" className="text-red-500 text-sm" />
+                                <div className="mb-5"></div>
+
+                                <button disabled={!isValid} type="submit" className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">{
+                                    funcion === 'add' ? `Registrar ${tipo}` : `Editar ${tipo}`
+                                }</button>
 
 
-                        </Form>
+                            </Form>)
+                        }}
+
 
                     </Formik >
 

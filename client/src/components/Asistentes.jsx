@@ -2,7 +2,7 @@ import { useGetAsistentesQuery } from "../services/apiTable";
 import Tables from "./Tables";
 import Evaluar from "./Comerciales/Evaluar";
 import AddPersona from "./Comerciales/FormComerciales";
-import Info from "./Comerciales/Info";
+import Info from "./Info";
 import { useDispatch, useSelector } from "react-redux";
 import ModalConfirm from "./Comerciales/ModalConfirm";
 import { setFuncion, setType,setIsopenAdd } from "../features/booleanos";

@@ -2,9 +2,9 @@ import { useGetComercialesQuery } from "../../services/apiTable";
 import Tables from "../Tables";
 import Evaluar from "./Evaluar";
 import { setId,setType, setIsOpenModalEvaluar,setIsOpenModalConfirm,setIsOpenInfo, setFuncion,setIsopenAdd } from '../../features/booleanos';
-
+import { useGetComercialQuery } from "../../services/apiTable";
 import FormComerciales from './FormComerciales'
-import Info from "./Info";
+import Info from "../Info";
 import { useDispatch, useSelector } from "react-redux";
 import ModalConfirm from "./ModalConfirm";
 
@@ -20,9 +20,11 @@ export default function Comerciales() {
         dispatch(setType('Comerciales'));
     }, [])
 
+    //Para obtener los datos por id
     
     const {iD:id, isOpenAdd, isOpenModalConfirm,isOpenModalEvaluar,funcion} = useSelector(state => state.booleanos);
-    
+    //get data by id
+    const {data:dataOneComercial} = useGetComercialQuery(id);
     const columns = [
         {
             name: "Nombre",
@@ -135,7 +137,8 @@ export default function Comerciales() {
                 data={data?.filter(t => t.id === id)[0]}
             />}
             <Info/>
-            {isOpenAdd && <FormComerciales />}
+            {isOpenAdd && <FormComerciales data={[]} />}
+            {isOpenAdd && dataOneComercial && <FormComerciales data={dataOneComercial} />}
             { isOpenModalConfirm && <ModalConfirm/>}
         </>
     )

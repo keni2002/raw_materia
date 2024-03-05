@@ -9,6 +9,8 @@ import Compras from './components/Compras';
 import Comerciales from './components/Comerciales/Comerciales';
 import Asistentes from './components/Asistentes';
 import Suministradores from './components/Suministradores';
+import Forms from './components/Forms';
+import ComercialForm from './components/Comerciales/createdit.comerciales';
 
 
 
@@ -23,7 +25,14 @@ function App() {
           <Route element={<Dashboard/>} >
             <Route path="/contratos" element={<Contratos/>} />
             <Route path="/compras" element={<Compras/>} />
+
+            {/* COMERCIALES DEPARTAMENTO */}
             <Route path='/comerciales' element={<Comerciales/>}/>
+            <Route path='/comerciales' element={<Forms/>}>
+              <Route path='form' element={<ComercialForm/>}/>
+            </Route>
+
+
             <Route path='/asistentes' element={<Asistentes/>}/>
             <Route path='/suministradores' element={<Suministradores/>}/>
             

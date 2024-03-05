@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useGetComercialQuery } from "../../services/apiTable";
-import { setIsOpenInfo } from "../../features/booleanos";
+import { useGetComercialQuery } from "../services/apiTable";
+import { setIsOpenInfo } from "../features/booleanos";
 
 export default function Info() {
     const { tipo } = useSelector(state => state.booleanos);
@@ -60,16 +60,16 @@ export default function Info() {
                         <p><span className="font-bold text-gray-900">Años de experiencia: </span>
                             {data?.anioExperiencia} años
                         </p>
-                        {tipo == 'asistentes' && <p><span className="font-bold text-gray-900">Nivel Escolar: </span>
+                        {tipo == 'Asistentes' && <p><span className="font-bold text-gray-900">Nivel Escolar: </span>
                             {data?.nivelEscolar}
                         </p>}
-                        {tipo == 'comerciales' && <p><span className="font-bold text-gray-900">Cantidad de Contratos </span>
+                        {tipo == 'Comerciales' && <p><span className="font-bold text-gray-900">Cantidad de Contratos </span>
                             {data.cntContratos ? data.cntContratos : 0}
                         </p>}
-                        {tipo == 'directores' && <p><span className="font-bold text-gray-900">Grado Académico: </span>
+                        {tipo == 'Directores' && <p><span className="font-bold text-gray-900">Grado Académico: </span>
                             {data?.gradoAcademico}
                         </p>}
-                        {tipo != 'directores' && <p><span className="font-bold text-gray-900">Evaluación: </span>
+                        {tipo != 'Directores' && <p><span className="font-bold text-gray-900">Evaluación: </span>
                             {data.evaluacion == 5 ? 'Excelente' : data.evaluacion == 4 ? 'Bien' : data.evaluacion == 3 ? 'Regular' : data.evaluacion == 2 ? 'Mal' : 'No evaluado'}
                         </p>}
                         <p><span className="font-bold text-gray-900">Salario: </span>

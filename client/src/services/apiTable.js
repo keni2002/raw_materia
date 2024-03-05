@@ -108,9 +108,9 @@ export const {
     useUpdateAsistenteMutation,
     useGetSuministradoresQuery,
     useGetComercialQuery,
+    useLazyGetComercialQuery,
     useDeleteComercialMutation,
     useCreateComercialMutation,
     useCreateAsistenteMutation,
     useGetAsistenteQuery,
-
     } = apiTable
