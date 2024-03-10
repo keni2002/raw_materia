@@ -25,7 +25,7 @@ export default function Comerciales() {
     
     const {iD:id, isOpenAdd, isOpenModalConfirm,isOpenModalEvaluar,funcion} = useSelector(state => state.booleanos);
     //get data by id
-    const {data:dataOneComercial} = useGetComercialQuery(id);
+    // const {data:dataOneComercial} = useGetComercialQuery(id);
     const columns = [
         {
             name: "Nombre",
@@ -75,6 +75,7 @@ export default function Comerciales() {
                 </button>
                 <Link to={`/comerciales/edit/${row.id}`}>
                 <button title="Editar">
+                    
                     <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm263-224 37-39-37-37-38 38 38 38Z" /></svg>
                 </button>
                 </Link>
@@ -89,6 +90,7 @@ export default function Comerciales() {
 ///---------------------------------------------transformando data
 
     const { data } = useGetComercialesQuery()
+    console.log(data)
     //Transformamos los salario y evaluacion
     const modifiedData = data?.map(item => {
         const evaluacion = parseInt(item.evaluacion);

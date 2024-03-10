@@ -8,5 +8,6 @@ export const initial =
         salario: '',
         email: '',
         password: '',
+        departamento:'',
         confirmPassword: ''
     }

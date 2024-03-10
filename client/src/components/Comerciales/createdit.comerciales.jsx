@@ -7,10 +7,10 @@ import { useUpdateComercialMutation, useLazyGetComercialQuery, useCreateComercia
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import DDDepart from './dropdownDepartament';
 export default function ComercialForm() {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [getComercialById, { data, isLoading }] = useLazyGetComercialQuery()
   const [updateComercial] = useUpdateComercialMutation()
   const [createComercial] = useCreateComercialMutation()
@@ -20,9 +20,12 @@ export default function ComercialForm() {
       return date.toISOString().split('T')[0];
   }
   const handleSubmit = (values) => {
-
+    let {confirmPassword,...rest} = values
     if (id) {
-      updateComercial({ id, ...values })
+      
+      console.log('EDITANDO')
+      
+      updateComercial({ id, ...rest })
         .unwrap()
         .then(() => {
           navigate('/comerciales');
@@ -30,7 +33,8 @@ export default function ComercialForm() {
         })
     }
     else {
-      createComercial(values)
+
+      createComercial({...rest})
         .unwrap()
         .then(() => {
           navigate('/comerciales');
@@ -42,7 +46,12 @@ export default function ComercialForm() {
     }
   };
   useEffect(() => {
-    if (id) getComercialById(id)
+    
+    if (id) {
+      getComercialById(id)
+    
+    }
+
   }, [id])
   return (
     <>
@@ -69,6 +78,7 @@ export default function ComercialForm() {
               setFieldValue("anioExperiencia", data.anioExperiencia);
               setFieldValue("salario", data.salario);
               setFieldValue("email", data.email);
+              setFieldValue("departamento", data.departamento)
             }
           }, [isLoading, data]);
           return (
@@ -80,9 +90,12 @@ export default function ComercialForm() {
               <Fields name='fechaNacimiento' max={fecha()} touched={touched} type='date' label='Fecha de nacimiento' />
               <Fields name='salario' touched={touched} type='number' label='Salario' min={1000} />
               <Fields name='anioExperiencia' touched={touched} type='number' label='Años de experiencia' min={0} />
+              <DDDepart name={"departamento"} label={"Departamentos"}/>
               <Fields name='password' touched={touched} type='password' label='Contraseña' />
               <Fields name='confirmPassword' touched={touched} type='password' label='Confirmar Contraseña' />
+              
               <Btn type='submit' disabled={!isValid} label={`${id ? 'Actualizar' : 'Registrar'} Comercial`} />
+              
             </Form>
           )
         }}

@@ -32,7 +32,7 @@ function App() {
               <Route path='/comerciales' element={<Forms />}>
                 <Route path='add' element={<ComercialForm />} />
                 <Route path='edit/:id' element={<ComercialForm />} />
-                <Ro
+                
               </Route>
 
 
