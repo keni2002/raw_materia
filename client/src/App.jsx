@@ -14,6 +14,7 @@ import ComercialForm from './components/Comerciales/createdit.comerciales';
 import Evaluar from './components/Comerciales/evaluar.comerciales'
 import DeleteCom from './components/Comerciales/delete.comerciales';
 import InfoCom from './components/Comerciales/info.comerciales';
+import InfoEvals from './components/Comerciales/info.evals';
 
 
 
@@ -38,7 +39,7 @@ function App() {
                 <Route path='evaluar/:id' element={<Evaluar/>}/>
                 <Route path='delete/:id' element={<DeleteCom/>}/>
                 <Route path='info/:id' element={<InfoCom/>}/>
-
+                <Route path='infoevals/:id' element={<InfoEvals/>}/>
               </Route>
 
 

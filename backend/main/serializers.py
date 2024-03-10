@@ -75,6 +75,13 @@ class ContratoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class EvaluacionSerializer(serializers.ModelSerializer):
+    trabajador = serializers.SerializerMethodField()
+    director = serializers.SerializerMethodField()
+    def get_trabajador(self,obj):
+        return obj.trabajador.nombre
+    def get_director(self, obj):
+        return obj.director.nombre
     class Meta:
+
         model = _models.Evaluacion
         fields = '__all__'

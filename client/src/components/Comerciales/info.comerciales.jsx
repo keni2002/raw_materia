@@ -55,12 +55,14 @@ export default function InfoCom() {
             </div>
             <label htmlFor="">Info Laboral</label>
             <div className='p-4 mb-3 bg-gray-200 rounded-md'>
-            <p>Años de Experiencia: {data?.anioExperiencia} </p>
+                <p>Años de Experiencia: {data?.anioExperiencia} </p>
                 <div className='flex gap-2 mb-2'>
-                    
-                    <p>Evaluación: ({data?.evaluacion}) {data?.evaluacion == 5 ? 'Excelente' : data?.evaluacion == 4 ? 'Bien' : data?.evaluacion == 3 ? 'Regular' : data?.evaluacion == 2 ? 'Mal' : 'No evaluado'}</p>
 
-                    <a href="#" class="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold    rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-400 inline-flex items-center justify-center">evaluaciones</a>
+                    <p>Evaluación: ({data?.evaluacion}) {data?.evaluacion == 5 ? 'Excelente' : data?.evaluacion == 4 ? 'Bien' : data?.evaluacion == 3 ? 'Regular' : data?.evaluacion == 2 ? 'Mal' : 'No evaluado'}</p>
+                     <Link to={`/comerciales/infoevals/${id}`}>
+                        <div className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold    rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-400 inline-flex items-center justify-center">evaluaciones</div>
+                        </Link> 
+
                 </div>
 
                 {/* INICIO */}
