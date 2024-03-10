@@ -1,27 +1,63 @@
 
 //DEPARTAMENTOS COMERCIALES
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { BASE_URL } from './api'
 
-export const apiDpCom = createApi({
-    reducerPath: 'apiTable',
+export const apiCom = createApi({
+    reducerPath: 'apiCom',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/'
+        baseUrl: BASE_URL
     }),
-    tagTypes: ['DpComerciales'],
+    tagTypes: ['Comerciales'],
     endpoints: (builder) => ({
         
-        getDpCom: builder.query({
-
+         
+        getComs: builder.query({
             query: () => ({
-                url: `dpcomerciales/`,
-                method: 'GET',
+                url: `comerciales/`,
+                method:'GET'
             }),
-            providesTags: ["Dpcomerciales"]
+            providesTags: ["Comerciales"],
         }),
 
+        getCom: builder.query({  //Para obtener un solo comercial
+            query: (id) => ({
+                url: `comerciales/${id}/`,
+                method: 'GET'
+            }),
+            providesTags: ["Comerciales"]
+        }),
+        updateCom: builder.mutation({
+            query: (updateInfo) => ({
+                url: `comerciales/${updateInfo.id}/`,
+                method: 'PATCH',
+                body: updateInfo,
+            }),
+           invalidatesTags : ["Comerciales"],
+            
+        }),
+        deleteCom: builder.mutation({
+            query: (id) => ({
+                url: `comerciales/${id}/`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ["Comerciales"],
+        }),
+        createCom: builder.mutation({
+            query: (comercial) => ({
+                url: '/comerciales/',
+                method: 'POST',
+                body: comercial,
+            }),
+            invalidatesTags: ["Comerciales"],
+        }),
         
     })
 })
 export const {
-    useGetDpComQuery,
-} = apiDpCom
+    useLazyGetComQuery,
+    useGetComsQuery,
+    useCreateComMutation,
+    useUpdateComMutation,
+    useDeleteComMutation
+} = apiCom

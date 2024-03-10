@@ -1,11 +1,12 @@
 
 //DEPARTAMENTOS COMERCIALES
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { BASE_URL } from './api'
 
 export const apiDpCom = createApi({
     reducerPath: 'apiTable',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/'
+        baseUrl: BASE_URL
     }),
     tagTypes: ['DpComerciales'],
     endpoints: (builder) => ({

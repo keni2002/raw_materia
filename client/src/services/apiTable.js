@@ -1,9 +1,10 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { BASE_URL } from './api'
 
 export const apiTable = createApi({
     reducerPath: 'apiTable',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/'
+        baseUrl: BASE_URL
     }),
     tagTypes: ['Comerciales'],
     endpoints: (builder) => ({
@@ -20,46 +21,7 @@ export const apiTable = createApi({
 
 
         //Comerciales
-        
-        getComerciales: builder.query({
-            query: () => ({
-                url: `comerciales/`,
-                method:'GET'
-            }),
-            providesTags: ["Comerciales"],
-        }),
-
-        getComercial: builder.query({  //Para obtener un solo comercial
-            query: (id) => ({
-                url: `comerciales/${id}/`,
-                method: 'GET'
-            }),
-            providesTags: ["Comerciales"]
-        }),
-        updateComercial: builder.mutation({
-            query: (updateInfo) => ({
-                url: `comerciales/${updateInfo.id}/`,
-                method: 'PATCH',
-                body: updateInfo,
-            }),
-           invalidatesTags : ["Comerciales"],
-            
-        }),
-        deleteComercial: builder.mutation({
-            query: (id) => ({
-                url: `comerciales/${id}/`,
-                method: 'DELETE',
-            }),
-            invalidatesTags: ["Comerciales"],
-        }),
-        createComercial: builder.mutation({
-            query: (comercial) => ({
-                url: '/comerciales/',
-                method: 'POST',
-                body: comercial,
-            }),
-            invalidatesTags: ["Comerciales"],
-        }),
+       
 
         //Asistentes
         getAsistentes: builder.query({
@@ -108,15 +70,10 @@ export const apiTable = createApi({
 export const {
     useGetComprasQuery,
     useGetContratosQuery,
-    useGetComercialesQuery,
-    useUpdateComercialMutation,
+
     useGetAsistentesQuery,
     useUpdateAsistenteMutation,
     useGetSuministradoresQuery,
-    useGetComercialQuery,
-    useLazyGetComercialQuery,
-    useDeleteComercialMutation,
-    useCreateComercialMutation,
     useCreateAsistenteMutation,
     useGetAsistenteQuery,
     } = apiTable

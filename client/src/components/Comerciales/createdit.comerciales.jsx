@@ -3,7 +3,7 @@ import Fields from '../Fields';
 import Btn from '../Btn';
 import { schema } from './schema';
 import { initial } from './initial';
-import { useUpdateComercialMutation, useLazyGetComercialQuery, useCreateComercialMutation } from '../../services/apiTable';
+import { useLazyGetComQuery, useCreateComMutation,useUpdateComMutation } from '../../services/apiComercial';
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -11,9 +11,9 @@ import DDDepart from './dropdownDepartament';
 export default function ComercialForm() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [getComercialById, { data, isLoading }] = useLazyGetComercialQuery()
-  const [updateComercial] = useUpdateComercialMutation()
-  const [createComercial] = useCreateComercialMutation()
+  const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
+  const [updateComercial] = useUpdateComMutation()
+  const [createComercial] = useCreateComMutation()
   const fecha = () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 18);
@@ -30,6 +30,9 @@ export default function ComercialForm() {
         .then(() => {
           navigate('/comerciales');
           toast.success('Comercial actualizado')
+        })
+        .catch((err) => {
+          toast.error(err.data.message)
         })
     }
     else {

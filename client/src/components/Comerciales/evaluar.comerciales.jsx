@@ -1,28 +1,40 @@
+import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import Fields from '../Fields';
 import Btn from '../Btn';
-import { schema } from './schema';
-import { initial } from './initial';
-import { useUpdateComercialMutation, useLazyGetComercialQuery, useCreateComercialMutation } from '../../services/apiTable';
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Dropdown from './Dropdown';
-export default function Evaluar() {
+import { useLazyGetComQuery } from '../../services/apiComercial';
+import { useCreateEvalMutation } from '../../services/apiEval';
+export default function EvaluarCom() {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const [getComercialById, { data, isLoading }] = useLazyGetComercialQuery()
-    const [updateComercial] = useUpdateComercialMutation()
+    const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
+    const [createEval] = useCreateEvalMutation()
     const handleSubmit = (values) => {
+
+
 
         if (values.evaluacion == '0')
             return toast.error('Seleccione una evaluación')
-        updateComercial({ id, ...values })
+
+        const valores = {
+            calificacion: values.evaluacion,
+            trabajador: id,
+            director: 10
+        }
+
+        createEval(valores)
             .unwrap()
             .then(() => {
                 navigate('/comerciales');
                 toast.success('Comercial Evaluado')
+            })
+
+            .catch((err) => {
+                toast.error(err.data.message)
             })
 
     };
@@ -31,12 +43,29 @@ export default function Evaluar() {
     }, [id])
     return (
         <>
+            <header className='flex justify-between pb-10'>
+                <Link to='/comerciales'>
+                    <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
+                </Link>
 
-            <Formik>
+                <h3 className='font-bold text-lg  text-center'>Evaluar a {data?.nombre + " " + data?.apellido} </h3>
+            </header>
+            <Formik
+                initialValues={
+                    {
+                        evaluacion: '',
+                    }
+                }
 
+                validationSchema={Yup.object({
+                    evaluacion: Yup.string().required('Seleccione una evaluacion')
+                }
+                )}
+                onSubmit={handleSubmit}
+            >
                 <Form>
-                    <Dropdown value={0}/>
-                    <Btn type='submit' text='Evaluar' />
+                    <Dropdown value={0} name='evaluacion' label={'Evaluación'} />
+                    <Btn type='submit' label='Evaluar' />
                 </Form>
 
             </Formik>

@@ -1,6 +1,6 @@
-from rest_framework import permissions, viewsets
-from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Compra
-from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer
+from rest_framework import permissions, viewsets, generics
+from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Compra, Evaluacion,Contrato
+from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer, EvaluacionSerializer,ContratoSerializer
 # Create your views here.
 class TrabajadorViewSet(viewsets.ModelViewSet):
     queryset = Trabajador.objects.all()
@@ -43,3 +43,26 @@ class AbogadoViewSet(viewsets.ModelViewSet):
     def get_view_name(self):
         return "Abogados"
 
+
+class ContratoViewSet(viewsets.ModelViewSet):
+    queryset = Contrato.objects.all()
+    serializer_class = ContratoSerializer
+    def get_view_name(self):
+        return "Contratos"
+
+class EvaluacionViewSet(viewsets.ModelViewSet):
+    queryset = Evaluacion.objects.all()
+    serializer_class = EvaluacionSerializer 
+
+class EvaluacionesTrabajador(generics.ListAPIView):
+    serializer_class = EvaluacionSerializer
+
+    def get_queryset(self):
+        trabajador_id = self.kwargs['id']
+        return Evaluacion.objects.filter(trabajador=trabajador_id)
+    
+class ContratosComercial(generics.ListAPIView):
+    serializer_class = ContratoSerializer
+    def get_queryset(self):
+        trabajador_id = self.kwargs['id']
+        return Contrato.objects.filter(trabajador=trabajador_id)

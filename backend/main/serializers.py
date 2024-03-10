@@ -3,6 +3,9 @@ import main.models as _models
 from django.contrib.auth.hashers import make_password
 from rest_framework.serializers import PrimaryKeyRelatedField
 class TrabajadorSerializer(serializers.ModelSerializer):
+    evaluacion  = serializers.SerializerMethodField()
+    def get_evaluacion(self, obj):
+        return obj.evaluacion
 
     class Meta:
         model= _models.Trabajador
@@ -34,14 +37,16 @@ class ComercialSerializer(TrabajadorSerializer):
     # departamento = DpComercialSerializer(read_only=True)
     # cntContratos = ContratoSerializer()
     cntContratos = serializers.SerializerMethodField()
+    
+    def get_cntContratos(self,obj):
+        return obj.compras.count()
+
+    
     class Meta(TrabajadorSerializer.Meta):
         model = _models.Comercial
         fields = '__all__'
 
-    def get_cntContratos(self,obj):
-        return obj.compras.count()
-
-
+    
         
 class DirectorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -56,7 +61,7 @@ class AsistenteSerializer(serializers.ModelSerializer):
 class AbogadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = _models.Abogado
-        fields = '__all__'
+        exclude = ('evaluaciones',)
 
 class ComprasSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,4 +72,9 @@ class ComprasSerializer(serializers.ModelSerializer):
 class ContratoSerializer(serializers.ModelSerializer):
     class Meta:
         model  = _models.Contrato
+        fields = '__all__'
+
+class EvaluacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = _models.Evaluacion
         fields = '__all__'

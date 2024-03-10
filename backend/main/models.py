@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.db import models
 import uuid
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 from random import randint
 from django.db import models
 name_regex = RegexValidator(r'^[a-zA-Z\s]+$', 'Solo se permiten letras y espacios')
@@ -55,6 +56,11 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nombre', 'apellido','direccion']
 
+    @property
+    def evaluacion(self):
+        #Para evitar que de me devuelva un nontype evito a toda costa si es mayor a cero
+        return self.evaluaciones.order_by("-fecha").first().calificacion if self.evaluaciones.count() > 0 else 0
+
     def get_full_name(self):
         return "%s %s" % (self.nombre, self.apellido)
 
@@ -67,6 +73,7 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return String"""
         return self.email
+    
     
 class Departamento(models.Model):
     class Meta:
@@ -95,6 +102,7 @@ class Abogado(Trabajador):
     division = models.ManyToManyField('Division', related_name='abogados')
     def __str__(self):
         return self.get_full_name()
+   
 
 class Division(models.Model):
     """Division de la empresa"""
@@ -157,6 +165,7 @@ class Director(Trabajador):
         return Asistente.objects.create_user(**kwargs)
     def __str__(self):
         return self.get_full_name()
+    
 
 
 MATERIA = [
@@ -197,6 +206,13 @@ class Evaluacion(models.Model):
     calificacion = models.CharField(max_length=255,choices=EVAL, default='0')
     trabajador = models.ForeignKey('Trabajador', on_delete=models.CASCADE, related_name='evaluaciones')
     director = models.ForeignKey('Director', on_delete=models.CASCADE, related_name='evaluados')
+
+    def save(self, *args, **kwargs):
+            
+        if Abogado.objects.filter(pk=self.trabajador_id).exists() or Director.objects.filter(pk=self.trabajador_id).exists():
+             raise ValueError("No puede evaluarlo")
+        super(Evaluacion, self).save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.trabajador} - {self.calificacion}'
 

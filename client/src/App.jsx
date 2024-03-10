@@ -7,10 +7,13 @@ import { store } from './app/store'
 import Contratos from './components/Contratos';
 import Compras from './components/Compras';
 import Comerciales from './components/Comerciales/Comerciales';
-import Asistentes from './components/Asistentes';
+
 import Suministradores from './components/Suministradores';
 import Forms from './components/Forms';
 import ComercialForm from './components/Comerciales/createdit.comerciales';
+import Evaluar from './components/Comerciales/evaluar.comerciales'
+import DeleteCom from './components/Comerciales/delete.comerciales';
+import InfoCom from './components/Comerciales/info.comerciales';
 
 
 
@@ -32,11 +35,14 @@ function App() {
               <Route path='/comerciales' element={<Forms />}>
                 <Route path='add' element={<ComercialForm />} />
                 <Route path='edit/:id' element={<ComercialForm />} />
-                
+                <Route path='evaluar/:id' element={<Evaluar/>}/>
+                <Route path='delete/:id' element={<DeleteCom/>}/>
+                <Route path='info/:id' element={<InfoCom/>}/>
+
               </Route>
 
 
-              <Route path='/asistentes' element={<Asistentes />} />
+              {/* <Route path='/asistentes' element={<Asistentes />} /> */}
               <Route path='/suministradores' element={<Suministradores />} />
 
               {/* <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
