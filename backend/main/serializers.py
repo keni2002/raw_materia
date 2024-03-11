@@ -2,8 +2,12 @@ import rest_framework.serializers as serializers
 import main.models as _models
 from django.contrib.auth.hashers import make_password
 from rest_framework.serializers import PrimaryKeyRelatedField
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class TrabajadorSerializer(serializers.ModelSerializer):
     evaluacion  = serializers.SerializerMethodField()
+    
+    def get_dp(self, obj):
+        return obj.departamento.nombre
     def get_evaluacion(self, obj):
         return obj.evaluacion
 
@@ -11,10 +15,29 @@ class TrabajadorSerializer(serializers.ModelSerializer):
         model= _models.Trabajador
         fields ='__all__'
         extra_kwargs = {
-            'password': {'write_only': True, 'required': False}
+            'password': {'write_only': True, 'required': False},
+            
            }
     def validate_password(self, value: str) -> str:
         return make_password(value)
+    
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Add custom claims
+        token['username'] = user.nombre
+        token['is_staff'] = user.is_staff
+        token['title'] = user.apellido
+        token['tipo'] = user.tipo
+        return token
+    def validate(self,attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+        return data
+
 
 class DpComercialSerializer(serializers.ModelSerializer):
     

@@ -44,6 +44,7 @@ class UserManager(BaseUserManager):
 
 class Trabajador(AbstractBaseUser, PermissionsMixin):
     """Modelo BD para Users"""
+    tipo = models.CharField(max_length=255, default='', editable=False)
     email = models.EmailField(max_length=255, unique=True)
     nombre = models.CharField(max_length=255, validators=[name_regex])
     apellido = models.CharField(max_length=255, validators=[apellidos_regex])
@@ -99,9 +100,14 @@ ClASIFICACION = [
 ]
 
 class Abogado(Trabajador):
+    
     division = models.ManyToManyField('Division', related_name='abogados')
     def __str__(self):
         return self.get_full_name()
+    
+    def save(self, *args, **kwargs):
+        self.tipo = 'Legal'
+        super().save(*args, **kwargs)
    
 
 class Division(models.Model):
@@ -126,6 +132,7 @@ class DpLegal(Departamento):
 
 
 class Comercial(Trabajador):
+    
     departamento = models.ForeignKey('DpComercial', on_delete=models.CASCADE, related_name='comerciales')
     anioExperiencia = models.IntegerField(default=0)
     fechaNacimiento = models.DateField(default='2002-01-21')
@@ -133,6 +140,9 @@ class Comercial(Trabajador):
 
     def __str__(self):
         return self.get_full_name()
+    def save(self, *args, **kwargs):
+        self.tipo = 'Comercial'
+        super().save(*args, **kwargs)
 
 
 NIVELES_ESCOLARES = [
@@ -142,10 +152,14 @@ NIVELES_ESCOLARES = [
     ('UNIV', 'Universidad'),
 ]
 class Asistente(Trabajador):
+    
     nivelEscolar = models.CharField(max_length=50, choices=NIVELES_ESCOLARES)
     departamento = models.ForeignKey('DpComercial', on_delete=models.CASCADE, related_name='asistentes')
     def __str__(self):
         return self.get_full_name()
+    def save(self, *args, **kwargs):
+        self.tipo = 'Comercial'
+        super().save(*args, **kwargs)
     
 
 GRADO_ACADEMICO = [
@@ -165,6 +179,9 @@ class Director(Trabajador):
         return Asistente.objects.create_user(**kwargs)
     def __str__(self):
         return self.get_full_name()
+    def save(self, *args, **kwargs):
+        self.tipo = 'Comercial'
+        super().save(*args, **kwargs)
     
 
 

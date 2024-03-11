@@ -1,7 +1,29 @@
 from rest_framework import permissions, viewsets, generics
 from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Compra, Evaluacion,Contrato
-from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer
+from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer, MyTokenObtainPairSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class LoginView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+class RegisterComercialView(APIView):
+    def post(self, request):
+        serializer = ComercialSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class TrabajadorViewSet(viewsets.ModelViewSet):
     queryset = Trabajador.objects.all()
     

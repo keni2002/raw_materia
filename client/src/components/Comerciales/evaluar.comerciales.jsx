@@ -12,6 +12,7 @@ export default function EvaluarCom() {
     const { id } = useParams();
 
     const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
+
     const [createEval] = useCreateEvalMutation()
     const handleSubmit = (values) => {
 
@@ -22,7 +23,7 @@ export default function EvaluarCom() {
 
         const valores = {
             calificacion: values.evaluacion,
-            trabajador: parseInt(id),
+            trabajador: id,
             director: 10
         }
         console.log(valores)
@@ -41,6 +42,7 @@ export default function EvaluarCom() {
     };
     useEffect(() => {
         getComercialById(id)
+
     }, [id])
     return (
         <>
@@ -64,11 +66,19 @@ export default function EvaluarCom() {
                 )}
                 onSubmit={handleSubmit}
             >
-                <Form>
-                    <Dropdown value={0} name='evaluacion' label={'Evaluación'} />
-                    <Btn type='submit' label='Evaluar' />
-                </Form>
-
+                {({ setFieldValue, touched, isValid, handleChange, handleBlur }) => {
+                    useEffect(() => {
+                        if (!isLoading && data) {
+                            setFieldValue("evaluacion",5);
+                        }
+                    }, [isLoading, data]);
+                    return (
+                        <Form>
+                            <Dropdown name='evaluacion' label={'Evaluación'} />
+                            <Btn type='submit' label='Evaluar' />
+                        </Form>
+                    )
+                }}
             </Formik>
 
         </>
