@@ -22,9 +22,10 @@ export default function EvaluarCom() {
 
         const valores = {
             calificacion: values.evaluacion,
-            trabajador: id,
+            trabajador: parseInt(id),
             director: 10
         }
+        console.log(valores)
 
         createEval(valores)
             .unwrap()

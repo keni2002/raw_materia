@@ -1,6 +1,6 @@
 from rest_framework import permissions, viewsets, generics
 from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Compra, Evaluacion,Contrato
-from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer, EvaluacionSerializer,ContratoSerializer
+from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer
 # Create your views here.
 class TrabajadorViewSet(viewsets.ModelViewSet):
     queryset = Trabajador.objects.all()
@@ -55,7 +55,7 @@ class EvaluacionViewSet(viewsets.ModelViewSet):
     serializer_class = EvaluacionSerializer 
 
 class EvaluacionesTrabajador(generics.ListAPIView):
-    serializer_class = EvaluacionSerializer
+    serializer_class = EvalsOneSerializer
 
     def get_queryset(self):
         trabajador_id = self.kwargs['id']

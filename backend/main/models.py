@@ -58,7 +58,7 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
 
     @property
     def evaluacion(self):
-        #Para evitar que de me devuelva un nontype evito a toda costa si es mayor a cero
+        #Para evitar que de me devuelva un nonetype evito a toda costa si es mayor a cero
         return self.evaluaciones.order_by("-fecha").first().calificacion if self.evaluaciones.count() > 0 else 0
 
     def get_full_name(self):
@@ -281,7 +281,7 @@ ESTADO = [
 ]
 class Contrato(models.Model):
     codigo = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    fecha_creacion = models.DateField()
+    fecha_creacion = models.DateField(auto_now=True)
     periodo_validez = models.DurationField()
     compra = models.OneToOneField(Compra, on_delete=models.CASCADE, related_name='contrato')
     estado = models.CharField(max_length=255, choices=ESTADO, default='P')

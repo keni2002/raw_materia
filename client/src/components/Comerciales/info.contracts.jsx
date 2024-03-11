@@ -5,20 +5,16 @@ import {  useParams, Link } from 'react-router-dom';
 import { useLazyGetComQuery } from '../../services/apiComercial';
 import { useLazyGetEvalOfQuery } from '../../services/apiEvalsOf';
 import Tables from '../Tables';
-import { useDispatch } from 'react-redux';
-import { setType } from '../../features/booleanos';
 export default function InfoEvals() {
     const { id } = useParams();
 
     const [getEvalsById, { data }] = useLazyGetEvalOfQuery()
-    const dispatch = useDispatch()
     
     useEffect(() => {
         getEvalsById(id)
-
     }, [id])
     useEffect(()=>{
-        dispatch(setType(''));
+        
     },[])
    
     const columns = [
@@ -47,7 +43,7 @@ export default function InfoEvals() {
 
                 <h3 className=' text-lg  text-center'>Evaluaciones </h3>
             </header>
-            <Tables data={data} columns={columns} title={''}
+            <Tables data={data} columns={columns}
 
             />
 
