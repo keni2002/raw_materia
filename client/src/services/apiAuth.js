@@ -1,9 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from './api';
-
+import { createApi} from '@reduxjs/toolkit/query/react';
+import customFetchBase from "../../src/config/customeBaseQuery"
 export const apiAuth = createApi({
   reducerPath: 'apiAuth',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND_URL}),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     // register: builder.mutation({
     //   query: (user) => ({

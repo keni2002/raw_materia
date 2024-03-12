@@ -1,8 +1,8 @@
-import {trabajador} from "./axios";
+import {client} from "./axios";
 
 const customFetchBase = async ({ url, method, body, params }) => {
   try {
-    const result = await trabajador({ url, method, data: body, params });
+    const result = await client({ url, method, data: body, params });
     return { data: result.data };
   } catch (axiosError) {
     const err = axiosError.response || { data: axiosError.message };

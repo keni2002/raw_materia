@@ -1,13 +1,12 @@
 //Evaluaciones perteneciente a un trabajador
 
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { BASE_URL } from './api'
+import {createApi} from '@reduxjs/toolkit/query/react'
+
+import customFetchBase from '../config/customeBaseQuery'
 
 export const apiEvalsOf = createApi({
     reducerPath: 'apiEvalsOf',
-    baseQuery: fetchBaseQuery({
-        baseUrl: BASE_URL
-    }),
+    baseQuery: customFetchBase,
     tagTypes: ['Evalsof'],
     endpoints: (builder) => ({
         

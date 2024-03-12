@@ -1,11 +1,10 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { BASE_URL } from './api'
+import customFetchBase from '../config/customeBaseQuery'
+
 
 export const apiTable = createApi({
     reducerPath: 'apiTable',
-    baseQuery: fetchBaseQuery({
-        baseUrl: BASE_URL
-    }),
+    baseQuery: customFetchBase,
     tagTypes: ['Comerciales'],
     endpoints: (builder) => ({
         //COMPRAS

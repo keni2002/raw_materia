@@ -26,8 +26,8 @@ function FormLogin() {
         validate,
         onSubmit: (values) => {
             login(values).unwrap().then((tokens) => {
-              localStorage.setItem('access', tokens.access);
-              localStorage.setItem('refresh', tokens.refresh);
+              sessionStorage.setItem('access', tokens.access);
+              sessionStorage.setItem('refresh', tokens.refresh);
                 navigate('/comerciales');
                 toast.success('Bienvenido');
             }).catch((error) => {

@@ -1,14 +1,13 @@
 
 //DEPARTAMENTOS COMERCIALES
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import { apiCom } from './apiComercial';
-import { BASE_URL } from './api'
+
+import customFetchBase from '../config/customeBaseQuery';
 
 export const apiEval = createApi({
     reducerPath: 'apiEval',
-    baseQuery: fetchBaseQuery({
-        baseUrl: BASE_URL
-    }),
+    baseQuery: customFetchBase,
     tagTypes: ['Evaluaciones'],
     endpoints: (builder) => ({
 
