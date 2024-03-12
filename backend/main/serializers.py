@@ -16,7 +16,7 @@ class TrabajadorSerializer(serializers.ModelSerializer):
         fields ='__all__'
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
-            
+            'tipo': {'read_only': True, 'required': False},
            }
     def validate_password(self, value: str) -> str:
         return make_password(value)

@@ -8,6 +8,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from .permission import IsComercialOrReadOnly
+
 class LoginView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
@@ -46,8 +48,17 @@ class DpLegalesViewSet(viewsets.ModelViewSet):
 class ComercialViewSet(viewsets.ModelViewSet):
     queryset = Comercial.objects.all()
     serializer_class = ComercialSerializer
+    # permission_classes = [IsComercialOrReadOnly]
     def get_view_name(self):
         return "Comerciales"
+    
+    def get_queryset(self):
+        # Si el usuario es un comercial, solo mostrar sus propios datos
+        if self.request.user.tipo == 'Director' or self.request.user.tipo == 'Admin':
+            return self.queryset.all()
+        elif self.request.user.tipo == 'Comercial':
+            return self.queryset.filter(email =self.request.user.email)
+        return Comercial.objects.none()
     
 class AsistenteViewSet(viewsets.ModelViewSet):
     queryset = Asistente.objects.all()

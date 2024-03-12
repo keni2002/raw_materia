@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
 
 class Trabajador(AbstractBaseUser, PermissionsMixin):
     """Modelo BD para Users"""
-    tipo = models.CharField(max_length=255, default='', editable=False)
+    tipo = models.CharField(max_length=255, default='Admin', editable=False)
     email = models.EmailField(max_length=255, unique=True)
     nombre = models.CharField(max_length=255, validators=[name_regex])
     apellido = models.CharField(max_length=255, validators=[apellidos_regex])

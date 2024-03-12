@@ -8,6 +8,7 @@ export const apiCom = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_URL
     }),
+    
     tagTypes: ['Comerciales'],
     endpoints: (builder) => ({
         

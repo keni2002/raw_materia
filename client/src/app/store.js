@@ -5,6 +5,7 @@ import { apiDpCom } from '../services/apiDepCom.js'
 import { apiCom } from '../services/apiComercial.js'
 import { apiEval } from '../services/apiEval.js'
 import { apiEvalsOf } from '../services/apiEvalsOf.js'
+import { apiAuth } from '../services/apiAuth.js'
 export const store =  configureStore({
 
     reducer: {
@@ -17,7 +18,8 @@ export const store =  configureStore({
 
         //Evals
         [apiEval.reducerPath]: apiEval.reducer,
-        [apiEvalsOf.reducerPath]: apiEvalsOf.reducer
+        [apiEvalsOf.reducerPath]: apiEvalsOf.reducer,
+        [apiAuth.reducerPath]: apiAuth.reducer,
         
         
     },
@@ -27,7 +29,8 @@ export const store =  configureStore({
             apiDpCom.middleware,
             apiCom.middleware,
             apiEval.middleware,
-            apiEvalsOf.middleware
+            apiEvalsOf.middleware,
+            apiAuth.middleware,
 
 
         ])

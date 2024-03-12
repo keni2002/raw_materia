@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import  {toast} from 'react-hot-toast'
+import { useLoginMutation } from '../services/apiAuth';
 const validate = values => {
     const errors = {};
     if (!values.email) {
@@ -15,6 +16,7 @@ const validate = values => {
     
 }
 function FormLogin() {
+    const [login, { isLoading, isError, error }] = useLoginMutation();
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -22,11 +24,26 @@ function FormLogin() {
             password: '',
         },
         validate,
-        onSubmit: values => {
-            // alert(JSON.stringify(values, null, 2));
-            navigate('/dashboard');
-            toast.success('Usted inicio sesion correctamente')
-        },
+        onSubmit: (values) => {
+            login(values).unwrap().then((tokens) => {
+              localStorage.setItem('access', tokens.access);
+              localStorage.setItem('refresh', tokens.refresh);
+                navigate('/comerciales');
+                toast.success('Bienvenido');
+            }).catch((error) => {
+                if (error.status === 401) {
+                    toast.error('Credenciales inválidas');
+                  } else if (error.status === 500) {
+                    toast.error('Error del servidor');
+                  } else if (error.status === 'FETCH_ERROR') {
+                    toast.error('Error de red');
+                    
+                  }
+                  else {
+                    toast.error('Error desconocido');
+                  }
+            });
+          },
     });
 
 
@@ -83,11 +100,13 @@ function FormLogin() {
                         </div>
                         
                         <div>
-                            <button className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            <button disabled={isLoading} className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 type="submit">
                                 Iniciar Sesión
                             </button>
+
                         </div>
+                        
                     </form>
 
 
