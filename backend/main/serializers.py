@@ -4,12 +4,15 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.serializers import PrimaryKeyRelatedField
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class TrabajadorSerializer(serializers.ModelSerializer):
-    
-    # evaluacion  = serializers.SerializerMethodField()
+    group = serializers.SerializerMethodField()
+    evaluacion  = serializers.SerializerMethodField()
     def get_dp(self, obj):
         return obj.departamento.nombre
     def get_evaluacion(self, obj):
         return obj.evaluacion
+    def get_group(self,obj):
+        return obj.name_group
+    
 
     class Meta:
         model= _models.Trabajador
@@ -32,6 +35,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['is_staff'] = user.is_staff
         token['apellido'] = user.apellido
         token['email'] = user.email
+        #// groups son grupos solo que lo puse en singular para no sobresscribir el original
+        token['group'] = user.name_group
         return token
     def validate(self,attrs):
         data = super().validate(attrs)
@@ -61,11 +66,10 @@ class ContratoSerializer(serializers.ModelSerializer):
 class ComercialSerializer(TrabajadorSerializer):
     # departamento = DpComercialSerializer(read_only=True)
     # cntContratos = ContratoSerializer()
-    group = serializers.SerializerMethodField()
+    
     cntContratos = serializers.SerializerMethodField()
     
-    def get_group(self,obj):
-        return obj.name_group
+    
     
     def get_cntContratos(self,obj):
         return obj.compras.count()

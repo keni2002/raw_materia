@@ -16,6 +16,8 @@ export const userSlice = createSlice({
       (state, { payload: { access } }) => {
         const data = jwtDecode(access);
         state.user = {
+          group: data.group,
+          is_staff: data.is_staff,
           user_id: data.user_id,
           nombre: data.nombre,
           apellido: data.apellido,

@@ -93,7 +93,7 @@ export default function Comerciales() {
     //Transformamos los salario y evaluacion
     const modifiedData = data?.map(item => {
         const evaluacion = parseInt(item.evaluacion);
-        console.log(evaluacion)
+
         const salario = parseFloat(item.salario);
         let modifiedEvaluacion = '';
         let modifiedSalario = 0;

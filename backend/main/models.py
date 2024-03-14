@@ -71,18 +71,21 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return String"""
         return self.email
-
+    #// groups son grupos solo que lo puse en singular para no sobresscribir el original
     @property
     def name_group(self):
-        return 'admin_group'
+        return [
+            {"name": "admin_group"},
+        ]
 
     #I LOVE THIS METHOD CAUSE ADD TO SPECIFIC GROUP XD
     def save(self, *args,**kwargs):
         self.password = make_password(self.password)
         super().save(*args,**kwargs)
-        if self.name_group != 'admin_group':
-            grupo = Group.objects.get(name=self.name_group)
-            self.groups.add(grupo)
+        for g in self.name_group:
+            if g["name"] != 'admin_group':
+                grupo = Group.objects.get(name=g["name"])
+                self.groups.add(grupo)
         
     
 class Departamento(models.Model):
@@ -148,7 +151,9 @@ class Comercial(Trabajador):
     
     @property
     def name_group(self):
-        return 'comercial_group'
+        return [
+            {"name": "comercial_group"},
+        ]
 
     @property
     def evaluacion(self):
@@ -204,7 +209,11 @@ class Director(Trabajador):
     def __str__(self):
         return self.get_full_name()
     
-    
+    @property
+    def name_group(self):
+        return [
+            {"name": "director_group"},
+        ]
 
 
 MATERIA = [

@@ -19,6 +19,8 @@ export const login = apiAuth.injectEndpoints({
                     const data = jwtDecode(access);
                     console.log(data.user_id)
                     sessionStorage.setItem('user', JSON.stringify({
+                        group: data.group,
+                        is_staff: data.is_staff,
                         user_id: data.user_id,
                         nombre: data.nombre,
                         apellido: data.apellido,
