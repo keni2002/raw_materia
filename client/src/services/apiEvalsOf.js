@@ -1,6 +1,6 @@
 //Evaluaciones perteneciente a un trabajador
 
-import {createApi} from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 import customFetchBase from '../config/customeBaseQuery'
 
@@ -9,7 +9,7 @@ export const apiEvalsOf = createApi({
     baseQuery: customFetchBase,
     tagTypes: ['Evalsof'],
     endpoints: (builder) => ({
-        
+
         getEvalOf: builder.query({
 
             query: (id) => ({

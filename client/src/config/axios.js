@@ -2,7 +2,6 @@ import axios from "axios";
 import {jwtDecode} from "jwt-decode"// Add missing import statement
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
-console.log(baseUrl)
 export const client = axios.create({
     baseURL: baseUrl,
     headers: {
@@ -30,7 +29,7 @@ client.interceptors.request.use(
                             refresh: sessionStorage.getItem("refresh"),
                         });
                     }
-                }
+                 }
             } catch (e) {
                 sessionStorage.removeItem("access");
                 sessionStorage.removeItem("refresh");

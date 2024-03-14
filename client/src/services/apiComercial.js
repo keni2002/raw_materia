@@ -1,19 +1,19 @@
 
 //DEPARTAMENTOS COMERCIALES
-import {createApi} from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import customFetchBase from '../config/customeBaseQuery'
 export const apiCom = createApi({
     reducerPath: 'apiCom',
     baseQuery: customFetchBase,
-    
+
     tagTypes: ['Comerciales'],
     endpoints: (builder) => ({
-        
-         
+
+
         getComs: builder.query({
             query: () => ({
                 url: `comerciales/`,
-                method:'GET'
+                method: 'GET'
             }),
             providesTags: ["Comerciales"],
         }),
@@ -31,8 +31,8 @@ export const apiCom = createApi({
                 method: 'PATCH',
                 body: updateInfo,
             }),
-           invalidatesTags : ["Comerciales"],
-            
+            invalidatesTags: ["Comerciales"],
+
         }),
         deleteCom: builder.mutation({
             query: (id) => ({
@@ -49,12 +49,12 @@ export const apiCom = createApi({
             }),
             invalidatesTags: ["Comerciales"],
         }),
-        
+
     })
 })
 export const {
     useLazyGetComQuery,
-    useGetComsQuery,
+    useLazyGetComsQuery,
     useCreateComMutation,
     useUpdateComMutation,
     useDeleteComMutation

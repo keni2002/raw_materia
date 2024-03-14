@@ -4,8 +4,8 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.serializers import PrimaryKeyRelatedField
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class TrabajadorSerializer(serializers.ModelSerializer):
-    evaluacion  = serializers.SerializerMethodField()
     
+    # evaluacion  = serializers.SerializerMethodField()
     def get_dp(self, obj):
         return obj.departamento.nombre
     def get_evaluacion(self, obj):
@@ -13,23 +13,25 @@ class TrabajadorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= _models.Trabajador
-        fields ='__all__'
+        
+        exclude = ('groups',)
+
+        
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
-            'tipo': {'read_only': True, 'required': False},
            }
-    def validate_password(self, value: str) -> str:
-        return make_password(value)
+    # def validate_password(self, value: str) -> str:
+    #     return make_password(value)
     
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
         # Add custom claims
-        token['username'] = user.nombre
+        token['nombre'] = user.nombre
         token['is_staff'] = user.is_staff
-        token['title'] = user.apellido
-        token['tipo'] = user.tipo
+        token['apellido'] = user.apellido
+        token['email'] = user.email
         return token
     def validate(self,attrs):
         data = super().validate(attrs)
@@ -59,7 +61,11 @@ class ContratoSerializer(serializers.ModelSerializer):
 class ComercialSerializer(TrabajadorSerializer):
     # departamento = DpComercialSerializer(read_only=True)
     # cntContratos = ContratoSerializer()
+    group = serializers.SerializerMethodField()
     cntContratos = serializers.SerializerMethodField()
+    
+    def get_group(self,obj):
+        return obj.name_group
     
     def get_cntContratos(self,obj):
         return obj.compras.count()
@@ -67,7 +73,9 @@ class ComercialSerializer(TrabajadorSerializer):
     
     class Meta(TrabajadorSerializer.Meta):
         model = _models.Comercial
-        fields = '__all__'
+        
+        
+        
 
     
         

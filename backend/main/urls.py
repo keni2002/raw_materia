@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
 
 from django.urls import path,include
 from rest_framework import routers
-from .views import TrabajadorViewSet, DpComercialViewSet,DpLegalesViewSet,ComercialViewSet,DirectorViewSet,AsistenteViewSet,AbogadoViewSet, EvaluacionViewSet, EvaluacionesTrabajador,ContratosComercial,RegisterComercialView, LoginView
+from .views import TrabajadorViewSet, DpComercialViewSet,DpLegalesViewSet,ComercialViewSet,DirectorViewSet,AsistenteViewSet,AbogadoViewSet, EvaluacionViewSet, EvaluacionesTrabajador,ContratosComercial,RegisterComercialView, LoginView, LogoutAllView
 router  = routers.DefaultRouter()
 router.register(r'users',TrabajadorViewSet)
 router.register(r'dplegales', DpLegalesViewSet)
@@ -24,5 +24,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register_comercial/',RegisterComercialView.as_view(),name='register_comercial'),
     path('login/', LoginView.as_view(), name='token_obtain_pair'),
+    path('logout/', LogoutAllView.as_view(), name='auth_logout'),
 
 ]

@@ -2,17 +2,19 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Btn from '../Btn';
 import { useEffect } from 'react';
+import { auth_state } from "../../features/authSlice";
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Dropdown from './Dropdown';
 import { useLazyGetComQuery } from '../../services/apiComercial';
 import { useCreateEvalMutation } from '../../services/apiEval';
+import { useSelector } from 'react-redux';
 export default function EvaluarCom() {
     const navigate = useNavigate();
     const { id } = useParams();
 
     const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
-
+    const { user: { user_id } } = useSelector(auth_state);
     const [createEval] = useCreateEvalMutation()
     const handleSubmit = (values) => {
 
@@ -24,7 +26,7 @@ export default function EvaluarCom() {
         const valores = {
             calificacion: values.evaluacion,
             trabajador: id,
-            director: 10
+            director: user_id
         }
         console.log(valores)
 
@@ -69,7 +71,7 @@ export default function EvaluarCom() {
                 {({ setFieldValue, touched, isValid, handleChange, handleBlur }) => {
                     useEffect(() => {
                         if (!isLoading && data) {
-                            setFieldValue("evaluacion",5);
+                            setFieldValue("evaluacion", 5);
                         }
                     }, [isLoading, data]);
                     return (

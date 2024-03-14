@@ -7,8 +7,21 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import OutstandingToken,BlacklistedToken
+import rest_framework.permissions as _permissions
+from .permission import HasGroupPermission
 
-from .permission import IsComercialOrReadOnly
+
+class LogoutAllView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        tokens = OutstandingToken.objects.filter(user_id=request.user.id)
+        for token in tokens:
+            t, _ = BlacklistedToken.objects.get_or_create(token=token)
+
+        return Response(status=status.HTTP_205_RESET_CONTENT)
 
 class LoginView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -52,13 +65,16 @@ class ComercialViewSet(viewsets.ModelViewSet):
     def get_view_name(self):
         return "Comerciales"
     
-    def get_queryset(self):
-        # Si el usuario es un comercial, solo mostrar sus propios datos
-        if self.request.user.tipo == 'Director' or self.request.user.tipo == 'Admin':
-            return self.queryset.all()
-        elif self.request.user.tipo == 'Comercial':
-            return self.queryset.filter(email =self.request.user.email)
-        return Comercial.objects.none()
+    # def get_queryset(self):
+    #     # Si el usuario es un comercial, solo mostrar sus propios datos
+    #     if self.request.user.tipo == 'Director' or self.request.user.tipo == 'Admin':
+    #         return self.queryset.all()
+    #     elif self.request.user.tipo == 'Comercial':
+    #         return self.queryset.filter(email =self.request.user.email)
+    #     return Comercial.objects.none()
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
+    
     
 class AsistenteViewSet(viewsets.ModelViewSet):
     queryset = Asistente.objects.all()

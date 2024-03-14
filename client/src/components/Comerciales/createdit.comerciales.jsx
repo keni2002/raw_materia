@@ -3,7 +3,7 @@ import Fields from '../Fields';
 import Btn from '../Btn';
 import { schema } from './schema';
 import { initial } from './initial';
-import { useLazyGetComQuery, useCreateComMutation,useUpdateComMutation } from '../../services/apiComercial';
+import { useLazyGetComQuery, useCreateComMutation, useUpdateComMutation } from '../../services/apiComercial';
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -15,16 +15,16 @@ export default function ComercialForm() {
   const [updateComercial] = useUpdateComMutation()
   const [createComercial] = useCreateComMutation()
   const fecha = () => {
-      const date = new Date();
-      date.setFullYear(date.getFullYear() - 18);
-      return date.toISOString().split('T')[0];
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 18);
+    return date.toISOString().split('T')[0];
   }
   const handleSubmit = (values) => {
-    let {confirmPassword,...rest} = values
+    let { confirmPassword, ...rest } = values
     if (id) {
-      
+
       console.log('EDITANDO')
-      
+
       updateComercial({ id, ...rest })
         .unwrap()
         .then(() => {
@@ -36,8 +36,8 @@ export default function ComercialForm() {
         })
     }
     else {
-
-      createComercial({...rest})
+      console.log({ ...rest })
+      createComercial({ ...rest })
         .unwrap()
         .then(() => {
           navigate('/comerciales');
@@ -49,10 +49,10 @@ export default function ComercialForm() {
     }
   };
   useEffect(() => {
-    
+
     if (id) {
       getComercialById(id)
-    
+
     }
 
   }, [id])
@@ -62,7 +62,7 @@ export default function ComercialForm() {
         <Link to='/comerciales'>
           <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
         </Link>
-        
+
         <h3 className='font-bold text-lg  text-center'>{id ? 'Actualizar' : 'Crear'} Comercial</h3>
       </header>
 
@@ -93,12 +93,12 @@ export default function ComercialForm() {
               <Fields name='fechaNacimiento' max={fecha()} touched={touched} type='date' label='Fecha de nacimiento' />
               <Fields name='salario' touched={touched} type='number' label='Salario' min={1000} />
               <Fields name='anioExperiencia' touched={touched} type='number' label='Años de experiencia' min={0} />
-              <DDDepart name={"departamento"} label={"Departamentos"}/>
+              <DDDepart name={"departamento"} label={"Departamentos"} />
               <Fields name='password' touched={touched} type='password' label='Contraseña' />
               <Fields name='confirmPassword' touched={touched} type='password' label='Confirmar Contraseña' />
-              
+
               <Btn type='submit' disabled={!isValid} label={`${id ? 'Actualizar' : 'Registrar'} Comercial`} />
-              
+
             </Form>
           )
         }}

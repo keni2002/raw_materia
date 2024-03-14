@@ -1,25 +1,23 @@
 import Tables from "../Tables";
 import { setId, setType, setIsOpenModalEvaluar, setIsOpenModalConfirm, setIsOpenInfo, setFuncion, setIsopenAdd } from '../../features/booleanos';
-import { useGetComsQuery } from "../../services/apiComercial"
+import { useLazyGetComsQuery } from "../../services/apiComercial"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Comerciales() {
     const dispatch = useDispatch()
+    const [getComercials, { data, isLoading }] = useLazyGetComsQuery()
+    console.log(data)
     //restablecer todos los valores
     useEffect(() => {
         dispatch(setIsopenAdd(false));
         dispatch(setId(''));
         // dispatch(setFuncion(''));
         dispatch(setType('Comerciales'));
+        getComercials();
     }, [])
 
-    //Para obtener los datos por id
-
-    const { iD: id, isOpenAdd, isOpenModalConfirm, isOpenModalEvaluar, funcion } = useSelector(state => state.booleanos);
-    //get data by id
-    // const {data:dataOneComercial} = useGetComercialQuery(id);
     const columns = [
         {
             name: "Nombre",
@@ -90,11 +88,12 @@ export default function Comerciales() {
 
     ///---------------------------------------------transformando data
 
-    const { data } = useGetComsQuery()
+
 
     //Transformamos los salario y evaluacion
     const modifiedData = data?.map(item => {
         const evaluacion = parseInt(item.evaluacion);
+        console.log(evaluacion)
         const salario = parseFloat(item.salario);
         let modifiedEvaluacion = '';
         let modifiedSalario = 0;

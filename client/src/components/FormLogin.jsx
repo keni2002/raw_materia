@@ -1,7 +1,11 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import  {toast} from 'react-hot-toast'
-import { useLoginMutation } from '../services/apiAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../services/auth/usecases/login';
+import { useHandleAsyncLogic } from '../hooks/useHandleAsyncLogic';
+import { useEffect } from 'react';
+import { auth_state } from '../features/authSlice';
+
 const validate = values => {
     const errors = {};
     if (!values.email) {
@@ -13,40 +17,29 @@ const validate = values => {
         errors.password = 'Se require contraseña';
     }
     return errors;
-    
+
 }
 function FormLogin() {
-    const [login, { isLoading, isError, error }] = useLoginMutation();
+    const dispatch = useDispatch();
+    const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
     const navigate = useNavigate();
+    const { isAuthenticated } = useSelector(auth_state)
+
+    useHandleAsyncLogic({ isLoading, isSuccess, isError, error, successMesaage: 'Bienvenido', customURL: '/comerciales' })
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
         validate,
-        onSubmit: (values) => {
-            login(values).unwrap().then((tokens) => {
-              sessionStorage.setItem('access', tokens.access);
-              sessionStorage.setItem('refresh', tokens.refresh);
-                navigate('/comerciales');
-                toast.success('Bienvenido');
-            }).catch((error) => {
-                if (error.status === 401) {
-                    toast.error('Credenciales inválidas');
-                  } else if (error.status === 500) {
-                    toast.error('Error del servidor');
-                  } else if (error.status === 'FETCH_ERROR') {
-                    toast.error('Error de red');
-                    
-                  }
-                  else {
-                    toast.error('Error desconocido');
-                  }
-            });
-          },
+        onSubmit: (values) => login(values),
     });
 
-
+    useEffect(() => {
+        if (isAuthenticated)
+            navigate('/comerciales')
+    }, [isAuthenticated])
 
     return (
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -72,14 +65,14 @@ function FormLogin() {
                                     type="email"
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
-                                    
+
                                     onBlur={formik.handleBlur}
                                 />
                             </div>
 
                         </div>
                         <div className='mt-0 text-red-700'>
-                        {formik.errors.email ? `${ formik.errors.email }` : null}
+                            {formik.errors.email ? `${formik.errors.email}` : null}
                         </div>
                         <div>
                             <div className="flex items-center justify-between">
@@ -96,17 +89,17 @@ function FormLogin() {
                             </div>
                         </div>
                         <div className='mt-0 text-red-700'>
-                        {formik.errors.password ? `${ formik.errors.password }` : null}
+                            {formik.errors.password ? `${formik.errors.password}` : null}
                         </div>
-                        
+
                         <div>
-                            <button disabled={isLoading} className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            <button disabled={isLoading} className="flex w-full cursor-pointer justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 type="submit">
                                 Iniciar Sesión
                             </button>
 
                         </div>
-                        
+
                     </form>
 
 

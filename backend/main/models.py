@@ -1,5 +1,5 @@
 import random
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
 from datetime import timedelta
 from django.db import models
 import uuid
@@ -9,7 +9,7 @@ from random import randint
 from django.db import models
 name_regex = RegexValidator(r'^[a-zA-Z\s]+$', 'Solo se permiten letras y espacios')
 apellidos_regex = RegexValidator(r'^[a-zA-Z\s]+$', 'Solo se permiten letras y espacios')
-
+from django.contrib.auth.hashers import make_password
 
 
 class UserManager(BaseUserManager):
@@ -44,7 +44,6 @@ class UserManager(BaseUserManager):
 
 class Trabajador(AbstractBaseUser, PermissionsMixin):
     """Modelo BD para Users"""
-    tipo = models.CharField(max_length=255, default='Admin', editable=False)
     email = models.EmailField(max_length=255, unique=True)
     nombre = models.CharField(max_length=255, validators=[name_regex])
     apellido = models.CharField(max_length=255, validators=[apellidos_regex])
@@ -56,11 +55,9 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nombre', 'apellido','direccion']
-
-    @property
-    def evaluacion(self):
-        #Para evitar que de me devuelva un nonetype evito a toda costa si es mayor a cero
-        return self.evaluaciones.order_by("-fecha").first().calificacion if self.evaluaciones.count() > 0 else 0
+    
+    
+      
 
     def get_full_name(self):
         return "%s %s" % (self.nombre, self.apellido)
@@ -74,7 +71,19 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return String"""
         return self.email
-    
+
+    @property
+    def name_group(self):
+        return 'admin_group'
+
+    #I LOVE THIS METHOD CAUSE ADD TO SPECIFIC GROUP XD
+    def save(self, *args,**kwargs):
+        self.password = make_password(self.password)
+        super().save(*args,**kwargs)
+        if self.name_group != 'admin_group':
+            grupo = Group.objects.get(name=self.name_group)
+            self.groups.add(grupo)
+        
     
 class Departamento(models.Model):
     class Meta:
@@ -100,14 +109,10 @@ ClASIFICACION = [
 ]
 
 class Abogado(Trabajador):
-    
     division = models.ManyToManyField('Division', related_name='abogados')
     def __str__(self):
         return self.get_full_name()
     
-    def save(self, *args, **kwargs):
-        self.tipo = 'Legal'
-        super().save(*args, **kwargs)
    
 
 class Division(models.Model):
@@ -140,10 +145,22 @@ class Comercial(Trabajador):
 
     def __str__(self):
         return self.get_full_name()
-    def save(self, *args, **kwargs):
-        self.tipo = 'Comercial'
-        super().save(*args, **kwargs)
+    
+    @property
+    def name_group(self):
+        return 'comercial_group'
 
+    @property
+    def evaluacion(self):
+        if self.evaluaciones.count() > 0:
+            ultima_evaluacion = self.evaluaciones.order_by("-fecha").first()
+            if ultima_evaluacion:
+                return ultima_evaluacion.calificacion
+            else:
+                return 0
+        else:
+            return 0
+    
 
 NIVELES_ESCOLARES = [
     ('PRIM', 'Primaria'),
@@ -157,10 +174,17 @@ class Asistente(Trabajador):
     departamento = models.ForeignKey('DpComercial', on_delete=models.CASCADE, related_name='asistentes')
     def __str__(self):
         return self.get_full_name()
-    def save(self, *args, **kwargs):
-        self.tipo = 'Comercial'
-        super().save(*args, **kwargs)
     
+    @property
+    def evaluacion(self):
+        if self.evaluaciones.count() > 0:
+            ultima_evaluacion = self.evaluaciones.order_by("-fecha").first()
+            if ultima_evaluacion:
+                return ultima_evaluacion.calificacion
+            else:
+                return 0
+        else:
+            return 0
 
 GRADO_ACADEMICO = [
     ('TEC', 'Tecnico'),
@@ -179,9 +203,7 @@ class Director(Trabajador):
         return Asistente.objects.create_user(**kwargs)
     def __str__(self):
         return self.get_full_name()
-    def save(self, *args, **kwargs):
-        self.tipo = 'Comercial'
-        super().save(*args, **kwargs)
+    
     
 
 
