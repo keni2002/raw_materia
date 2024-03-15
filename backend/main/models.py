@@ -1,4 +1,5 @@
 import random
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
 from datetime import timedelta
 from django.db import models
@@ -74,7 +75,7 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
     #// groups son grupos solo que lo puse en singular para no sobresscribir el original
     @property
     def name_group(self):
-        return [
+        return  [{'name': group.name} for group in self.groups.all()] or [
             {"name": "admin_group"},
         ]
 
@@ -148,13 +149,6 @@ class Comercial(Trabajador):
 
     def __str__(self):
         return self.get_full_name()
-    
-    @property
-    def name_group(self):
-        return [
-            {"name": "comercial_group"},
-        ]
-
     @property
     def evaluacion(self):
         if self.evaluaciones.count() > 0:
@@ -165,6 +159,11 @@ class Comercial(Trabajador):
                 return 0
         else:
             return 0
+    @property
+    def name_group(self):
+        return [
+            {"name": "comercial_group"},
+        ]
     
 
 NIVELES_ESCOLARES = [

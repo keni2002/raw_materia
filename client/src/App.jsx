@@ -51,7 +51,7 @@ function App() {
                 </Route>
 
                 <Route path='/asistentes' element={
-                  <ComponentsPrivatization permitted={['']} redirect={true}>
+                  <ComponentsPrivatization permitted={['comercial_group']} redirect={true}>
                     <Asistentes />
                   </ComponentsPrivatization>
                 } />

@@ -4,8 +4,12 @@ import { useLazyGetComsQuery } from "../../services/apiComercial"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { auth_state } from "../../features/authSlice";
+
 
 export default function Comerciales() {
+    const { user: { is_staff, group } } = useSelector(auth_state);
+    const rol = group[0].name
     const dispatch = useDispatch()
     const [getComercials, { data, isLoading }] = useLazyGetComsQuery()
     console.log(data)
@@ -57,14 +61,15 @@ export default function Comerciales() {
     const actions = {
         name: 'Acciones',
         cell: row => (
+
             <div className=' flex  gap-2'>
-                <Link to={`/comerciales/evaluar/${row.id}`}>
+                {!is_staff && <Link to={`/comerciales/evaluar/${row.id}`}>
 
 
                     <button title='Evaluar trabajador'>
                         <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="M160-120v-80h480v80H160Zm226-194L160-540l84-86 228 226-86 86Zm254-254L414-796l86-84 226 226-86 86Zm184 408L302-682l56-56 522 522-56 56Z" /></svg>
                     </button>
-                </Link>
+                </Link>}
                 <Link to={`/comerciales/info/${row.id}`}>
                     <button title="Informacion adicional">
                         <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg>
@@ -128,7 +133,7 @@ export default function Comerciales() {
             <Tables data={modifiedData} columns={[...columns, actions]}
 
             />
-            <Link to='/comerciales/add'>
+            {rol == 'director_group' && <Link to='/comerciales/add'>
                 <button
                     title="Agregar un comercial"
                     className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
@@ -136,7 +141,7 @@ export default function Comerciales() {
                         <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                     </svg>
                 </button>
-            </Link>
+            </Link>}
         </>
     )
 }

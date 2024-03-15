@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import { auth_state } from "../features/authSlice";
+import { Navigate } from "react-router-dom";
 
 export function checkPerm(permitted, user) {
 
     if (Array.isArray(permitted)) {
         // groups son grupos solo que lo puse en singular para no sobresscribir el original
+
         return user?.group.some((role) => permitted.includes(role.name));
     } else if (typeof permitted === "string") {
         return user?.group.some((role) => role.name === permitted);
@@ -19,6 +21,6 @@ export default function ComponentsPrivatization({ permitted, redirect = false, c
     return checkPerm(permitted, user) || user.is_staff ? (
         <>{children}</>
     ) : redirect === false ? null : (
-        <Navigate to={'/comerciales'} replace />
+        <Navigate to={'/home'} replace />
     );
 };
