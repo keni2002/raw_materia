@@ -97,7 +97,9 @@ class ContratoSerializer(serializers.ModelSerializer):
 class ComercialSerializer(TrabajadorSerializer):
     # departamento = DpComercialSerializer(read_only=True)
     # cntContratos = ContratoSerializer()
-    
+    fecha_latest_eval = serializers.SerializerMethodField()
+    def get_fecha_latest_eval(self,obj):
+        return obj.fecha_latest_eval
     
     cntContratos = serializers.SerializerMethodField()
     depa = serializers.SerializerMethodField()

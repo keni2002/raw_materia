@@ -1,5 +1,4 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-
 import Fields from '../Fields';
 import Btn from '../Btn';
 import { schema } from './schema';
@@ -10,13 +9,13 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { auth_state } from '../../features/authSlice';
-export default function ComercialForm() {
+export default function ContratoForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
   const [updateComercial] = useUpdateComMutation()
   const [createComercial] = useCreateComMutation()
-  const { user: { dep } } = useSelector(auth_state);
+  const { user: { id: comercial_id } } = useSelector(auth_state);
   const fecha = () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 18);
@@ -24,33 +23,19 @@ export default function ComercialForm() {
   }
   const handleSubmit = (values) => {
     let { confirmPassword, ...rest } = values
-    if (id) {
 
 
+    createComercial({ ...rest, departamento: dep[1] })
+      .unwrap()
+      .then(() => {
+        navigate('/comerciales');
+        toast.success('Comercial creado')
+      })
+      .catch((err) => {
+        toast.error(err.data.message)
+      })
+  }
 
-      updateComercial({ id, ...rest })
-        .unwrap()
-        .then(() => {
-          navigate('/comerciales');
-          toast.success('Comercial actualizado')
-        })
-        .catch((err) => {
-          toast.error(err.data.message)
-        })
-    }
-    else {
-
-      createComercial({ ...rest, departamento: dep[1] })
-        .unwrap()
-        .then(() => {
-          navigate('/comerciales');
-          toast.success('Comercial creado')
-        })
-        .catch((err) => {
-          toast.error(err.data.message)
-        })
-    }
-  };
   useEffect(() => {
 
     if (id) {
@@ -66,7 +51,7 @@ export default function ComercialForm() {
           <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
         </Link>
 
-        <h3 className='font-bold text-lg  text-center'>{id ? 'Actualizar' : 'Crear'} Comercial</h3>
+        <h3 className='font-bold text-lg  text-center'>Crear Contrato</h3>
       </header>
 
       <Formik
@@ -96,7 +81,6 @@ export default function ComercialForm() {
               <Fields name='fechaNacimiento' max={fecha()} touched={touched} type='date' label='Fecha de nacimiento' />
               <Fields name='salario' touched={touched} type='number' label='Salario' min={1000} />
               <Fields name='anioExperiencia' touched={touched} type='number' label='Años de experiencia' min={0} />
-
 
               <Fields name='password' touched={touched} type='password' label='Contraseña' />
               <Fields name='confirmPassword' touched={touched} type='password' label='Confirmar Contraseña' />

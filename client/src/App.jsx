@@ -19,6 +19,8 @@ import PrivateRoutes from './components/PrivateRutes';
 import ComponentsPrivatization from './components/ComponentPrivatization';
 import Asistentes from './components/Asistentes/Asistentes';
 
+import ContratoForm from './components/Contratos/create.contrato';
+
 
 
 function App() {
@@ -59,7 +61,13 @@ function App() {
 
                 {/* <Route path='/asistentes' element={<Asistentes />} /> */}
                 <Route path='/suministradores' element={<Suministradores />} />
-
+                <Route path='/contratos' element={<Forms />}>
+                  <Route path='add' element={
+                    // <ComponentsPrivatization permitted={["Admin", "Comercial"]} redirect={true}>
+                    <ContratoForm />
+                    // </ComponentsPrivatization>
+                  } />
+                </Route>
                 {/* <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
             <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
             <Route path='/compras' element={<Table quito={'evaluar'}/>}/>

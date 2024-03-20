@@ -78,6 +78,17 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
         return  [{'name': group.name} for group in self.groups.all()] or [
             {"name": "admin_group"},
         ]
+    
+    @property
+    def fecha_latest_eval(self):
+        if self.evaluaciones.count() > 0:
+            ultima_evaluacion = self.evaluaciones.order_by("-fecha").first()
+            if ultima_evaluacion:
+                return ultima_evaluacion.fecha
+            else:
+                return 0
+        else:
+            return 0
 
     #I LOVE THIS METHOD CAUSE ADD TO SPECIFIC GROUP XD
     def save(self, *args,**kwargs):
@@ -155,6 +166,17 @@ class Comercial(Trabajador):
             ultima_evaluacion = self.evaluaciones.order_by("-fecha").first()
             if ultima_evaluacion:
                 return ultima_evaluacion.calificacion
+            else:
+                return 0
+        else:
+            return 0
+        
+    @property
+    def fecha_latest_eval(self):
+        if self.evaluaciones.count() > 0:
+            ultima_evaluacion = self.evaluaciones.order_by("-fecha").first()
+            if ultima_evaluacion:
+                return ultima_evaluacion.fecha
             else:
                 return 0
         else:
@@ -303,9 +325,8 @@ class Compra(models.Model):
     id  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     producto = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='compras')
     comercial = models.ForeignKey('Comercial', on_delete=models.CASCADE, related_name='compras')
-
-    #relacion con la tabla Comercial 
-    suministrador = models.ManyToManyField('Suministrador', related_name='compras')
+    contrato = models.ForeignKey('Contrato',on_delete=models.CASCADE, related_name='compras')
+    suministrador = models.ForeignKey('Suministrador',on_delete=models.CASCADE, related_name='compras')
     
     #campos de la relacion
     cantidad = models.IntegerField()
@@ -330,12 +351,11 @@ class Contrato(models.Model):
     codigo = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fecha_creacion = models.DateField(auto_now=True)
     periodo_validez = models.DurationField()
-    compra = models.OneToOneField(Compra, on_delete=models.CASCADE, related_name='contrato')
+    producto = models.ManyToManyField(Producto, related_name='contrato')
     estado = models.CharField(max_length=255, choices=ESTADO, default='P')
-    def save(self, *args, **kwargs):
-        if self.compra:
-            self.fecha_creacion = self.compra.fecha_compra
-        super(Contrato, self).save(*args, **kwargs)
+
+    comercial = models.ForeignKey('Comercial', on_delete=models.CASCADE, related_name='contratos')
+    suministrador = models.ManyToManyField('Suministrador', related_name='contratos')
     def __str__(self):
         return f'{self.compra} - {self.estado}'
 
