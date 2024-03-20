@@ -43,7 +43,8 @@ class TrabajadorViewSet(viewsets.ModelViewSet):
     queryset = Trabajador.objects.all()
     
     serializer_class = TrabajadorSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
 
 
 class DpComercialViewSet(viewsets.ModelViewSet):
@@ -64,14 +65,6 @@ class ComercialViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsComercialOrReadOnly]
     def get_view_name(self):
         return "Comerciales"
-    
-    # def get_queryset(self):
-    #     # Si el usuario es un comercial, solo mostrar sus propios datos
-    #     if self.request.user.tipo == 'Director' or self.request.user.tipo == 'Admin':
-    #         return self.queryset.all()
-    #     elif self.request.user.tipo == 'Comercial':
-    #         return self.queryset.filter(email =self.request.user.email)
-    #     return Comercial.objects.none()
     permission_classes = (_permissions.IsAuthenticated,
                           _permissions.DjangoModelPermissions)
     
@@ -81,16 +74,25 @@ class AsistenteViewSet(viewsets.ModelViewSet):
     serializer_class = AsistenteSerializer
     def get_view_name(self):
         return "Asistentes"
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
+    
 class DirectorViewSet(viewsets.ModelViewSet):
     queryset = DpComercial.objects.all()
     serializer_class = DirectorSerializer
     def get_view_name(self):
         return "Directores"
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
+    
+
 class AbogadoViewSet(viewsets.ModelViewSet):
     queryset = Abogado.objects.all()
     serializer_class = AbogadoSerializer
     def get_view_name(self):
         return "Abogados"
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
 
 
 class ContratoViewSet(viewsets.ModelViewSet):
@@ -98,10 +100,14 @@ class ContratoViewSet(viewsets.ModelViewSet):
     serializer_class = ContratoSerializer
     def get_view_name(self):
         return "Contratos"
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
 
 class EvaluacionViewSet(viewsets.ModelViewSet):
     queryset = Evaluacion.objects.all()
     serializer_class = EvaluacionSerializer 
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
 
 class EvaluacionesTrabajador(generics.ListAPIView):
     serializer_class = EvalsOneSerializer
@@ -109,9 +115,13 @@ class EvaluacionesTrabajador(generics.ListAPIView):
     def get_queryset(self):
         trabajador_id = self.kwargs['id']
         return Evaluacion.objects.filter(trabajador=trabajador_id)
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
     
 class ContratosComercial(generics.ListAPIView):
     serializer_class = ContratoSerializer
     def get_queryset(self):
         trabajador_id = self.kwargs['id']
         return Contrato.objects.filter(trabajador=trabajador_id)
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)

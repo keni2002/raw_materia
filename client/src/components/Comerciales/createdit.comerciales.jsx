@@ -7,13 +7,15 @@ import { useLazyGetComQuery, useCreateComMutation, useUpdateComMutation } from '
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import DDDepart from './dropdownDepartament';
+import { useSelector } from 'react-redux';
+import { auth_state } from '../../features/authSlice';
 export default function ComercialForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
   const [updateComercial] = useUpdateComMutation()
   const [createComercial] = useCreateComMutation()
+  const { user: { dep } } = useSelector(auth_state);
   const fecha = () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 18);
@@ -23,7 +25,7 @@ export default function ComercialForm() {
     let { confirmPassword, ...rest } = values
     if (id) {
 
-      console.log('EDITANDO')
+
 
       updateComercial({ id, ...rest })
         .unwrap()
@@ -36,8 +38,8 @@ export default function ComercialForm() {
         })
     }
     else {
-      console.log({ ...rest })
-      createComercial({ ...rest })
+
+      createComercial({ ...rest, departamento: dep[1] })
         .unwrap()
         .then(() => {
           navigate('/comerciales');
@@ -81,7 +83,7 @@ export default function ComercialForm() {
               setFieldValue("anioExperiencia", data.anioExperiencia);
               setFieldValue("salario", data.salario);
               setFieldValue("email", data.email);
-              setFieldValue("departamento", data.departamento)
+
             }
           }, [isLoading, data]);
           return (
@@ -89,11 +91,11 @@ export default function ComercialForm() {
               <Fields name='nombre' touched={touched} type='text' placeholder='James' label='Nombre' />
               <Fields name='apellido' touched={touched} type='text' placeholder='Born' label='Apellido' />
               <Fields name='email' touched={touched} type='email' placeholder='james@rmateria.cu' label='Email' />
-              <Fields name='direccion' touched={touched} type='text' placeholder='calle 12,Las Tunas' label='Direccion' />
+              <Fields name='direccion' touched={touched} type='text' placeholder='calle 12,Las Tunas' label='Direc cion' />
               <Fields name='fechaNacimiento' max={fecha()} touched={touched} type='date' label='Fecha de nacimiento' />
               <Fields name='salario' touched={touched} type='number' label='Salario' min={1000} />
               <Fields name='anioExperiencia' touched={touched} type='number' label='Años de experiencia' min={0} />
-              <DDDepart name={"departamento"} label={"Departamentos"} />
+
               <Fields name='password' touched={touched} type='password' label='Contraseña' />
               <Fields name='confirmPassword' touched={touched} type='password' label='Confirmar Contraseña' />
 

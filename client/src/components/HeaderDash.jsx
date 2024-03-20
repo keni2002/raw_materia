@@ -11,14 +11,12 @@ function HeaderDash({ toggleMenu }) {
     const dispatch = useDispatch();
     const [getComercialById, { data }] = useLazyGetComQuery()
     const [logout, { isLoading, isError, error, isSuccess }] = useLogoutMutation();
-    const { user: { user_id, nombre, apellido, email, is_staff, group } } = useSelector(auth_state);
+    const { user: { nombre, apellido, email, grupo, is_staff, dep } } = useSelector(auth_state);
 
-    const rol = group[0].name
+
 
     useEffect(() => {
-        if (rol == 'comercial_group') {
-            getComercialById(user_id)
-        }
+
     }, [])
 
 
@@ -41,31 +39,19 @@ function HeaderDash({ toggleMenu }) {
                 <svg fill="#1b1b1b" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" /></svg>
             </button>
             <h1 className="text-2xl font-bold text-gray-900 ml-4">
-                {is_staff ?
-                    'Administración' :
-                    rol === 'director_group' ?
-                        `Dpt.Comercial:: ${data?.depa}` :
-                        rol === 'comercial_group' ?
-                            `Dpt.Comercial: ${data?.depa}` :
-                            rol === 'asistente_group' ?
-                                'Asistente' :
-                                rol === 'abogado_group' ?
-                                    'abogado' : ''}</h1>
+                {is_staff && <>Administración</>}
+                {grupo == 'comercial_group' && <>{`Dp. Comercial: ${dep[0]}`}</>}
+                {grupo == 'asistente_group' && <>{`Dp. Comercial: ${dep}`}</>}
+                {grupo == 'director_group' && <>{`Dp. Comercial: ${dep[0]}`}</>}
+                {/* legales */}
+                {grupo == 'abogado_group' && <>{`Dp.Legal:Div. ${dep[0]}`}</>}
+            </h1>
             <ul className="ml-auto flex items-center">
                 <h1 className="text-xl  text-gray-900 ml-4">
-                    Rol: {is_staff ?
-                        'admin' :
-                        rol === 'director_group' ?
-                            'director' :
-                            rol === 'comercial_group' ?
-                                'comercial' :
-                                rol === 'asistente_group' ?
-                                    'Asistente' :
-                                    rol === 'abogado_group' ?
-                                        'abogado' : ''
+                    Rol:{grupo.split('_')[0]}
 
 
-                    }</h1>
+                </h1>
                 <li className="dropdown relative ml-3">
 
                     <div type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" className="bg-gray-200 w-10 h-10 rounded-full cursor-pointer"><p className="text-center align-text-bottom">{nombre?.charAt(0).toUpperCase() + apellido?.charAt(0).toUpperCase()}</p></div>

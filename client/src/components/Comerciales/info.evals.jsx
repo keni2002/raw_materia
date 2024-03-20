@@ -1,6 +1,6 @@
 
 import { useEffect } from 'react';
-import {  useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { useLazyGetComQuery } from '../../services/apiComercial';
 import { useLazyGetEvalOfQuery } from '../../services/apiEvalsOf';
@@ -12,15 +12,15 @@ export default function InfoEvals() {
 
     const [getEvalsById, { data }] = useLazyGetEvalOfQuery()
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         getEvalsById(id)
 
     }, [id])
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(setType(''));
-    },[])
-   
+    }, [])
+
     const columns = [
         {
             name: "Evaluacion",
@@ -38,6 +38,7 @@ export default function InfoEvals() {
             sortable: true
         }
     ]
+
     return (
         <>
             <header className='flex justify-between pb-10'>

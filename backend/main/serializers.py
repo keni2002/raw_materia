@@ -1,8 +1,14 @@
 import rest_framework.serializers as serializers
+from  datetime import datetime, timedelta
+from django.core.exceptions import ValidationError
 import main.models as _models
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class TrabajadorSerializer(serializers.ModelSerializer):
     evaluacion  = serializers.SerializerMethodField()
+    fecha_latest_eval = serializers.SerializerMethodField()
+    def get_fecha_latest_eval(self,obj):
+        return obj.fecha_latest_eval
+
     def get_dp(self, obj):
         return obj.departamento.nombre
     def get_evaluacion(self, obj):
@@ -31,19 +37,43 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        # Add custom claims
-        token['nombre'] = user.nombre
-        token['is_staff'] = user.is_staff
-        token['apellido'] = user.apellido
-        token['email'] = user.email
-        #// groups son grupos solo que lo puse en singular para no sobresscribir el original
-        token['grupos'] = user.name_group
         return token
     def validate(self,attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
+        data['user'] = {
+            'email': self.user.email,
+            'nombre': self.user.nombre,
+            'apellido': self.user.apellido,
+            'is_staff': self.user.is_staff,
+            'grupo': self.user.name_group[0]['name']
+            
+        }
+        def get_dep():
+            dp='all'
+            code=''
+            if self.user.name_group[0]['name'] == 'comercial_group':
+                dp =_models.Comercial.objects.get(pk=self.user.id).departamento.nombre
+                code = _models.Comercial.objects.get(pk=self.user.id).departamento.codigo
+
+            elif self.user.name_group[0]['name'] == 'asistente_group':
+                dp =_models.Asistente.objects.get(pk=self.user.id).departamento.nombre
+                code = _models.Asistente.objects.get(pk=self.user.id).departamento.codigo
+
+            elif self.user.name_group[0]['name'] == 'director_group':
+                dp =_models.Director.objects.get(pk=self.user.id).departamento.nombre
+                code = _models.Director.objects.get(pk=self.user.id).departamento.codigo
+
+            elif self.user.name_group[0]['name'] == 'asistente_group':
+                dp =_models.Abogado.objects.get(pk=self.user.id).division.nombre
+                code = _models.Abogado.objects.get(pk=self.user.id).departamento.codigo
+            return [dp,code]
+        data['user']['dep']=get_dep()
+        
+        
+            
         return data
 
 
@@ -68,7 +98,7 @@ class ComercialSerializer(TrabajadorSerializer):
     # departamento = DpComercialSerializer(read_only=True)
     # cntContratos = ContratoSerializer()
     
-
+    
     cntContratos = serializers.SerializerMethodField()
     depa = serializers.SerializerMethodField()
     def get_depa(self,obj):
@@ -133,3 +163,18 @@ class EvaluacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = _models.Evaluacion
         fields = '__all__'
+
+    def validate(self, data):
+        trabajador = data.get('trabajador')
+        fecha_actual = datetime.now().date()
+        print(fecha_actual)
+        ultima_evaluacion = trabajador.fecha_latest_eval
+        print(ultima_evaluacion)
+        if ultima_evaluacion:
+            dif = fecha_actual - ultima_evaluacion
+            if dif.days < 30:
+                raise ValidationError('No ha pasado un mes desde la ultima evaluacion.')
+        return data
+    def create(self, validated_data):
+        return _models.Evaluacion.objects.create(**validated_data)
+        

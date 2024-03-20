@@ -5,6 +5,7 @@ import { logOut, login } from '../services/auth/usecases';
 const initialState = {
   user: JSON.parse(sessionStorage.getItem('user')) || null,
   isAuthenticated: !!JSON.parse(sessionStorage.getItem('user')),
+
 };
 
 export const userSlice = createSlice({
@@ -13,16 +14,9 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       login.endpoints.login.matchFulfilled,
-      (state, { payload: { access } }) => {
-        const data = jwtDecode(access);
-        state.user = {
-          group: data.grupos,
-          is_staff: data.is_staff,
-          user_id: data.user_id,
-          nombre: data.nombre,
-          apellido: data.apellido,
-          email: data.email
-        }
+      (state, { payload: { user } }) => {
+
+        state.user = user
         state.isAuthenticated = true;
       }
     );

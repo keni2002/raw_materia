@@ -12,22 +12,11 @@ export const login = apiAuth.injectEndpoints({
             async onQueryStarted(arg, { queryFulfilled, getCacheEntry }) {
                 try {
                     await queryFulfilled;
-                    const { access, refresh } = getCacheEntry().data
-
-                    console.log(access, refresh)
-
+                    const { access, refresh, user } = getCacheEntry().data
                     const data = jwtDecode(access);
-
-                    sessionStorage.setItem('user', JSON.stringify({
-                        group: data.grupos,
-                        is_staff: data.is_staff,
-                        user_id: data.user_id,
-                        nombre: data.nombre,
-                        apellido: data.apellido,
-                        tipo: data.tipo,
-                        email: data.email
-                    }));
-
+                    sessionStorage.setItem('user', JSON.stringify(
+                        { ...user, id: data.user_id }
+                    ));
                     sessionStorage.setItem('access', access);
                     sessionStorage.setItem('refresh', refresh);
 

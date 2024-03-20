@@ -14,8 +14,9 @@ export default function EvaluarCom() {
     const { id } = useParams();
 
     const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
-    const { user: { user_id } } = useSelector(auth_state);
+    const { user: { id: director } } = useSelector(auth_state);
     const [createEval] = useCreateEvalMutation()
+
     const handleSubmit = (values) => {
 
 
@@ -26,9 +27,9 @@ export default function EvaluarCom() {
         const valores = {
             calificacion: values.evaluacion,
             trabajador: id,
-            director: user_id
+            director: `${director}`
         }
-        console.log(valores)
+
 
         createEval(valores)
             .unwrap()
@@ -38,7 +39,9 @@ export default function EvaluarCom() {
             })
 
             .catch((err) => {
-                toast.error(err.data.message)
+
+                console.log(err)
+                toast.error(err.data.non_field_errors)
             })
 
     };
