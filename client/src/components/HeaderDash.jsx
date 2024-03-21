@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 import { auth_state } from "../features/authSlice";
 import { useLogoutMutation } from '../services/auth/usecases/logout';
 import { useHandleAsyncLogic } from '../hooks/useHandleAsyncLogic';
-import toast from "react-hot-toast";
-import { useLazyGetComQuery } from "../services/apiComercial";
+
+// eslint-disable-next-line react/prop-types
 function HeaderDash({ toggleMenu }) {
-    const dispatch = useDispatch();
-    const [getComercialById, { data }] = useLazyGetComQuery()
+
     const [logout, { isLoading, isError, error, isSuccess }] = useLogoutMutation();
     const { user: { nombre, apellido, email, grupo, is_staff, dep } } = useSelector(auth_state);
 
@@ -24,11 +23,11 @@ function HeaderDash({ toggleMenu }) {
     useHandleAsyncLogic({ isError, isLoading, isSuccess, error, customURL: '/login', successMesaage: "Sayonara baby" })
 
     // ----------------------------------------para abajo se acabo la porqueria
-    // const [showMenu, setShowMenu] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
     // const [showSearch, setShowSearch] = useState(false);
-    // const loginMenuToggle = () => {
-    //     setShowMenu(!showMenu);
-    // }
+    const loginMenuToggle = () => {
+        setShowMenu(!showMenu);
+    }
     // const searchMenuToggle = () => {
     //     setShowSearch(!showSearch);
     // }
@@ -48,26 +47,30 @@ function HeaderDash({ toggleMenu }) {
             </h1>
             <ul className="ml-auto flex items-center">
                 <h1 className="text-xl  text-gray-900 ml-4">
-                    Rol:{grupo.split('_')[0]}
+                    Rol: {grupo.split('_')[0]}
 
 
                 </h1>
                 <li className="dropdown relative ml-3">
 
-                    <div type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" className="bg-gray-200 w-10 h-10 rounded-full cursor-pointer"><p className="text-center align-text-bottom">{nombre?.charAt(0).toUpperCase() + apellido?.charAt(0).toUpperCase()}</p></div>
+                    <div onClick={loginMenuToggle} type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" className="bg-gray-200 w-10 h-10 rounded-full cursor-pointer"><p className="text-center align-text-bottom">{nombre?.charAt(0).toUpperCase() + apellido?.charAt(0).toUpperCase()}</p></div>
                     {/* <!-- Dropdown menu --> */}
-                    <div id="userDropdown" class="z-10 hidden  cursor-pointer bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                    <div onClick={loginMenuToggle} className={`fixed ${showMenu || 'hidden'}  inset-0 transition-opacity`}>
+                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+                    {showMenu && <div id="userDropdown" className="z-10 absolute right-3 cursor-pointer bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                        <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             <div>{`${nombre} ${apellido}`}</div>
-                            <div class="font-medium truncate">{email}</div>
+                            <div className="font-medium truncate">{email}</div>
                         </div>
 
-                        <div class="py-1">
-                            <button onClick={logout} class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
+                        <div className="py-1">
+                            <button onClick={logout} className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Cerrar Sesión</button>
                         </div>
-                    </div>
+                    </div>}
 
                 </li>
+
             </ul>
         </div>
     )

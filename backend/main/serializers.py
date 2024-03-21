@@ -123,22 +123,24 @@ class DirectorSerializer(serializers.ModelSerializer):
         model = _models.Director
         
 
-class AsistenteSerializer(serializers.ModelSerializer):
+class AsistenteSerializer(TrabajadorSerializer):
     depa = serializers.SerializerMethodField()
+    fecha_latest_eval = serializers.SerializerMethodField()
+    def get_fecha_latest_eval(self,obj):
+        return obj.fecha_latest_eval
     def get_depa(self,obj):
-        return _models.DpLegal.objects.get(comerciales=obj).nombre
-    class Meta:
+        return _models.DpComercial.objects.get(asistentes=obj).nombre
+    class Meta(TrabajadorSerializer.Meta):
         model = _models.Asistente
-        fields = '__all__'
 
 class AbogadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = _models.Abogado
         exclude = ('evaluaciones',)
 
-class ComprasSerializer(serializers.ModelSerializer):
+class FacturaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = _models.Compra
+        model = _models.Factura
         fields = '__all__'
 
 

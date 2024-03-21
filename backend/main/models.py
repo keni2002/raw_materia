@@ -125,6 +125,7 @@ ClASIFICACION = [
 
 class Abogado(Trabajador):
     division = models.ManyToManyField('Division', related_name='abogados')
+    salario = models.DecimalField(max_digits=10, decimal_places=2,default=2000)
     def __str__(self):
         return self.get_full_name()
     
@@ -195,8 +196,10 @@ NIVELES_ESCOLARES = [
     ('UNIV', 'Universidad'),
 ]
 class Asistente(Trabajador):
-    
+    fechaNacimiento = models.DateField(default='2002-01-21')
+    anioExperiencia = models.IntegerField(default=0)
     nivelEscolar = models.CharField(max_length=50, choices=NIVELES_ESCOLARES)
+    salario = models.DecimalField(max_digits=10, decimal_places=2,default=2000)
     departamento = models.ForeignKey('DpComercial', on_delete=models.CASCADE, related_name='asistentes')
     def __str__(self):
         return self.get_full_name()
@@ -211,6 +214,24 @@ class Asistente(Trabajador):
                 return 0
         else:
             return 0
+        
+    @property
+    def fecha_latest_eval(self):
+        if self.evaluaciones.count() > 0:
+            ultima_evaluacion = self.evaluaciones.order_by("-fecha").first()
+            if ultima_evaluacion:
+                return ultima_evaluacion.fecha
+            else:
+                return 0
+        else:
+            return 0
+        
+    @property
+    def name_group(self):
+        return [
+            {"name": "asistente_group"},
+        ]
+        
 
 GRADO_ACADEMICO = [
     ('TEC', 'Tecnico'),
@@ -222,6 +243,7 @@ GRADO_ACADEMICO = [
 class Director(Trabajador):
     gradoAcademico = models.CharField(max_length=50, choices=GRADO_ACADEMICO)
     departamento = models.ForeignKey('DpComercial', on_delete=models.CASCADE, related_name='directores')
+    salario = models.DecimalField(max_digits=10, decimal_places=2,default=2000)
     def crear_comercial(self, **kwargs):
         return Comercial.objects.create_user(**kwargs)
 
@@ -302,6 +324,7 @@ class Producto(models.Model):
     tipo = models.CharField(max_length=255, choices=MATERIA)
     fecha_producion = models.DateField()
     fecha_vencimiento = models.DateField()
+    suministrador = models.ForeignKey('Suministrador',on_delete=models.CASCADE, related_name='productos')
     def save(self, *args, **kwargs):
         if self.fecha_producion > self.fecha_vencimiento:
             raise ValueError("La fecha de produccion no puede ser mayor a la fecha de vencimiento")
@@ -319,28 +342,23 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-class Compra(models.Model):
+class Factura(models.Model):
     """La Tabla Many to Many entre Producto y Comercial"""
     #la relacion
     id  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    producto = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='compras')
+    producto = models.ManyToManyField('Producto',  related_name='compras')
     comercial = models.ForeignKey('Comercial', on_delete=models.CASCADE, related_name='compras')
     contrato = models.ForeignKey('Contrato',on_delete=models.CASCADE, related_name='compras')
-    suministrador = models.ForeignKey('Suministrador',on_delete=models.CASCADE, related_name='compras')
+    
     
     #campos de la relacion
-    cantidad = models.IntegerField()
     fecha_compra = models.DateField(auto_now_add=True)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    importe = models.DecimalField(max_digits=10, decimal_places=2,editable=False)
+    importe = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
         return f'{self.producto} - {self.comercial} - {self.cantidad}'
     
-    def save(self, *args, **kwargs):
-        self.importe = self.cantidad * self.precio
-        super(Compra, self).save(*args, **kwargs)
-
+    
 ESTADO = [
     ('P','Pendiente'),
     ('A','Aprobado'),
@@ -351,13 +369,13 @@ class Contrato(models.Model):
     codigo = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fecha_creacion = models.DateField(auto_now=True)
     periodo_validez = models.DurationField()
-    producto = models.ManyToManyField(Producto, related_name='contrato')
+    descripcion = models.TextField()
     estado = models.CharField(max_length=255, choices=ESTADO, default='P')
 
     comercial = models.ForeignKey('Comercial', on_delete=models.CASCADE, related_name='contratos')
-    suministrador = models.ManyToManyField('Suministrador', related_name='contratos')
+    suministrador = models.ForeignKey('Suministrador',on_delete=models.CASCADE, related_name='contratos')
     def __str__(self):
-        return f'{self.compra} - {self.estado}'
+        return f'contrado de {self.comercial.nombre} - {self.estado}'
 
 class Informe(models.Model):
     codigo = models.CharField(max_length=255,primary_key=True, editable=False)

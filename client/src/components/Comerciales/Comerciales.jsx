@@ -1,15 +1,15 @@
 import Tables from "../Tables";
-import { setId, setType, setIsOpenModalEvaluar, setIsOpenModalConfirm, setIsOpenInfo, setFuncion, setIsopenAdd } from '../../features/booleanos';
+import { setId, setType, setIsopenAdd } from '../../features/booleanos';
 import { useLazyGetComsQuery } from "../../services/apiComercial"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
 
 export default function Comerciales() {
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
-    const [getComercials, { data, isLoading }] = useLazyGetComsQuery()
+    const [getComercials, { data }] = useLazyGetComsQuery()
     //restablecer todos los valores
     useEffect(() => {
         dispatch(setIsopenAdd(false));

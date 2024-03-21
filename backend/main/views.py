@@ -1,6 +1,6 @@
 from rest_framework import permissions, viewsets, generics
-from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Compra, Evaluacion,Contrato
-from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,ComprasSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer, MyTokenObtainPairSerializer
+from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Factura, Evaluacion,Contrato
+from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,FacturaSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer, MyTokenObtainPairSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status

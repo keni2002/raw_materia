@@ -7,6 +7,7 @@ import { apiEval } from '../services/apiEval.js'
 import { apiEvalsOf } from '../services/apiEvalsOf.js'
 import { apiAuth } from '../services/auth/views/apiAuth.js'
 import authSlice, { userSlice } from '../features/authSlice.js'
+import { apiAsist } from '../services/apiAsistente.js'
 export const store = configureStore({
 
     reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
         [apiDpCom.reducerPath]: apiDpCom.reducer,
         //Personal
         [apiCom.reducerPath]: apiCom.reducer,
+        [apiAsist.reducerPath]: apiAsist.reducer,
 
         //Evals
         [apiEval.reducerPath]: apiEval.reducer,
@@ -33,7 +35,7 @@ export const store = configureStore({
             apiEval.middleware,
             apiEvalsOf.middleware,
             apiAuth.middleware,
-
+            apiAsist.middleware
 
         ])
 })

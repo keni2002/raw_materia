@@ -11,15 +11,21 @@ import Comerciales from './components/Comerciales/Comerciales';
 import Suministradores from './components/Suministradores';
 import Forms from './components/Forms';
 import ComercialForm from './components/Comerciales/createdit.comerciales';
+import AsistenteForm from './components/Asistentes/createdit.asistentes';
 import Evaluar from './components/Comerciales/evaluar.comerciales'
 import DeleteCom from './components/Comerciales/delete.comerciales';
+import DeleteAsis from './components/Asistentes/delete.asis'
 import InfoCom from './components/Comerciales/info.comerciales';
+import InfoAsis from './components/Asistentes/info.asistente';
+
 import InfoEvals from './components/Comerciales/info.evals';
 import PrivateRoutes from './components/PrivateRutes';
 import ComponentsPrivatization from './components/ComponentPrivatization';
 import Asistentes from './components/Asistentes/Asistentes';
 
 import ContratoForm from './components/Contratos/create.contrato';
+import EvaluarAsis from './components/Asistentes/evaluar.asistente';
+import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
 
 
 
@@ -41,9 +47,9 @@ function App() {
                 <Route path='/comerciales' element={<Comerciales />} />
                 <Route path='/comerciales' element={<Forms />}>
                   <Route path='add' element={
-                    // <ComponentsPrivatization permitted={["Admin", "Comercial"]} redirect={true}>
-                    <ComercialForm />
-                    // </ComponentsPrivatization>
+                    <ComponentsPrivatization permitted={['director_group', 'admin_group']} redirect={true}>
+                      <ComercialForm />
+                    </ComponentsPrivatization>
                   } />
                   <Route path='edit/:id' element={<ComercialForm />} />
                   <Route path='evaluar/:id' element={<Evaluar />} />
@@ -52,11 +58,20 @@ function App() {
                   <Route path='infoevals/:id' element={<InfoEvals />} />
                 </Route>
 
-                <Route path='/asistentes' element={
-                  <ComponentsPrivatization permitted={['comercial_group']} redirect={true}>
-                    <Asistentes />
-                  </ComponentsPrivatization>
-                } />
+                {/* ASISTENTES */}
+                <Route path='/asistentes' element={<Asistentes />} />
+                <Route path='/asistentes' element={<Forms />}>
+                  <Route path='add' element={
+                    <ComponentsPrivatization permitted={['director_group', 'admin_group']} redirect={true}>
+                      <AsistenteForm />
+                    </ComponentsPrivatization>
+                  } />
+                  <Route path='edit/:id' element={<AsistenteForm />} />
+                  <Route path='evaluar/:id' element={<EvaluarAsis />} />
+                  <Route path='delete/:id' element={<DeleteAsis />} />
+                  <Route path='info/:id' element={<InfoAsis />} />
+                  <Route path='infoevals/:id' element={<InfoEvalsAsis />} />
+                </Route>
 
 
                 {/* <Route path='/asistentes' element={<Asistentes />} /> */}

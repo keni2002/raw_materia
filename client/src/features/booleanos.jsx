@@ -60,7 +60,7 @@ const initialState = {
             },
         ],
         comerciales: [
-            
+
         ],
         asistentes: [
             {
@@ -76,10 +76,7 @@ const initialState = {
                 name: "Dirección",
                 selector: row => row.direccion
             },
-            {
-                name: "Exp",
-                selector: row => row.anioExperiencia
-            },
+
             {
                 name: "nivel escolar",
                 selector: row => row.nivelEscolar
@@ -97,7 +94,7 @@ const initialState = {
                 selector: row => row.sfinal
             }
         ],
-        suministradores:   [
+        suministradores: [
             {
                 name: "Nombre",
                 selector: row => row.nombre
@@ -152,13 +149,13 @@ const booleanos = createSlice({
         setIsOpenModalConfirm: (state, action) => {
             state.isOpenModalConfirm = action.payload;
         },
-        setId: (state, action) => { 
+        setId: (state, action) => {
             state.iD = action.payload;
         },
-        setFuncion: (state, action) => {  
+        setFuncion: (state, action) => {
             state.funcion = action.payload;
         },
-        setIsopenAdd : (state, action) => {
+        setIsopenAdd: (state, action) => {
             state.isOpenAdd = action.payload;
         }
     },
@@ -166,12 +163,12 @@ const booleanos = createSlice({
 
 
 export const {
-     setIsOpenModalEvaluar,
-     setId,
-     setIsOpenInfo,
-     setType,
-     setIsOpenModalConfirm,
-     setFuncion,
-     setIsopenAdd
+    setIsOpenModalEvaluar,
+    setId,
+    setIsOpenInfo,
+    setType,
+    setIsOpenModalConfirm,
+    setFuncion,
+    setIsopenAdd
 } = booleanos.actions;
 export default booleanos.reducer;
