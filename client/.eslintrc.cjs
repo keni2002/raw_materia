@@ -17,5 +17,8 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "react-hooks/hooks-naming-convention": ["error", {
+      "additionalHooks": "(useLazyGet|useCreate)"
+    }]
   },
 }

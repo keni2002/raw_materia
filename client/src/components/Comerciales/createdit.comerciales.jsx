@@ -47,6 +47,7 @@ export default function ComercialForm() {
           toast.success('Comercial creado')
         })
         .catch((err) => {
+          console.log(err)
           toast.error(err.data.message)
         })
     }

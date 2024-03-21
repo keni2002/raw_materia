@@ -10,6 +10,7 @@ import authSlice, { userSlice } from '../features/authSlice.js'
 import { apiAsist } from '../services/apiAsistente.js'
 import { apiSum } from '../services/apiSumin.js'
 import { apiAddress } from '../services/apiAddress.js'
+import { apiContra } from '../services/apiContratos.js'
 export const store = configureStore({
 
     reducer: {
@@ -30,7 +31,8 @@ export const store = configureStore({
 
 
         //Miscelaneos
-        [apiAddress.reducerPath]: apiAddress.reducer
+        [apiAddress.reducerPath]: apiAddress.reducer,
+        [apiContra.reducerPath]: apiContra.reducer
 
     },
     middleware: (getDefaultMiddleware) =>
@@ -44,8 +46,7 @@ export const store = configureStore({
             apiAsist.middleware,
             apiAddress.middleware,
             apiSum.middleware,
-
-
+            apiContra.middleware
         ])
 })
 

@@ -27,6 +27,8 @@ import EvaluarAsis from './components/Asistentes/evaluar.asistente';
 import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
 import Home from './pages/Home';
 import Contratos from './components/Contratos/Contratos';
+import InfoContrato from './components/Contratos/info.Contrato';
+import DeleteCont from './components/Contratos/delete.contrato';
 
 
 
@@ -45,12 +47,14 @@ function App() {
                 {/* CONTRATO */}
                 <Route path="/contratos" element={<Contratos />} />
                 <Route path='/contratos' element={<Forms />}>
-                  <Route path='add' element={<ContratoForm />} />
-                  <Route path='edit/:id' element={<ComercialForm />} />
-                  <Route path='evaluar/:id' element={<Evaluar />} />
-                  <Route path='delete/:id' element={<DeleteCom />} />
-                  <Route path='info/:id' element={<InfoCom />} />
-                  <Route path='infoevals/:id' element={<InfoEvals />} />
+                  <Route path='add' element={
+                    <ComponentsPrivatization permitted={['comercial_group', 'admin_group']} redirect={true}>
+                      <ContratoForm />
+                    </ComponentsPrivatization>
+                  } />
+                  <Route path='renovar/:id' element={<ContratoForm />} />
+                  <Route path='delete/:id' element={<DeleteCont />} />
+                  <Route path='info/:id' element={<InfoContrato />} />
                 </Route>
 
 

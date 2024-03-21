@@ -49,7 +49,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'apellido': self.user.apellido,
             'is_staff': self.user.is_staff,
             'grupo': self.user.name_group[0]['name']
-            
+                
         }
         def get_dep():
             dp='all'
@@ -88,10 +88,20 @@ class DpLegaleSerializer(serializers.ModelSerializer):
         model = _models.DpLegal
         fields = '__all__'
 
+#-----------------------------------------------------------------------Contratos-------------------
 class ContratoSerializer(serializers.ModelSerializer):
     class Meta:
         model  = _models.Contrato
         fields = '__all__'
+    suministradorName = serializers.SerializerMethodField()
+    materia = serializers.SerializerMethodField()
+    def get_suministradorName(self,obj):
+        return _models.Suministrador.objects.filter(contratos=obj)[0].nombre
+    def get_materia(self,obj):
+        return _models.Suministrador.objects.filter(contratos=obj)[0].clasificacion
+        
+    
+    
 
 class SuministradorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -112,11 +122,13 @@ class ComercialSerializer(TrabajadorSerializer):
     
     cntContratos = serializers.SerializerMethodField()
     depa = serializers.SerializerMethodField()
+    
     def get_depa(self,obj):
         return _models.DpComercial.objects.get(comerciales=obj).nombre
     
     def get_cntContratos(self,obj):
-        return obj.compras.count()
+        #cuenta contratos de comerciales
+        return obj.contratos.count()
 
     
     class Meta(TrabajadorSerializer.Meta):
@@ -152,11 +164,6 @@ class FacturaSerializer(serializers.ModelSerializer):
         model = _models.Factura
         fields = '__all__'
 
-
-class ContratoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model  = _models.Contrato
-        fields = '__all__'
 
 class EvalsOneSerializer(serializers.ModelSerializer): #para devolver las evaluaciones
     trabajador = serializers.SerializerMethodField()

@@ -62,7 +62,6 @@ class DpLegalesViewSet(viewsets.ModelViewSet):
 class ComercialViewSet(viewsets.ModelViewSet):
     queryset = Comercial.objects.all()
     serializer_class = ComercialSerializer
-    # permission_classes = [IsComercialOrReadOnly]
     def get_view_name(self):
         return "Comerciales"
     permission_classes = (_permissions.IsAuthenticated,
