@@ -1,5 +1,5 @@
 import Tables from "../Tables";
-import { setId, setType, setIsOpenModalEvaluar, setIsOpenModalConfirm, setIsOpenInfo, setFuncion, setIsopenAdd } from '../../features/booleanos';
+import { setId, setType, setIsopenAdd } from '../../features/booleanos';
 import { useLazyGetComsQuery } from "../../services/apiComercial"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -132,9 +132,9 @@ export default function Contratos() {
                 <Tables data={modifiedData} columns={[...columns, actions]}
 
                 />
-                <Link to='/comerciales/add'>
+                <Link to='/contratos/add'>
                     <button
-                        title="Agregar un comercial"
+                        title="Agregar un Contrato"
                         className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
                     ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
                             <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>

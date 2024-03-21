@@ -59,7 +59,7 @@ export default function ContratoForm() {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue, touched, isValid, handleChange, handleBlur }) => {
+        {({ setFieldValue, touched, isValid }) => {
           useEffect(() => {
             if (!isLoading && data) {
               setFieldValue("nombre", data.nombre);

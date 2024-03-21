@@ -4,7 +4,6 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard';
 import { Provider } from 'react-redux';
 import { store } from './app/store'
-import Contratos from './components/Contratos';
 import Compras from './components/Compras';
 import Comerciales from './components/Comerciales/Comerciales';
 
@@ -27,6 +26,7 @@ import ContratoForm from './components/Contratos/create.contrato';
 import EvaluarAsis from './components/Asistentes/evaluar.asistente';
 import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
 import Home from './pages/Home';
+import Contratos from './components/Contratos/Contratos';
 
 
 
@@ -42,7 +42,21 @@ function App() {
             <Route element={<PrivateRoutes />}>
               <Route element={<Dashboard />} >
                 <Route path='/home' element={<Home></Home>}></Route>
+                {/* CONTRATO */}
                 <Route path="/contratos" element={<Contratos />} />
+                <Route path='/contratos' element={<Forms />}>
+                  <Route path='add' element={<ContratoForm />} />
+                  <Route path='edit/:id' element={<ComercialForm />} />
+                  <Route path='evaluar/:id' element={<Evaluar />} />
+                  <Route path='delete/:id' element={<DeleteCom />} />
+                  <Route path='info/:id' element={<InfoCom />} />
+                  <Route path='infoevals/:id' element={<InfoEvals />} />
+                </Route>
+
+
+
+
+                {/* FACTURA */}
                 <Route path="/compras" element={<Compras />} />
 
                 {/* COMERCIALES */}
