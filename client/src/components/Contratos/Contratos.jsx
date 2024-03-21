@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
 
-export default function Comerciales() {
+export default function Contratos() {
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getComercials, { data, isLoading }] = useLazyGetComsQuery()
@@ -15,7 +15,7 @@ export default function Comerciales() {
         dispatch(setIsopenAdd(false));
         dispatch(setId(''));
         // dispatch(setFuncion(''));
-        dispatch(setType('Comerciales'));
+        dispatch(setType('Contratos'));
         getComercials();
     }, [])
 
@@ -128,18 +128,20 @@ export default function Comerciales() {
 
     return (
         <>
-            <Tables data={modifiedData} columns={[...columns, actions]}
+            <div className="flex flex-col items-center">
+                <Tables data={modifiedData} columns={[...columns, actions]}
 
-            />
-            <Link to='/comerciales/add'>
-                <button
-                    title="Agregar un comercial"
-                    className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
-                        <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
-                    </svg>
-                </button>
-            </Link>
+                />
+                <Link to='/comerciales/add'>
+                    <button
+                        title="Agregar un comercial"
+                        className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
+                    ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
+                            <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
+                        </svg>
+                    </button>
+                </Link>
+            </div>
         </>
     )
 }

@@ -48,7 +48,7 @@ export default function InfoCom() {
             <div className='p-4 mb-3 bg-gray-200 rounded-md'>
                 <p>Nombre: {data?.nombre} </p>
                 <p>Apellidos: {data?.apellido} </p>
-                <p>Email:<a href={`mailto:${data?.email}`} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{data?.email}</a> </p>
+                <p>Email:<a href={`mailto:${data?.email}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{data?.email}</a> </p>
                 <p>Dirección: {data?.direccion}</p>
                 <p>Nacimiento: {fecha(data?.fechaNacimiento)}</p>
                 <p>Edad: {calcularEdad(data?.fechaNacimiento)} años</p>
@@ -59,16 +59,16 @@ export default function InfoCom() {
                 <div className='flex gap-2 mb-2'>
 
                     <p>Evaluación: ({data?.evaluacion}) {data?.evaluacion == 5 ? 'Excelente' : data?.evaluacion == 4 ? 'Bien' : data?.evaluacion == 3 ? 'Regular' : data?.evaluacion == 2 ? 'Mal' : 'No evaluado'}</p>
-                     <Link to={`/comerciales/infoevals/${id}`}>
+                    <Link to={`/comerciales/infoevals/${id}`}>
                         <div className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold    rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-400 inline-flex items-center justify-center">evaluaciones</div>
-                        </Link> 
+                    </Link>
 
                 </div>
 
                 {/* INICIO */}
                 <div className='flex gap-2'>
                     <p>Cantidad de Contratos: {data?.cntContratos}</p>
-                    <a href="#" class="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold    rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-400 inline-flex items-center justify-center">contratos</a>
+                    <a href="#" className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold    rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-400 inline-flex items-center justify-center">contratos</a>
                 </div>
             </div>
 

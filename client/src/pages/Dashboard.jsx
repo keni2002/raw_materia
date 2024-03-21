@@ -17,8 +17,8 @@ const Dashboard = () => {
       <SidebarDash closeMenu={closeMenu} menuVisible={menuVisible} />
       <main className={`w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main ${menuVisible ? '' : 'active'}`}>
         <HeaderDash toggleMenu={toggleMenu} menuVisible={menuVisible} />
-        <div className="flex flex-col items-center">
-          <Outlet/>
+        <div className="">
+          <Outlet />
         </div>
       </main>
     </div>

@@ -2,14 +2,14 @@ import Tables from "../Tables";
 import { setId, setType } from '../../features/booleanos';
 import { useLazyGetAsistsQuery } from "../../services/apiAsistente"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
 
 export default function Asistentes() {
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
-    const [getAsistentes, { data, isLoading }] = useLazyGetAsistsQuery()
+    const [getAsistentes, { data }] = useLazyGetAsistsQuery()
     //restablecer todos los valores
     useEffect(() => {
         dispatch(setId(''));
@@ -87,7 +87,7 @@ export default function Asistentes() {
     ///---------------------------------------------transformando data
     //here solo dejo pasar a los locos que sean del mismo depa
     const data_filter = data?.filter(entry => entry?.departamento == dep[1])
-    console.log(data)
+
     //Transformamos los salario y evaluacion
     const modifiedData = data_filter?.map(item => {
         const evaluacion = parseInt(item.evaluacion);
@@ -135,18 +135,22 @@ export default function Asistentes() {
 
     return (
         <>
-            <Tables data={modifiedData} columns={[...columns, actions]}
+            <div className="flex flex-col items-center">
 
-            />
-            <Link to='/asistentes/add'>
-                <button
-                    title="Agregar un Asistente"
-                    className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
-                        <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
-                    </svg>
-                </button>
-            </Link>
+
+                <Tables data={modifiedData} columns={[...columns, actions]}
+
+                />
+                <Link to='/asistentes/add'>
+                    <button
+                        title="Agregar un Asistente"
+                        className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
+                    ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
+                            <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
+                        </svg>
+                    </button>
+                </Link>
+            </div>
         </>
     )
 }

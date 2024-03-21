@@ -50,7 +50,7 @@ export default function Comerciales() {
             selector: row => row.evaluacion
         },
         {
-            name: "Slario Final",
+            name: "Salario Final",
             selector: row => row.sfinal
         }
     ]
@@ -128,18 +128,21 @@ export default function Comerciales() {
 
     return (
         <>
-            <Tables data={modifiedData} columns={[...columns, actions]}
+            <div className="flex flex-col items-center">
 
-            />
-            <Link to='/comerciales/add'>
-                <button
-                    title="Agregar un comercial"
-                    className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
-                        <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
-                    </svg>
-                </button>
-            </Link>
+                <Tables data={modifiedData} columns={[...columns, actions]}
+
+                />
+                <Link to='/comerciales/add'>
+                    <button
+                        title="Agregar un comercial"
+                        className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
+                    ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
+                            <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
+                        </svg>
+                    </button>
+                </Link>
+            </div >
         </>
     )
 }

@@ -25,7 +25,7 @@ function FormLogin() {
     const navigate = useNavigate();
     const { isAuthenticated } = useSelector(auth_state)
 
-    useHandleAsyncLogic({ isLoading, isSuccess, isError, error, successMesaage: 'Bienvenido', customURL: '/comerciales' })
+    useHandleAsyncLogic({ isLoading, isSuccess, isError, error, successMesaage: 'Bienvenido', customURL: '/home' })
 
     const formik = useFormik({
         initialValues: {
@@ -38,7 +38,7 @@ function FormLogin() {
 
     useEffect(() => {
         if (isAuthenticated)
-            navigate('/comerciales')
+            navigate('/home')
     }, [isAuthenticated])
 
     return (

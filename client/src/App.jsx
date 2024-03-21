@@ -26,6 +26,7 @@ import Asistentes from './components/Asistentes/Asistentes';
 import ContratoForm from './components/Contratos/create.contrato';
 import EvaluarAsis from './components/Asistentes/evaluar.asistente';
 import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
+import Home from './pages/Home';
 
 
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoutes />}>
               <Route element={<Dashboard />} >
+                <Route path='/home' element={<Home></Home>}></Route>
                 <Route path="/contratos" element={<Contratos />} />
                 <Route path="/compras" element={<Compras />} />
 
