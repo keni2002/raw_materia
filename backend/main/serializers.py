@@ -93,6 +93,15 @@ class ContratoSerializer(serializers.ModelSerializer):
         model  = _models.Contrato
         fields = '__all__'
 
+class SuministradorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = _models.Suministrador
+        fields = '__all__'
+
+class DireccionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = _models.Direccion
+        fields = '__all__'
 
 class ComercialSerializer(TrabajadorSerializer):
     # departamento = DpComercialSerializer(read_only=True)

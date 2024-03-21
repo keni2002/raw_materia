@@ -22,7 +22,7 @@ import PrivateRoutes from './components/PrivateRutes';
 import ComponentsPrivatization from './components/ComponentPrivatization';
 import Asistentes from './components/Asistentes/Asistentes';
 
-import ContratoForm from './components/Contratos/create.contrato';
+import ContratoForm from './components/Contratos/createdit.contratos';
 import EvaluarAsis from './components/Asistentes/evaluar.asistente';
 import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
 import Home from './pages/Home';

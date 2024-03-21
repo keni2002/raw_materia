@@ -92,7 +92,7 @@ export default function ComercialForm() {
               <Fields name='nombre' touched={touched} type='text' placeholder='James' label='Nombre' />
               <Fields name='apellido' touched={touched} type='text' placeholder='Born' label='Apellido' />
               <Fields name='email' touched={touched} type='email' placeholder='james@rmateria.cu' label='Email' />
-              <Fields name='direccion' touched={touched} type='text' placeholder='calle 12,Las Tunas' label='Direc cion' />
+              <Fields name='direccion' touched={touched} type='text' placeholder='calle 12,Las Tunas' label='Direccion' />
               <Fields name='fechaNacimiento' max={fecha()} touched={touched} type='date' label='Fecha de nacimiento' />
               <Fields name='salario' touched={touched} type='number' label='Salario' min={1000} />
               <Fields name='anioExperiencia' touched={touched} type='number' label='Años de experiencia' min={0} />

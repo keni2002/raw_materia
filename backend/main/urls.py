@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
 
 from django.urls import path,include
 from rest_framework import routers
-from .views import TrabajadorViewSet, DpComercialViewSet,DpLegalesViewSet,ComercialViewSet,DirectorViewSet,AsistenteViewSet,AbogadoViewSet, EvaluacionViewSet, EvaluacionesTrabajador,ContratosComercial,RegisterComercialView, LoginView, LogoutAllView
+from .views import TrabajadorViewSet, DpComercialViewSet,DpLegalesViewSet,ComercialViewSet,DirectorViewSet,AsistenteViewSet,AbogadoViewSet, EvaluacionViewSet, EvaluacionesTrabajador,ContratosComercial,RegisterComercialView, ContratoViewSet, LoginView, LogoutAllView,SuministradorViewSet,DireccionViewSet
 router  = routers.DefaultRouter()
 router.register(r'users',TrabajadorViewSet)
 router.register(r'dplegales', DpLegalesViewSet)
@@ -15,6 +15,11 @@ router.register(r'asistentes', AsistenteViewSet)
 router.register(r'abogados', AbogadoViewSet)
 router.register(r'dpcomerciales', DpComercialViewSet)
 router.register(r'evaluaciones', EvaluacionViewSet)
+router.register(r'contratos', ContratoViewSet)
+router.register(r'suministradores', SuministradorViewSet)
+router.register(r'direcciones',DireccionViewSet)
+
+
 
 urlpatterns = [
     path('', include(router.urls)),

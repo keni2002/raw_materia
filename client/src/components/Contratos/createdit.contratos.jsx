@@ -1,4 +1,5 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+
 import Fields from '../Fields';
 import Btn from '../Btn';
 import { schema } from './schema';
@@ -9,13 +10,17 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { auth_state } from '../../features/authSlice';
+import FieldArea from '../FieldArea';
+import DDSum from './dropdownSumin';
 export default function ContratoForm() {
+  const fechaActual = new Date();
+  const fechaMinima = new Date(fechaActual.setDate(fechaActual.getDate())).toISOString().split('T')[0];
   const navigate = useNavigate();
   const { id } = useParams();
   const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
   const [updateComercial] = useUpdateComMutation()
   const [createComercial] = useCreateComMutation()
-  const { user: { id: comercial_id } } = useSelector(auth_state);
+  const { user: { dep } } = useSelector(auth_state);
   const fecha = () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 18);
@@ -23,19 +28,33 @@ export default function ContratoForm() {
   }
   const handleSubmit = (values) => {
     let { confirmPassword, ...rest } = values
+    if (id) {
 
 
-    createComercial({ ...rest, departamento: dep[1] })
-      .unwrap()
-      .then(() => {
-        navigate('/comerciales');
-        toast.success('Comercial creado')
-      })
-      .catch((err) => {
-        toast.error(err.data.message)
-      })
-  }
 
+      updateComercial({ id, ...rest })
+        .unwrap()
+        .then(() => {
+          navigate('/comerciales');
+          toast.success('Comercial actualizado')
+        })
+        .catch((err) => {
+          toast.error(err.data.message)
+        })
+    }
+    else {
+
+      createComercial({ ...rest, departamento: dep[1] })
+        .unwrap()
+        .then(() => {
+          navigate('/comerciales');
+          toast.success('Comercial creado')
+        })
+        .catch((err) => {
+          toast.error(err.data.message)
+        })
+    }
+  };
   useEffect(() => {
 
     if (id) {
@@ -47,11 +66,11 @@ export default function ContratoForm() {
   return (
     <>
       <header className='flex justify-between pb-10'>
-        <Link to='/comerciales'>
+        <Link to='/asistentes'>
           <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
         </Link>
 
-        <h3 className='font-bold text-lg  text-center'>Crear Contrato</h3>
+        <h3 className='font-bold text-lg  text-center'>{id ? 'Actualizar' : 'Crear'} Comercial</h3>
       </header>
 
       <Formik
@@ -59,7 +78,7 @@ export default function ContratoForm() {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue, touched, isValid }) => {
+        {({ setFieldValue, touched, isValid, handleChange, handleBlur }) => {
           useEffect(() => {
             if (!isLoading && data) {
               setFieldValue("nombre", data.nombre);
@@ -74,18 +93,12 @@ export default function ContratoForm() {
           }, [isLoading, data]);
           return (
             <Form>
-              <Fields name='nombre' touched={touched} type='text' placeholder='James' label='Nombre' />
-              <Fields name='apellido' touched={touched} type='text' placeholder='Born' label='Apellido' />
-              <Fields name='email' touched={touched} type='email' placeholder='james@rmateria.cu' label='Email' />
-              <Fields name='direccion' touched={touched} type='text' placeholder='calle 12,Las Tunas' label='Direc cion' />
-              <Fields name='fechaNacimiento' max={fecha()} touched={touched} type='date' label='Fecha de nacimiento' />
-              <Fields name='salario' touched={touched} type='number' label='Salario' min={1000} />
-              <Fields name='anioExperiencia' touched={touched} type='number' label='Años de experiencia' min={0} />
 
-              <Fields name='password' touched={touched} type='password' label='Contraseña' />
-              <Fields name='confirmPassword' touched={touched} type='password' label='Confirmar Contraseña' />
+              <Fields name='periodo_validez' min={fechaMinima} touched={touched} type='date' label='Válido hasta' />
+              <FieldArea name='descripcion' label="Descripción" />
+              <DDSum name='suminstrador' label='Suministrador' />
 
-              <Btn type='submit' disabled={!isValid} label={`${id ? 'Actualizar' : 'Registrar'} Comercial`} />
+              <Btn type='submit' disabled={!isValid} label={`${id ? 'Actualizar' : 'Registrar'} Contrato`} />
 
             </Form>
           )

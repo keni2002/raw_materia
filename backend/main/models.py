@@ -368,7 +368,7 @@ ESTADO = [
 class Contrato(models.Model):
     codigo = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fecha_creacion = models.DateField(auto_now=True)
-    periodo_validez = models.DurationField()
+    periodo_validez = models.DateField()
     descripcion = models.TextField()
     estado = models.CharField(max_length=255, choices=ESTADO, default='P')
 

@@ -8,6 +8,8 @@ import { apiEvalsOf } from '../services/apiEvalsOf.js'
 import { apiAuth } from '../services/auth/views/apiAuth.js'
 import authSlice, { userSlice } from '../features/authSlice.js'
 import { apiAsist } from '../services/apiAsistente.js'
+import { apiSum } from '../services/apiSumin.js'
+import { apiAddress } from '../services/apiAddress.js'
 export const store = configureStore({
 
     reducer: {
@@ -19,12 +21,16 @@ export const store = configureStore({
         //Personal
         [apiCom.reducerPath]: apiCom.reducer,
         [apiAsist.reducerPath]: apiAsist.reducer,
+        [apiSum.reducerPath]: apiSum.reducer,
 
         //Evals
         [apiEval.reducerPath]: apiEval.reducer,
         [apiEvalsOf.reducerPath]: apiEvalsOf.reducer,
         [apiAuth.reducerPath]: apiAuth.reducer,
 
+
+        //Miscelaneos
+        [apiAddress.reducerPath]: apiAddress.reducer
 
     },
     middleware: (getDefaultMiddleware) =>
@@ -35,7 +41,10 @@ export const store = configureStore({
             apiEval.middleware,
             apiEvalsOf.middleware,
             apiAuth.middleware,
-            apiAsist.middleware
+            apiAsist.middleware,
+            apiAddress.middleware,
+            apiSum.middleware,
+
 
         ])
 })
