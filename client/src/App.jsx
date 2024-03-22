@@ -29,6 +29,8 @@ import Home from './pages/Home';
 import Contratos from './components/Contratos/Contratos';
 import InfoContrato from './components/Contratos/info.Contrato';
 import DeleteCont from './components/Contratos/delete.contrato';
+import NotFound from './pages/NotFound';
+import SuminisForm from './components/Suministradores/createdit.sumin';
 
 
 
@@ -94,23 +96,21 @@ function App() {
                 </Route>
 
 
-                {/* <Route path='/asistentes' element={<Asistentes />} /> */}
+                {/* SUMINISTRADORES */}
                 <Route path='/suministradores' element={<Suministradores />} />
-                <Route path='/contratos' element={<Forms />}>
+                <Route path='/suministradores' element={<Forms />}>
                   <Route path='add' element={
                     // <ComponentsPrivatization permitted={["Admin", "Comercial"]} redirect={true}>
-                    <ContratoForm />
+                    <SuminisForm />
                     // </ComponentsPrivatization>
                   } />
+                  <Route path='edit/:id' element={<SuminisForm />} />
                 </Route>
-                {/* <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
-            <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
-            <Route path='/compras' element={<Table quito={'evaluar'}/>}/>
-            <Route path='/comerciales' element={<Table/>}/>
-            <Route path='/evaluar' element={<FormEvaluate/>}/>        */}
+
+
               </Route>
             </Route>
-
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
         <Toaster />
@@ -120,3 +120,11 @@ function App() {
   )
 }
 export default App;
+
+
+
+{/* <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
+            <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
+            <Route path='/compras' element={<Table quito={'evaluar'}/>}/>
+            <Route path='/comerciales' element={<Table/>}/>
+            <Route path='/evaluar' element={<FormEvaluate/>}/>        */}

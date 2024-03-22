@@ -83,7 +83,7 @@ export default function ContratoForm() {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue, touched, isValid }) => {
+        {({ setFieldValue, touched, isValid, handleChange, handleBlur }) => {
           useEffect(() => {
             if (!isLoading && data) {
               setFieldValue("periodo_validez", '');
@@ -97,7 +97,7 @@ export default function ContratoForm() {
               <Fields name='periodo_validez' min={fechaMinima} touched={touched} type='date' label='Válido hasta' />
 
               <FieldArea name='descripcion' label="Descripción" />
-              <DDSum name='suministrador' value={data?.suministrador} label='Suministrador' />
+              <DDSum name='suministrador' handleChange={handleChange} handleBlur={handleBlur} touched={touched} label='Suministrador' />
 
               <Btn type='submit' disabled={!isValid} label={`${id ? 'Renovar' : 'Registrar'} Contrato`} />
 

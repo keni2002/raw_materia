@@ -54,5 +54,7 @@ export const apiAddress = createApi({
 })
 // eslint-disable-next-line no-empty-pattern
 export const {
-
+    useLazyGetAddressQuery,
+    useCreateAddressMutation,
+    useUpdateAddressMutation
 } = apiAddress

@@ -90,10 +90,11 @@ export default function Contratos() {
 
     ///---------------------------------------------transformando data
     //here solo dejo pasar a los locos que sean del mismo depa
-
+    const filter_data = grupo == 'abogado_group' ? data.filter(item => item.estado == 'P') : data
+    //ROL
 
     //Transformamos los salario y evaluacion
-    const modifiedData = data?.map(item => {
+    const modifiedData = filter_data?.map(item => {
         let modifedCodigo = item.codigo.slice(-10)
         let modifedMateria
         let modEstado

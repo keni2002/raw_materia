@@ -54,5 +54,8 @@ export const apiSum = createApi({
 })
 // eslint-disable-next-line no-empty-pattern
 export const {
-    useGetSumsQuery
+    useGetSumsQuery,
+    useLazyGetSumQuery,
+    useUpdateSumMutation,
+    useCreateSumMutation
 } = apiSum
