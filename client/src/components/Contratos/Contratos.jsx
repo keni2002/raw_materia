@@ -110,13 +110,34 @@ export default function Contratos() {
             modifedMateria = 'Mineral'
         }
         if (estado == 'P') {
-            modEstado = 'Pendiente'
+            modEstado = (
+                <div className="flex items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="2" fill="orange" />
+                    </svg>
+                    Pendiente
+                </div>
+            )
         }
         else if (estado == 'N') {
-            modEstado = 'No aprobado'
+            modEstado = (
+                <div className="flex items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="2" fill="red" />
+                    </svg>
+                    No aprobado
+                </div>
+            )
         }
         else if (estado == 'A') {
-            modEstado = 'Aprobado'
+            modEstado = (
+                <div className="flex items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="2" fill="green" />
+                    </svg>
+                    Aprobado
+                </div>
+            )
         }
 
         return {

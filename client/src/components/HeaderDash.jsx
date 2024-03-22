@@ -43,7 +43,7 @@ function HeaderDash({ toggleMenu }) {
                 {grupo == 'asistente_group' && <>{`Dp. Comercial: ${dep}`}</>}
                 {grupo == 'director_group' && <>{`Dp. Comercial: ${dep[0]}`}</>}
                 {/* legales */}
-                {grupo == 'abogado_group' && <>{`Dp.Legal:Div. ${dep[0]}`}</>}
+                {grupo == 'abogado_group' && <>{`Dp.Legal: ${dep[0]}`}</>}
             </h1>
             <ul className="ml-auto flex items-center">
                 <h1 className="text-xl  text-gray-900 ml-4">

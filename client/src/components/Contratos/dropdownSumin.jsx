@@ -26,8 +26,8 @@ export default function DDSum({ name, value, label, handleChange, handleBlur }) 
                         <svg height="32" viewBox="0 -960 960 960" width="32"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                     </Link>
 
-                </div >
-            </div >
+                </div>
+            </div>
             <ErrorMessage name={name} component="div" className="text-red-500 text-sm" />
             <div className="mb-5"></div>
         </>

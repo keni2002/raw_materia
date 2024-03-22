@@ -69,7 +69,7 @@ export default function SuminisForm() {
   return (
     <>
       <header className='flex justify-between pb-10'>
-        <Link to={'..'}>
+        <Link to={navigate(-1)}>
           <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
         </Link>
 
@@ -81,7 +81,7 @@ export default function SuminisForm() {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue, touched, isValid }) => {
+        {({ setFieldValue, touched, isValid, values }) => {
           useEffect(() => {
             if (!isLoading && !isLoadDress && datasum && datadress) {
               setFieldValue("nombre", datasum.nombre);
@@ -97,7 +97,7 @@ export default function SuminisForm() {
           return (
             <Form>
               <Fields name='nombre' touched={touched} type='text' placeholder='Microsoft' label='Nombre' />
-              <DDMateria name='clasificacion' label={'Clasificación'} />
+              <DDMateria name='clasificacion' value={values.clasificacion} label={'Clasificación'} />
 
               <label>Dirección</label>
               <div className='p-3 mb-3 rounded-lg bg-gray-200'>

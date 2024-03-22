@@ -68,9 +68,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
             elif self.user.name_group[0]['name'] == 'abogado_group':
                 print(_models.Abogado.objects.get(pk=self.user.id).division)
-                dp =_models.Abogado.objects.get(pk=self.user.id).division.nombre
+                dp =_models.Abogado.objects.get(pk=self.user.id).division.all()[0].dp_legal.nombre
 
-                code = _models.Abogado.objects.get(pk=self.user.id).division.codigo
+                code = _models.Abogado.objects.get(pk=self.user.id).division.all()[0].dp_legal.codigo
             return [dp,code]
         data['user']['dep']=get_dep()
         
