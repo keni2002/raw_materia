@@ -5,7 +5,3 @@ INTEGRANTES
     Raúl Ignacio Paz Mederos	raulipm	    CDF2302
     Alejandro Chipi Cedeño	    achipic	    CDF2302
 
-Tema 11:
-    MATERIAS PRIMAS
-
-    La Empresa Nacional de Materias Primas desea informatizar los procesos de sus áreas. La misma cuenta con departamentos comerciales y departamentos legales. 
