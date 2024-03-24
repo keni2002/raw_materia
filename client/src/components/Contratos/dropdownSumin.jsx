@@ -1,6 +1,7 @@
 import { Field, ErrorMessage } from "formik"
 import { useGetSumsQuery } from '../../services/apiSumin'
 import { Link } from "react-router-dom"
+import Masicon from "../Icons/Masicon"
 export default function DDSum({ name, value, label, handleChange, handleBlur }) {
     const { data } = useGetSumsQuery()
     return (
@@ -22,8 +23,8 @@ export default function DDSum({ name, value, label, handleChange, handleBlur }) 
                                 }
                             </option>))}
                     </Field>
-                    <Link to={'/suministradores/add'}>
-                        <svg height="32" viewBox="0 -960 960 960" width="32"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
+                    <Link to={'/suministradores/add'} title="Registrar un nuevo Suministrador">
+                        <Masicon size='24' />
                     </Link>
 
                 </div>

@@ -23,6 +23,7 @@ import ComponentsPrivatization from './components/ComponentPrivatization';
 import Asistentes from './components/Asistentes/Asistentes';
 
 import ContratoForm from './components/Contratos/createdit.contratos';
+import InformeForm from './components/Contratos/createInforme';
 import EvaluarAsis from './components/Asistentes/evaluar.asistente';
 import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
 import Home from './pages/Home';
@@ -50,8 +51,13 @@ function App() {
                 <Route path="/contratos" element={<Contratos />} />
                 <Route path='/contratos' element={<Forms />}>
                   <Route path='add' element={
-                    <ComponentsPrivatization permitted={['comercial_group', 'admin_group']} redirect={true}>
+                    <ComponentsPrivatization permitted={['comercial_group']} redirect={true}>
                       <ContratoForm />
+                    </ComponentsPrivatization>
+                  } />
+                  <Route path='add_informe' element={
+                    <ComponentsPrivatization permitted={['abogado_group']} redirect={true}>
+                      <InformeForm />
                     </ComponentsPrivatization>
                   } />
                   <Route path='renovar/:id' element={<ContratoForm />} />

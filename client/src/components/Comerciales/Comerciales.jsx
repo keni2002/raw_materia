@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
-
+import Evalicon from '../Icons/Evalicon'
 export default function Comerciales() {
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
@@ -64,7 +64,7 @@ export default function Comerciales() {
 
 
                     <button title='Evaluar trabajador'>
-                        <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="M160-120v-80h480v80H160Zm226-194L160-540l84-86 228 226-86 86Zm254-254L414-796l86-84 226 226-86 86Zm184 408L302-682l56-56 522 522-56 56Z" /></svg>
+                        <Evalicon />
                     </button>
                 </Link>
                 <Link to={`/comerciales/info/${row.id}`}>
@@ -142,7 +142,7 @@ export default function Comerciales() {
                         </svg>
                     </button>
                 </Link>
-            </div >
+            </div>
         </>
     )
 }

@@ -6,16 +6,9 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useLazyGetContratQuery } from '../../services/apiContratos';
 import calcularTiempoRestante from '../utils/fechaRestante';
-
+import fecha from '../utils/fechaHumana'
 export default function InfoContrato() {
-    function fecha(fecha) {
-        return new Date(fecha)
-            .toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            })
-    }
+
     function calcularEdad(fechaNacimiento) {
         const hoy = new Date();
         const nacimiento = new Date(fechaNacimiento);
