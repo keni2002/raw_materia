@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/keni2002/raw_materia/tree/main/client/src/public/logo.svg)
+![Logo](https://github.com/keni2002/raw_materia/blob/main/client/public/carrousel/dash.png)
 
 # Raw materia (Materias Primas)
 The National Raw Materials Company wants to computerize the processes in its areas. It has commercial departments and legal departments.
