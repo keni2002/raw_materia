@@ -1,4 +1,8 @@
 
+
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+
+
 ![Logo](https://github.com/keni2002/raw_materia/tree/main/client/src/public/logo.svg)
 
 # Raw materia (Materias Primas)
@@ -18,4 +22,16 @@ La Empresa Nacional de Materias Primas desea informatizar los procesos de sus á
 - Alejandro Chipi Cedeño
 
 
+
+
+## Tech Stack
+
+**Client:** React, Redux, TailwindCSS
+
+**Server:** Django
+
+
+## Support
+
+For support, email ...
 
