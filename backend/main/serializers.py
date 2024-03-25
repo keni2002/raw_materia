@@ -12,7 +12,13 @@ class TrabajadorSerializer(serializers.ModelSerializer):
     def get_dp(self, obj):
         return obj.departamento.nombre
     def get_evaluacion(self, obj):
-        return obj.evaluacion
+        if _models.Comercial.objects.filter(pk=obj.id):
+            return _models.Comercial.objects.get(pk=obj.id).evaluacion
+        elif  _models.Asistente.objects.filter(pk=obj.id):
+            return _models.Asistente.objects.get(pk=obj.id).evaluacion
+        else:
+            return '0'
+
     def get_group(self,obj):
         return obj.name_group
     
@@ -51,7 +57,41 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'grupo': self.user.name_group[0]['name']
                 
         }
+        materias = []
+        divisiones =[]
+#         MATERIA = [
+#     ('VEG', 'Vegetal'),
+#     ('ANIM', 'Animal'),
+#     ('MIN', 'Mineral'),
+#     ('FOS', 'Fosil'),
+# ]
+#         ClASIFICACION = [
+#     ('A', 'Vegetal (A)'),
+#     ('B', 'Animal (B)'),
+#     ('C', 'Mineral (C)'),
+#     ('D', 'Fosil (D)'),
+# ]
+        def get_materias(m):
+            c = 0
+            """viene un texto asi A -> sale un asi Vegetal (A) y debe retornar <Veg>str"""
+            #m = A for axample
+            for i in _models.ClASIFICACION:
+                if i[0] == m:
+                    return _models.MATERIA[c][0]
+                
+                c+=1
+            return ''
+        def get_division(m):
+            """viene un texto asi A -> sale un asi Vegetal (A)str"""
+            #m = A for axample
+            for i in _models.ClASIFICACION:
+                if i[0] == m:
+                    return f'{m} {i[1][0:-4]}'
+                
+            return ''
+
         def get_dep():
+            
             dp='all'
             code=''
             if self.user.name_group[0]['name'] == 'comercial_group':
@@ -67,12 +107,24 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
                 code = _models.Director.objects.get(pk=self.user.id).departamento.codigo
 
             elif self.user.name_group[0]['name'] == 'abogado_group':
-                print(_models.Abogado.objects.get(pk=self.user.id).division)
+                
                 dp =_models.Abogado.objects.get(pk=self.user.id).division.all()[0].dp_legal.nombre
 
                 code = _models.Abogado.objects.get(pk=self.user.id).division.all()[0].dp_legal.codigo
+               
+                for i in _models.Abogado.objects.get(pk=self.user).division.all():
+                    materias.append(get_materias(i.clasificacion))
+                    divisiones.append(get_division(i.clasificacion))
+
             return [dp,code]
         data['user']['dep']=get_dep()
+        
+        if self.user.name_group[0]['name'] == 'abogado_group':
+            data['user']['materias'] = materias
+            data['user']['divisiones'] = divisiones
+        else:
+            data['user']['materias'] = ''
+            data['user']['divisiones'] = ''
         
         
             
@@ -97,12 +149,17 @@ class ContratoSerializer(serializers.ModelSerializer):
         fields = '__all__'
     suministradorName = serializers.SerializerMethodField()
     materia = serializers.SerializerMethodField()
+    
     def get_suministradorName(self,obj):
         return _models.Suministrador.objects.filter(contratos=obj)[0].nombre
     def get_materia(self,obj):
         return _models.Suministrador.objects.filter(contratos=obj)[0].clasificacion
         
-    
+#----------------------------------------------------------------Informe----------------------------
+class InformeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = _models.Informe
+        fields = '__all__'   
     
 
 class SuministradorSerializer(serializers.ModelSerializer):
@@ -156,7 +213,7 @@ class AsistenteSerializer(TrabajadorSerializer):
     class Meta(TrabajadorSerializer.Meta):
         model = _models.Asistente
 
-class AbogadoSerializer(serializers.ModelSerializer):
+class AbogadoSerializer(TrabajadorSerializer):
     class Meta:
         model = _models.Abogado
         exclude = ('evaluaciones',)

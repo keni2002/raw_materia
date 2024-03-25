@@ -72,7 +72,7 @@ class Trabajador(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return String"""
         return self.email
-    #// groups son grupos solo que lo puse en singular para no sobresscribir el original
+
     @property
     def name_group(self):
         return  [{'name': group.name} for group in self.groups.all()] or [
@@ -380,8 +380,9 @@ class Contrato(models.Model):
 class Informe(models.Model):
     codigo = models.CharField(max_length=255,primary_key=True, editable=False)
     fecha = models.DateField(auto_now_add=True)
-    contrato = models.OneToOneField(Contrato, on_delete=models.CASCADE, related_name='informe')
+    contrato = models.OneToOneField(Contrato, on_delete=models.CASCADE, related_name='informes')
     descripcion = models.TextField()
+    abogado = models.ForeignKey(Abogado,on_delete=models.CASCADE, related_name='informes',default='')
     def save(self, *args, **kwargs):
         if not self.codigo:
             randon = str(random.randint(100000, 999999))

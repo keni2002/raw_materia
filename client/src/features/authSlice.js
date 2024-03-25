@@ -17,6 +17,7 @@ export const userSlice = createSlice({
       (state, { payload: { user } }) => {
 
         state.user = user
+        console.log(state.user)
         state.isAuthenticated = true;
       }
     );

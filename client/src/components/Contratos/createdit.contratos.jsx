@@ -51,6 +51,7 @@ export default function ContratoForm() {
       createContrato({ ...values, comercial: com_id })
         .unwrap()
         .then(() => {
+          console.log(com_id)
           navigate('/contratos');
           toast.success('Contrato creado')
         })

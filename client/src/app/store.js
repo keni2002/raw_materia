@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import booleanos from '../features/booleanos.jsx'
-import { apiTable } from '../services/apiTable.js'
 import { apiDpCom } from '../services/apiDepCom.js'
 import { apiCom } from '../services/apiComercial.js'
 import { apiEval } from '../services/apiEval.js'
@@ -11,12 +10,12 @@ import { apiAsist } from '../services/apiAsistente.js'
 import { apiSum } from '../services/apiSumin.js'
 import { apiAddress } from '../services/apiAddress.js'
 import { apiContra } from '../services/apiContratos.js'
+import { apinForme } from '../services/apiInforme.js'
 export const store = configureStore({
 
     reducer: {
         booleanos: booleanos,
         [userSlice.name]: authSlice,
-        [apiTable.reducerPath]: apiTable.reducer,
         //Departamentos
         [apiDpCom.reducerPath]: apiDpCom.reducer,
         //Personal
@@ -32,12 +31,13 @@ export const store = configureStore({
 
         //Miscelaneos
         [apiAddress.reducerPath]: apiAddress.reducer,
-        [apiContra.reducerPath]: apiContra.reducer
+        [apiContra.reducerPath]: apiContra.reducer,
+        [apinForme.reducerPath]: apinForme.reducer
 
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({}).concat([
-            apiTable.middleware,
+
             apiDpCom.middleware,
             apiCom.middleware,
             apiEval.middleware,
@@ -46,7 +46,8 @@ export const store = configureStore({
             apiAsist.middleware,
             apiAddress.middleware,
             apiSum.middleware,
-            apiContra.middleware
+            apiContra.middleware,
+            apinForme.middleware,
         ])
 })
 

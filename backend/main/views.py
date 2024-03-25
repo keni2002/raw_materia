@@ -1,6 +1,6 @@
 from rest_framework import permissions, viewsets, generics
-from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Factura, Evaluacion,Contrato, Suministrador,Direccion
-from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,FacturaSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer, MyTokenObtainPairSerializer, SuministradorSerializer, DireccionSerializer
+from .models import Trabajador,DpComercial,DpLegal, Comercial, Asistente, Abogado,Factura, Evaluacion,Contrato, Suministrador,Direccion,Informe
+from .serializers import TrabajadorSerializer, DpComercialSerializer,DpLegaleSerializer,ComercialSerializer,DirectorSerializer,AsistenteSerializer,AbogadoSerializer,FacturaSerializer, EvaluacionSerializer, ContratoSerializer, EvalsOneSerializer, MyTokenObtainPairSerializer, SuministradorSerializer, DireccionSerializer, InformeSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -99,6 +99,12 @@ class ContratoViewSet(viewsets.ModelViewSet):
     serializer_class = ContratoSerializer
     def get_view_name(self):
         return "Contratos"
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)
+    
+class InformeViewSet(viewsets.ModelViewSet):
+    queryset = Informe.objects.all()
+    serializer_class = InformeSerializer
     permission_classes = (_permissions.IsAuthenticated,
                           _permissions.DjangoModelPermissions)
     

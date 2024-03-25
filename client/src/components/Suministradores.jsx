@@ -1,4 +1,4 @@
-import { useGetAsistentesQuery,useGetSuministradoresQuery } from "../services/apiTable";
+
 import { useSelector } from "react-redux";
 import Tables from "./Tables";
 
@@ -29,17 +29,17 @@ export default function Suministradores() {
                 </button>
             </div>
         ),
-        
+
 
     }
     const columns = [...getColumns, actiones]
     const { data, isSuccess } = useGetSuministradoresQuery()
     return (
         <>
-        {
-            isSuccess &&
-            <Tables data={data} columns={columns} name={'Suminstradores'} />
-        }
-    </>
+            {
+                isSuccess &&
+                <Tables data={data} columns={columns} name={'Suminstradores'} />
+            }
+        </>
     )
 }

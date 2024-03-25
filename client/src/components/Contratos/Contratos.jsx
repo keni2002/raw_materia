@@ -18,7 +18,7 @@ import vence from '../utils/vence'
 
 export default function Contratos() {
 
-    const { user: { dep, grupo } } = useSelector(auth_state);
+    const { user: { dep, grupo, materias } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getContrats, { data }] = useLazyGetContratsQuery()
     //restablecer todos los valores
@@ -80,7 +80,7 @@ export default function Contratos() {
                     : <></>
                 }
                 {grupo == 'abogado_group' &&
-                    < Link to={'add_informe/'}>
+                    < Link to={`add_informe/${row.codigo}`}>
                         <button title="Gestionar contrato">
                             <Evalicon />
                         </button>
@@ -110,7 +110,10 @@ export default function Contratos() {
 
     ///---------------------------------------------transformando data
     //Los que esten en pendiente y no hayan vencido
-    const filter_data = grupo == 'abogado_group' ? data?.filter(item => item.estado == 'P' && !vence(item.periodo_validez)) : data
+    const filter_data = grupo == 'abogado_group' ?
+        data?.filter(
+            item => item.estado == 'P' && !vence(item.periodo_validez) && materias.includes(item.materia)
+        ) : data
     //ROL
 
     //Transformamos los salario y evaluacion

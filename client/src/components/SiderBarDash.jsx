@@ -24,7 +24,7 @@ const SidebarDash = ({ closeMenu, menuVisible }) => {
 
                 <Link to={'/'}>
                     <div className="flex items-center pb-4 border-b border-b-gray-800">
-                        <Logo />
+                        <Logo size={50} fill={'white'} />
                         <span className="text-lg font-bold text-white ml-3">Raw Materia</span>
                     </div>
                 </Link>

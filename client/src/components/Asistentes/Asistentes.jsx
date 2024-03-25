@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
-
+import Editicon from '../Icons/Editicon'
 export default function Asistentes() {
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
@@ -71,7 +71,7 @@ export default function Asistentes() {
                 <Link to={`/asistentes/edit/${row.id}`}>
                     <button title="Editar">
 
-                        <svg fill='#646464' height="24" viewBox="0 -960 960 960" width="24"><path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm263-224 37-39-37-37-38 38 38 38Z" /></svg>
+                        <Editicon size={24} fill={'#646464'} />
                     </button>
                 </Link>
                 <Link to={`/asistentes/delete/${row.id}`}>

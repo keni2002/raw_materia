@@ -6,11 +6,12 @@ import { auth_state } from "../features/authSlice";
 import { useLogoutMutation } from '../services/auth/usecases/logout';
 import { useHandleAsyncLogic } from '../hooks/useHandleAsyncLogic';
 
+import Editicon from "./Icons/Editicon";
 // eslint-disable-next-line react/prop-types
 function HeaderDash({ toggleMenu }) {
 
     const [logout, { isLoading, isError, error, isSuccess }] = useLogoutMutation();
-    const { user: { nombre, apellido, email, grupo, is_staff, dep } } = useSelector(auth_state);
+    const { user: { nombre, apellido, email, grupo, is_staff, dep, materias, divisiones } } = useSelector(auth_state);
 
 
 
@@ -60,9 +61,24 @@ function HeaderDash({ toggleMenu }) {
                     </div>
                     {showMenu && <div id="userDropdown" className="z-10 absolute right-3 cursor-pointer bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                            <div>{`${nombre} ${apellido}`}</div>
-                            <div className="font-medium truncate">{email}</div>
+                            <div className="flex gap-3">
+                                <div className=" flex flex-col">
+                                    <div>{`${nombre} ${apellido}`}</div>
+                                    <div className="font-medium mt-3 text-xs truncate">Email: {email}</div>
+                                </div>
+                                <Editicon size={30} fill={'#646464'} />
+                            </div>
                         </div>
+                        {grupo == 'abogado_group' && <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                            <div>Divisiones:</div>
+                            <ul className="list-disc list-inside ml-3">
+                                {
+                                    divisiones &&
+                                    divisiones.map(element => <li>{element}</li>)
+                                }
+                            </ul>
+
+                        </div>}
 
                         <div className="py-1">
                             <button onClick={logout} className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Cerrar Sesión</button>

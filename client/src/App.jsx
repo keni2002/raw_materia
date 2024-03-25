@@ -4,7 +4,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard';
 import { Provider } from 'react-redux';
 import { store } from './app/store'
-import Compras from './components/Compras';
+
 import Comerciales from './components/Comerciales/Comerciales';
 
 import Suministradores from './components/Suministradores';
@@ -23,7 +23,7 @@ import ComponentsPrivatization from './components/ComponentPrivatization';
 import Asistentes from './components/Asistentes/Asistentes';
 
 import ContratoForm from './components/Contratos/createdit.contratos';
-import InformeForm from './components/Contratos/createInforme';
+import InformeForm from './components/Informes/createdit.Informe';
 import EvaluarAsis from './components/Asistentes/evaluar.asistente';
 import InfoEvalsAsis from './components/Asistentes/info.evals.asis';
 import Home from './pages/Home';
@@ -55,9 +55,9 @@ function App() {
                       <ContratoForm />
                     </ComponentsPrivatization>
                   } />
-                  <Route path='add_informe' element={
+                  <Route path='add_informe/:id' element={
                     <ComponentsPrivatization permitted={['abogado_group']} redirect={true}>
-                      <InformeForm />
+                      <InformeForm isInLista={false} />
                     </ComponentsPrivatization>
                   } />
                   <Route path='renovar/:id' element={<ContratoForm />} />
@@ -69,7 +69,7 @@ function App() {
 
 
                 {/* FACTURA */}
-                <Route path="/compras" element={<Compras />} />
+
 
                 {/* COMERCIALES */}
                 <Route path='/comerciales' element={<Comerciales />} />
