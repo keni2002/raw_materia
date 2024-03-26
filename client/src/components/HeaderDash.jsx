@@ -59,9 +59,9 @@ function HeaderDash({ toggleMenu }) {
                     <div onClick={loginMenuToggle} className={`fixed ${showMenu || 'hidden'}  inset-0 transition-opacity`}>
                         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                     </div>
-                    {showMenu && <div id="userDropdown" className="z-10 absolute right-3 cursor-pointer bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                    {showMenu && <div id="userDropdown" className="z-10 absolute right-3 cursor-pointer bg-white divide-y divide-gray-100 rounded-lg shadow sm:w-auto md:w-64  dark:bg-gray-700 dark:divide-gray-600">
                         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 justify-between">
                                 <div className=" flex flex-col">
                                     <div>{`${nombre} ${apellido}`}</div>
                                     <div className="font-medium mt-3 text-xs truncate">Email: {email}</div>

@@ -65,8 +65,8 @@ export default function InformeForm({ isInLista }) {
   useEffect(() => {
 
     if (id && isInLista) {
-      getInformeById(id).unwrap().then(() => {
-        getContraById(data.contrato)
+      getInformeById(id).unwrap().then((response) => {
+        getContraById(response.contrato)
       })
 
     }
@@ -84,7 +84,7 @@ export default function InformeForm({ isInLista }) {
   return (
     <>
       <header className='flex justify-between pb-10'>
-        <Link to='/contratos'>
+        <Link to={-1}>
           <Backicon />
         </Link>
         <Evalicon />

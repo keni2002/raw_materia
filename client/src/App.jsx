@@ -32,7 +32,8 @@ import InfoContrato from './components/Contratos/info.Contrato';
 import DeleteCont from './components/Contratos/delete.contrato';
 import NotFound from './pages/NotFound';
 import SuminisForm from './components/Suministradores/createdit.sumin';
-
+import Informes from './components/Informes/Informes';
+import InfoInformes from './components/Informes/info.Informes'
 
 
 function App() {
@@ -63,6 +64,17 @@ function App() {
                   <Route path='renovar/:id' element={<ContratoForm />} />
                   <Route path='delete/:id' element={<DeleteCont />} />
                   <Route path='info/:id' element={<InfoContrato />} />
+                </Route>
+
+                {/* Informe */}
+                <Route path="/informes" element={<Informes />} />
+                <Route path='/informes' element={<Forms />}>
+                  <Route path='edit/:id' element={
+                    <ComponentsPrivatization permitted={['abogado_group']} redirect={true}>
+                      <InformeForm isInLista={true} />
+                    </ComponentsPrivatization>
+                  } />
+                  <Route path='info/:id' element={<InfoInformes />} />
                 </Route>
 
 
@@ -128,9 +140,3 @@ function App() {
 export default App;
 
 
-
-{/* <Route path="/" element={<Navigate to='/dashboard/contratos'/>} />
-            <Route path="/contratos"  element={<Table quito={'evaluar'}/>} />
-            <Route path='/compras' element={<Table quito={'evaluar'}/>}/>
-            <Route path='/comerciales' element={<Table/>}/>
-            <Route path='/evaluar' element={<FormEvaluate/>}/>        */}

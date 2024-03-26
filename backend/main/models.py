@@ -340,7 +340,7 @@ class Producto(models.Model):
                 self.calidad = 'ALTA'
         super(Producto, self).save(*args, **kwargs)
     def __str__(self):
-        return self.nombre
+        return f'{self.nombre} ({self.calidad})'
 
 class Factura(models.Model):
     """La Tabla Many to Many entre Producto y Comercial"""
@@ -385,12 +385,13 @@ class Informe(models.Model):
     abogado = models.ForeignKey(Abogado,on_delete=models.CASCADE, related_name='informes',default='')
     def save(self, *args, **kwargs):
         if not self.codigo:
-            randon = str(random.randint(100000, 999999))
+            code = self.contrato.codigo
+            random = str(random.randint(100000, 999999))
             # Concatenamos el código de contrato y los dígitos aleatorios
-            self.codigo =f'{str(self.contrato.codigo)}-{str(randon)}'
-        super(Informe, self).save(*args, **kwargs)
+            self.codigo =f'{str(code)}-{random}'
+        super().save(*args, **kwargs)
     def __str__(self):
-        return f'{self.codigo} - {self.fecha}'
+        return f'{str(self.codigo)} - {str(self.fecha)}'
     
 
     

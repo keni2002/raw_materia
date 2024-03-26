@@ -59,6 +59,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         }
         materias = []
         divisiones =[]
+       
 #         MATERIA = [
 #     ('VEG', 'Vegetal'),
 #     ('ANIM', 'Animal'),
@@ -82,12 +83,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
                 c+=1
             return ''
         def get_division(m):
+           
             """viene un texto asi A -> sale un asi Vegetal (A)str"""
             #m = A for axample
             for i in _models.ClASIFICACION:
                 if i[0] == m:
-                    return f'{m} {i[1][0:-4]}'
-                
+                    return f' {i[1][0:-4]} {m}'
+        
             return ''
 
         def get_dep():
@@ -114,7 +116,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
                
                 for i in _models.Abogado.objects.get(pk=self.user).division.all():
                     materias.append(get_materias(i.clasificacion))
-                    divisiones.append(get_division(i.clasificacion))
+                    divisiones.append(i.nombre + get_division(i.clasificacion))
 
             return [dp,code]
         data['user']['dep']=get_dep()
@@ -165,7 +167,13 @@ class ContratoSerializer(serializers.ModelSerializer):
         
 #----------------------------------------------------------------Informe----------------------------
 class InformeSerializer(serializers.ModelSerializer):
-    
+    comercialyId  = serializers.SerializerMethodField()
+    estado = serializers.SerializerMethodField()
+
+    def get_estado(self,obj):
+        return obj.contrato.estado
+    def get_comercialyId(self, obj):
+        return f'{obj.contrato.codigo} - {obj.contrato.comercial.nombre} {obj.contrato.comercial.apellido}'
     class Meta:
         model = _models.Informe
         fields = '__all__'   
