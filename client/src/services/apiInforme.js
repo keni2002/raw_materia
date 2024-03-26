@@ -67,5 +67,6 @@ export const apinForme = createApi({
 export const {
     useCreateInformeMutation,
     useLazyGetInformeQuery,
-    useUpdateInformeMutation
+    useUpdateInformeMutation,
+    useDeleteInformeMutation
 } = apinForme

@@ -5,30 +5,32 @@ import { useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useLazyGetContratQuery } from '../../services/apiContratos';
+import { useLazyGetInformeQuery } from '../../services/apiInforme';
 import calcularTiempoRestante from '../utils/fechaRestante';
 import fecha from '../utils/fechaHumana'
+import fechaHumana from '../utils/fechaHumana';
 export default function InfoContrato() {
-
-    function calcularEdad(fechaNacimiento) {
-        const hoy = new Date();
-        const nacimiento = new Date(fechaNacimiento);
-
-        let edad = hoy.getFullYear() - nacimiento.getFullYear();
-        const mes = hoy.getMonth() - nacimiento.getMonth();
-
-        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-            edad--;
+    function toTexto(char) {
+        switch (char) {
+            case 'A':
+                return 'Aprobado'; break;
+            case 'N':
+                return 'No aprobado'; break;
+            case 'P':
+                return 'Pendiente'; break;
+            default:
+                break;
         }
-
-        return edad;
     }
-
     const { id } = useParams();
 
     const [getContratById, { data, isLoading }] = useLazyGetContratQuery()
+    const [getInformeById, { data: info_data, isLoading_info }] = useLazyGetInformeQuery()
 
     useEffect(() => {
-        getContratById(id)
+        getContratById(id).unwrap().then((response) => {
+            console.log(response)
+        })
     }, [id])
     const restTime = calcularTiempoRestante(data?.periodo_validez)
     return (
@@ -42,22 +44,33 @@ export default function InfoContrato() {
             </header>
 
             <div className='p-4 mb-3 bg-gray-100 rounded-md'>
-                <p>Suministrador: {data?.suministradorName} </p>
-                <p>Valido hasta: {fecha(data?.periodo_validez)} </p>
+                <p><span className='font-bold'>Suministrador</span>: {data?.suministradorName} </p>
+                <p><span className='font-bold'>Válido hasta: </span> {fecha(data?.periodo_validez)} </p>
                 <p>
+
                     {(restTime.anios == 0 && restTime.meses == 0 && restTime.dias == 0) ? 'HOY VENCE' : <>
-                        {(restTime.anios < 0 || restTime.meses < 0 || restTime.dias < 0) ? <>Ya pasaron:</> : <>Finaliza en </>}
+                        {(restTime.anios < 0 || restTime.meses < 0 || restTime.dias < 0) ? <><span className='font-bold'>Ya Pasaron: </span></> : <><span className='font-bold'>Finaliza en: </span> </>}
                         {restTime.anios != 0 && <> {Math.abs(restTime.anios)} años</>}
                         {restTime.meses != 0 && <> {Math.abs(restTime.meses)} meses</>}
                         {restTime.dias != 0 && <> {Math.abs(restTime.dias)} días</>}
                     </>
                     }
                 </p>
-                <p>Estado: {data?.estado} </p>
+                <p><span className='font-bold'>Estado: </span>: {toTexto(data?.estado)} </p>
                 <p>Materia objetivo: {data?.materia} </p>
-                <div className='pb-4 mt-7 bg-slate-200 rounded-md'>
-                    <p>Descripcion: {data?.descripcion}</p>
+                <p className='mt-4'><span className='font-bold'>Descripcion del contrato: </span> </p>
+                <div className='p-4 mb-6 bg-slate-200 rounded-md'>
+                    {data?.descripcion}
                 </div>
+                {(data?.estado == 'A' || data?.estado == 'N') && <>
+                    <p className='mt-4'><span className='font-bold'>Descripcion del Informe: </span> </p>
+                    <div className='p-4  bg-slate-200 rounded-md'>
+                        <p className={`${data?.estado == 'A' ? 'text-green-700' : 'text-red-500'} font-bold`}>{toTexto(data?.estado)}</p>
+                        <p>id: {data?.informe_codigo}</p>
+                        <p><span className='font-bold'>Abogado:</span> {data?.abogado_name}</p>
+                        <p>Fecha: {fechaHumana(data?.fecha_creacion)}</p>
+                        <p>Detalle de Informe: {data?.informe_descripcion}</p>
+                    </div></>}
 
             </div>
 

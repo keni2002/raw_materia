@@ -149,7 +149,15 @@ class ContratoSerializer(serializers.ModelSerializer):
         fields = '__all__'
     suministradorName = serializers.SerializerMethodField()
     materia = serializers.SerializerMethodField()
-    
+    abogado_name = serializers.SerializerMethodField()
+    informe_descripcion = serializers.SerializerMethodField()
+    informe_codigo = serializers.SerializerMethodField()
+    def get_informe_codigo(self,obj):
+        return obj.informes.codigo if hasattr(obj, "informes") else ""
+    def get_informe_descripcion(self,obj):
+        return obj.informes.descripcion if hasattr(obj, "informes") else ""
+    def get_abogado_name(self,obj):
+        return f'{obj.informes.abogado.nombre} {obj.informes.abogado.apellido}' if hasattr(obj, "informes") else ""
     def get_suministradorName(self,obj):
         return _models.Suministrador.objects.filter(contratos=obj)[0].nombre
     def get_materia(self,obj):
@@ -157,6 +165,7 @@ class ContratoSerializer(serializers.ModelSerializer):
         
 #----------------------------------------------------------------Informe----------------------------
 class InformeSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = _models.Informe
         fields = '__all__'   

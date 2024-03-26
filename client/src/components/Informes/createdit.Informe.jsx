@@ -4,7 +4,7 @@ import Fields from '../Fields';
 import Btn from '../Btn';
 import { schema } from './schema';
 import { initial } from './initial';
-import { useCreateInformeMutation, useLazyGetInformeQuery, useUpdateInformeMutation } from '../../services/apiInforme'
+import { useCreateInformeMutation, useLazyGetInformeQuery, useDeleteInformeMutation, useUpdateInformeMutation } from '../../services/apiInforme'
 import { useUpdateContratMutation, useLazyGetContratQuery } from '../../services/apiContratos'
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -24,10 +24,11 @@ export default function InformeForm({ isInLista }) {
   const [getContraById, { data: contractData, isLoadingCon }] = useLazyGetContratQuery()
 
   const [updateInforme] = useUpdateInformeMutation()
+  const [deleteInforme] = useDeleteInformeMutation()
   const [createInforme] = useCreateInformeMutation()
   const [updateContrato] = useUpdateContratMutation()
-  const { user: { id: abo_id, grupo } } = useSelector(auth_state);
-
+  const { user: { grupo } } = useSelector(auth_state);
+  const abo_id = JSON.parse(sessionStorage.getItem('user'))['id']
 
   const handleSubmit = (values) => {
     if (id && isInLista) {
@@ -68,6 +69,15 @@ export default function InformeForm({ isInLista }) {
         getContraById(data.contrato)
       })
 
+    }
+    if (id) {
+      getContraById(id).unwrap().then((response) => {
+        if (response.informe_codigo != '') {
+          deleteInforme(response.informe_codigo).unwrap().then(() => {
+            toast.success('Informe anterior borrado')
+          })
+        }
+      })
     }
 
   }, [id, isInLista])

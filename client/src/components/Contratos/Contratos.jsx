@@ -15,12 +15,15 @@ import Deleteicon from "../Icons/Deleteicon"
 import Masicon from "../Icons/Masicon"
 
 import vence from '../utils/vence'
+import { formToJSON } from "axios";
 
 export default function Contratos() {
-
     const { user: { dep, grupo, materias } } = useSelector(auth_state);
+    const id = JSON.parse(sessionStorage.getItem('user'))['id']
+    const [filter_data, setfilter_data] = useState([])
+
     const dispatch = useDispatch()
-    const [getContrats, { data }] = useLazyGetContratsQuery()
+    const [getContrats, { data, isSuccess }] = useLazyGetContratsQuery()
     //restablecer todos los valores
     useEffect(() => {
         dispatch(setIsopenAdd(false));
@@ -70,8 +73,8 @@ export default function Contratos() {
         cell: row => (
 
             <div className=' flex  gap-2'>
-                {grupo != 'abogado_group' && (vence(row.periodo_validez) ||
-                    row.estado == 'No aprobado') ?
+                {(grupo != 'abogado_group' && vence(row.periodo_validez)) ||
+                    (row.estado == '*No aprobado') ?
                     <Link to={`/contratos/renovar/${row.codigo}`}>
                         <button title="Renovar Contrato">
                             <Againicon />
@@ -110,10 +113,23 @@ export default function Contratos() {
 
     ///---------------------------------------------transformando data
     //Los que esten en pendiente y no hayan vencido
-    const filter_data = grupo == 'abogado_group' ?
-        data?.filter(
-            item => item.estado == 'P' && !vence(item.periodo_validez) && materias.includes(item.materia)
-        ) : data
+    useEffect(() => {
+
+        setfilter_data(grupo == 'abogado_group' ?
+            data?.filter(
+                item => item.estado == 'P' && !vence(item.periodo_validez) && materias.includes(item.materia)
+            ) :
+            grupo == 'comercial_group' ?
+                data?.filter(
+                    item => item.comercial == id
+                ) : grupo == 'asistente_group' ?
+                    null : data)
+
+
+    }, [isSuccess])
+
+
+
     //ROL
 
     //Transformamos los salario y evaluacion

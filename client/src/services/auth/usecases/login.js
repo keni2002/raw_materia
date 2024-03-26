@@ -13,7 +13,7 @@ export const login = apiAuth.injectEndpoints({
                 try {
                     await queryFulfilled;
                     const { access, refresh, user } = getCacheEntry().data
-                    const data = jwtDecode(access);
+                    const data = await jwtDecode(access);
                     sessionStorage.setItem('user', JSON.stringify(
                         { ...user, id: data.user_id }
                     ));
