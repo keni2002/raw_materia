@@ -366,7 +366,7 @@ ESTADO = [
 
 ]
 class Contrato(models.Model):
-    codigo = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    codigo =  models.AutoField(primary_key=True)
     fecha_creacion = models.DateField(auto_now=True)
     periodo_validez = models.DateField()
     descripcion = models.TextField()
@@ -378,7 +378,7 @@ class Contrato(models.Model):
         return f'contrado de {self.comercial.nombre} - {self.estado}'
 
 class Informe(models.Model):
-    codigo = models.CharField(max_length=255,primary_key=True, editable=False)
+    codigo = models.CharField(max_length=100, primary_key=True, editable=False)
     fecha = models.DateField(auto_now_add=True)
     contrato = models.OneToOneField(Contrato, on_delete=models.CASCADE, related_name='informes')
     descripcion = models.TextField()
@@ -387,7 +387,7 @@ class Informe(models.Model):
         if not self.codigo:
             randon = str(random.randint(100000, 999999))
             # Concatenamos el código de contrato y los dígitos aleatorios
-            self.codigo = str(self.contrato.codigo)+ '--' + str(randon)
+            self.codigo =f'{str(self.contrato.codigo)}-{str(randon)}'
         super(Informe, self).save(*args, **kwargs)
     def __str__(self):
         return f'{self.codigo} - {self.fecha}'
