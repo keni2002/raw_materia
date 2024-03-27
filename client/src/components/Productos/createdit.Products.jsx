@@ -36,8 +36,8 @@ export default function ProductForm() {
       updateComercial({ id, ...rest })
         .unwrap()
         .then(() => {
-          navigate('/comerciales');
-          toast.success('Comercial actualizado')
+          navigate(-1);
+          toast.success('Producto actualizado')
         })
         .catch((err) => {
           toast.error(err.data.message)
@@ -60,7 +60,7 @@ export default function ProductForm() {
   useEffect(() => {
 
     if (id) {
-      getComercialById(id)
+      getProductById(id)
 
     }
 

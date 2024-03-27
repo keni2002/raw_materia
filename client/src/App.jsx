@@ -35,7 +35,9 @@ import SuminisForm from './components/Suministradores/createdit.sumin';
 import Informes from './components/Informes/Informes';
 import InfoInformes from './components/Informes/info.Informes'
 import Productos from './components/Productos/Productos'
+import DeleteProduct from './components/Productos/delete.product'
 import ProductForm from './components/Productos/createdit.Products'
+import InfoProductos from './components/Productos/info.Productos'
 function App() {
 
   return (
@@ -85,6 +87,13 @@ function App() {
                       <ProductForm />
                     </ComponentsPrivatization>
                   } />
+                  <Route path='edit/:id' element={
+                    <ComponentsPrivatization permitted={['comercial_group', 'asistente_group']} redirect={true}>
+                      <ProductForm />
+                    </ComponentsPrivatization>
+                  } />
+                  <Route path='delete/:id' element={<DeleteProduct />} />
+                  <Route path='info/:id' element={<InfoProductos />} />
                 </Route>
 
 

@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
-import Evalicon from '../Icons/Evalicon'
+
 import Infoicon from '../Icons/Infoicon'
 import Editicon from '../Icons/Editicon'
 import Deleteicon from '../Icons/Deleteicon'
 import fecha from '../utils/fechaHumana'
+import Masicon from "../Icons/Masicon";
 export default function Productos() {
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
@@ -53,17 +54,17 @@ export default function Productos() {
         name: 'Acciones',
         cell: row => (
             <div className=' flex  gap-2'>
-                <Link to={`/productos/info/${row.id}`}>
+                <Link to={`/productos/info/${row.codigo}`}>
                     <button title="Informacion adicional">
                         <Infoicon />
                     </button>
                 </Link>
-                <Link to={`/productos/edit/${row.id}`}>
+                <Link to={`/productos/edit/${row.codigo}`}>
                     <button title="Editar">
                         <Editicon size={24} fill={'#646464'} />
                     </button>
                 </Link>
-                <Link to={`/productos/delete/${row.id}`}>
+                <Link to={`/productos/delete/${row.codigo}`}>
                     <button title='Eliminar'>
                         <Deleteicon />
                     </button>
@@ -105,13 +106,11 @@ export default function Productos() {
                 <Tables data={modifiedData} columns={[...columns, actions]}
 
                 />
-                <Link to='/comerciales/add'>
+                <Link to='/productos/add'>
                     <button
-                        title="Agregar un comercial"
+                        title="Agregar un producto"
                         className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                    ><svg fill="#fff" height="40" viewBox="0 0 24 24" width="40">
-                            <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
-                        </svg>
+                    ><Masicon size='40' fill="#fff" />
                     </button>
                 </Link>
             </div>

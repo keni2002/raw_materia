@@ -276,6 +276,9 @@ class EvaluacionSerializer(serializers.ModelSerializer):
         
 
 class ProductoSerializer(serializers.ModelSerializer):
+    suministradorName = serializers.SerializerMethodField()
+    def get_suministradorName(self,obj):
+        return _models.Suministrador.objects.get(productos=obj).nombre
     class Meta:
         model = _models.Producto
         fields = '__all__'

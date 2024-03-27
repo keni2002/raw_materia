@@ -57,4 +57,5 @@ export const {
     useCreateProdMutation,
     useUpdateProdMutation,
     useLazyGetProdsQuery,
+    useDeleteProdMutation,
 } = apiProd;
