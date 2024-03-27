@@ -37,7 +37,7 @@ export default function DeleteCont() {
                 <h3 className=' text-lg  text-center'>eliminar</h3>
             </header>
 
-            <h3 className='font-bold text-xl'>Deseas Eliminar el contrato {data?.codigo.substring(0, 5) + '...'}que tiene con el suministrador <span className='text-red-600'>{data?.suministradorName}</span></h3>
+            <h3 className='font-bold text-xl'>Deseas Eliminar el contrato {data?.codigo} que tiene con el suministrador <span className='text-red-600'>{data?.suministradorName}</span></h3>
             <div className='pb-3'></div>
             <div className='flex gap-3'>
                 <button onClick={handleSubmit} type='button' className=' text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'>Eliminar</button>

@@ -107,7 +107,7 @@ export default function InformeForm({ isInLista }) {
 
           return (
             <Form>
-              <Dropdown name='estado' label={'Aprobación'} value={values.estado} />
+              <Dropdown name={'estado'} label={'Aprobación'} value={values?.estado} />
               <FieldArea name='descripcion' label="Desarrollar Informe" />
               <Btn type='submit' disabled={!isValid} label={`${id && isInLista ? 'Actualizar' : 'Generar'} Informe`} />
             </Form>

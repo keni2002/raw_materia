@@ -11,6 +11,7 @@ import { apiSum } from '../services/apiSumin.js'
 import { apiAddress } from '../services/apiAddress.js'
 import { apiContra } from '../services/apiContratos.js'
 import { apinForme } from '../services/apiInforme.js'
+import { apiProd } from '../services/apiProductos.js'
 export const store = configureStore({
 
     reducer: {
@@ -27,6 +28,9 @@ export const store = configureStore({
         [apiEval.reducerPath]: apiEval.reducer,
         [apiEvalsOf.reducerPath]: apiEvalsOf.reducer,
         [apiAuth.reducerPath]: apiAuth.reducer,
+
+        //Productos
+        [apiProd.reducerPath]: apiProd.reducer,
 
 
         //Miscelaneos
@@ -48,6 +52,7 @@ export const store = configureStore({
             apiSum.middleware,
             apiContra.middleware,
             apinForme.middleware,
+            apiProd.middleware
         ])
 })
 

@@ -322,19 +322,19 @@ class Producto(models.Model):
     descripcion = models.TextField()   
     calidad = models.CharField(max_length=255, choices=CALIDAD,default='ALTA',editable=False)
     tipo = models.CharField(max_length=255, choices=MATERIA)
-    fecha_producion = models.DateField()
+    fecha_produccion = models.DateField()
     fecha_vencimiento = models.DateField()
     suministrador = models.ForeignKey('Suministrador',on_delete=models.CASCADE, related_name='productos')
     def save(self, *args, **kwargs):
-        if self.fecha_producion > self.fecha_vencimiento:
+        if self.fecha_produccion > self.fecha_vencimiento:
             raise ValueError("La fecha de produccion no puede ser mayor a la fecha de vencimiento")
-        if self.fecha_producion == self.fecha_vencimiento:
+        if self.fecha_produccion == self.fecha_vencimiento:
             raise ValueError("La fecha de produccion no puede ser igual a la fecha de vencimiento")
         
-        if self.fecha_producion < self.fecha_vencimiento:
-            if self.fecha_vencimiento - self.fecha_producion <= timedelta(days=30):
+        if self.fecha_produccion < self.fecha_vencimiento:
+            if self.fecha_vencimiento - self.fecha_produccion <= timedelta(days=30):
                 self.calidad = 'BAJA'
-            elif self.fecha_vencimiento - self.fecha_producion <= timedelta(days=90):
+            elif self.fecha_vencimiento - self.fecha_produccion <= timedelta(days=90):
                 self.calidad = 'MEDIA'
             else:
                 self.calidad = 'ALTA'
@@ -386,9 +386,9 @@ class Informe(models.Model):
     def save(self, *args, **kwargs):
         if not self.codigo:
             code = self.contrato.codigo
-            random = str(random.randint(100000, 999999))
+            randon = str(random.randint(100000, 999999))
             # Concatenamos el código de contrato y los dígitos aleatorios
-            self.codigo =f'{str(code)}-{random}'
+            self.codigo =f'{str(code)}-{randon}'
         super().save(*args, **kwargs)
     def __str__(self):
         return f'{str(self.codigo)} - {str(self.fecha)}'

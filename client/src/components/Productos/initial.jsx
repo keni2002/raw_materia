@@ -1,13 +1,11 @@
+
+// initial para Productos
 export const initial =
 {
     nombre: '',
-    apellido: '',
-    direccion: '',
-    fechaNacimiento: '',
-    anioExperiencia: '',
-    salario: '',
-    email: '',
-    password: '',
-
-    confirmPassword: ''
+    descripcion: '',
+    tipo: '',
+    fecha_produccion: '',
+    fecha_vencimiento: '',
+    suministrador: ''
 }

@@ -20,7 +20,8 @@ export default function ContratoForm() {
   const [updateContrat] = useUpdateContratMutation()
   const [createContrato] = useCreateCotratMutation()
 
-  const { user: { id: com_id, grupo } } = useSelector(auth_state);
+  const { user: { grupo } } = useSelector(auth_state);
+  const com_id = JSON.parse(sessionStorage.getItem('user')).id
   // const fecha = () => {
   //   const date = new Date();
   //   date.setFullYear(date.getFullYear() - 18);

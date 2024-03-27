@@ -274,3 +274,8 @@ class EvaluacionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return _models.Evaluacion.objects.create(**validated_data)
         
+
+class ProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = _models.Producto
+        fields = '__all__'

@@ -34,8 +34,8 @@ import NotFound from './pages/NotFound';
 import SuminisForm from './components/Suministradores/createdit.sumin';
 import Informes from './components/Informes/Informes';
 import InfoInformes from './components/Informes/info.Informes'
-
-
+import Productos from './components/Productos/Productos'
+import ProductForm from './components/Productos/createdit.Products'
 function App() {
 
   return (
@@ -77,7 +77,15 @@ function App() {
                   <Route path='info/:id' element={<InfoInformes />} />
                 </Route>
 
-
+                {/* Productos */}
+                <Route path="/productos" element={<Productos />} />
+                <Route path="/productos" element={<Forms />}>
+                  <Route path='add' element={
+                    <ComponentsPrivatization permitted={['comercial_group', 'asistente_group']} redirect={true}>
+                      <ProductForm />
+                    </ComponentsPrivatization>
+                  } />
+                </Route>
 
 
                 {/* FACTURA */}
