@@ -2,11 +2,14 @@ import Tables from "../Tables";
 import { setId, setType } from '../../features/booleanos';
 import { useLazyGetAsistsQuery } from "../../services/apiAsistente"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
 import Editicon from '../Icons/Editicon'
+import SearchFilter from '../SearchFilter'
 export default function Asistentes() {
+    const [filterText, setFilterText] = useState('');
+    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getAsistentes, { data }] = useLazyGetAsistsQuery()
@@ -131,14 +134,25 @@ export default function Asistentes() {
 
         };
     });
-
+    //FILTER
+    const filteredItems = modifiedData?.filter(
+        item => item.nombre && item.nombre.toLowerCase().includes(filterText.toLowerCase()) || (item.apellido && item.apellido.toLowerCase().includes(filterText.toLowerCase())) || (`${item.nombre} ${item.apellido}` && `${item.nombre} ${item.apellido}`.toLowerCase().includes(filterText.toLowerCase())),
+    );
+    const handleClear = () => {
+        if (filterText) {
+            setResetPaginationToggle(!resetPaginationToggle);
+            setFilterText('');
+        }
+    };
+    // FILTER
 
     return (
         <>
+            <SearchFilter placeholder={'filtrar por nombre o apellido'} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
             <div className="flex flex-col items-center">
 
 
-                <Tables data={modifiedData} columns={[...columns, actions]}
+                <Tables data={filteredItems} columns={[...columns, actions]}
 
                 />
                 <Link to='/asistentes/add'>

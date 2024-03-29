@@ -13,11 +13,13 @@ import Infoicon from "../Icons/Infoicon"
 import Againicon from "../Icons/Againicon"
 import Deleteicon from "../Icons/Deleteicon"
 import Masicon from "../Icons/Masicon"
-
+import SearchFilter from "../SearchFilter";
 import vence from '../utils/vence'
-import { formToJSON } from "axios";
 
 export default function Contratos() {
+    const [stadoHook, setStadoHook] = useState('-')
+    const [filterText, setFilterText] = useState('');
+    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const { user: { dep, grupo, materias } } = useSelector(auth_state);
     const id = JSON.parse(sessionStorage.getItem('user'))['id']
     const [filter_data, setfilter_data] = useState([])
@@ -164,23 +166,35 @@ export default function Contratos() {
             estado: modEstado
         };
     });
-
+    //FILTER
+    const filteredItems = modifiedData?.filter(
+        item => item.suministradorName &&
+            item.suministradorName.toLowerCase().includes(filterText.toLowerCase()) &&
+            item.estado == (stadoHook == '-' ? item.estado : stadoHook)
+    );
+    const handleClear = () => {
+        if (filterText) {
+            setResetPaginationToggle(!resetPaginationToggle);
+            setFilterText('');
+        }
+    };
+    // FILTER
 
     return (
         <>
-            <div className="flex flex-col items-center">
-                <Tables data={modifiedData} columns={[...columns, actions]}
+            <SearchFilter placeholder={'filtrar por comercial'} setStadoHook={setStadoHook} estado={!(grupo == 'abogado_group')} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <Tables data={filteredItems} columns={[...columns, actions]}
 
-                />
-                {grupo != 'abogado_group' && <Link to='/contratos/add'>
-                    <button
-                        title="Agregar un Contrato"
-                        className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                    >
-                        <Masicon size='40' fill="#fff" />
-                    </button>
-                </Link>}
-            </div>
+            />
+            {grupo != 'abogado_group' && <Link to='/contratos/add'>
+                <button
+                    title="Agregar un Contrato"
+                    className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
+                >
+                    <Masicon size='40' fill="#fff" />
+                </button>
+            </Link>}
+
         </>
     )
 }

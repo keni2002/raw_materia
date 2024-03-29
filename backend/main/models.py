@@ -352,7 +352,7 @@ class Factura(models.Model):
     
     
     #campos de la relacion
-    fecha_compra = models.DateField(auto_now_add=True)
+    fecha_compra = models.DateField()
     importe = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):

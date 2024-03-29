@@ -2,16 +2,19 @@ import Tables from "../Tables";
 import { setId, setType, setIsopenAdd } from '../../features/booleanos';
 import { useLazyGetProdsQuery } from "../../services/apiProductos"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { auth_state } from "../../features/authSlice";
-
+import SearchFilter from '../SearchFilter'
 import Infoicon from '../Icons/Infoicon'
 import Editicon from '../Icons/Editicon'
 import Deleteicon from '../Icons/Deleteicon'
 import fecha from '../utils/fechaHumana'
 import Masicon from "../Icons/Masicon";
+
 export default function Productos() {
+    const [filterText, setFilterText] = useState('');
+    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const { user: { dep } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getProds, { data }] = useLazyGetProdsQuery()
@@ -97,13 +100,27 @@ export default function Productos() {
             tipo: modifedMateria
         };
     });
-
-
+    //FILTER
+    const filteredItems = modifiedData?.filter(
+        item => item.nombre && item.nombre.toLowerCase().includes(filterText.toLowerCase()),
+    );
+    const handleClear = () => {
+        if (filterText) {
+            setResetPaginationToggle(!resetPaginationToggle);
+            setFilterText('');
+        }
+    };
+    // FILTER
     return (
         <>
+            <SearchFilter placeholder={'filtrar productos'} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
             <div className="flex flex-col items-center">
 
-                <Tables data={modifiedData} columns={[...columns, actions]}
+                <Tables
+
+                    data={filteredItems}
+
+                    columns={[...columns, actions]}
 
                 />
                 <Link to='/productos/add'>

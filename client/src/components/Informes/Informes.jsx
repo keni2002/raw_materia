@@ -16,9 +16,13 @@ import Masicon from "../Icons/Masicon"
 
 import vence from '../utils/vence'
 import Editicon from "../Icons/Editicon";
+import SearchFilter from "../SearchFilter";
 
 
 export default function Informes() {
+    const [stadoHook, setStadoHook] = useState('-')
+    const [filterText, setFilterText] = useState('');
+    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const { user: { dep, grupo, materias } } = useSelector(auth_state);
     const id = JSON.parse(sessionStorage.getItem('user'))['id']
     const [filter_data, setfilter_data] = useState([])
@@ -100,7 +104,7 @@ export default function Informes() {
             modEstado = 'Pendiente'
         }
         else if (estado == 'N') {
-            modEstado = '*No aprobado'
+            modEstado = 'No aprobado'
         }
         else if (estado == 'A') {
             modEstado = 'Aprobado'
@@ -111,11 +115,25 @@ export default function Informes() {
         };
     });
 
+    //FILTER
+    const filteredItems = modifiedData?.filter(
+        item => item.comercialyId &&
+            item.comercialyId.toLowerCase().includes(filterText.toLowerCase()) &&
+            item.estado == (stadoHook == '-' ? item.estado : stadoHook)
+    );
+    const handleClear = () => {
+        if (filterText) {
+            setResetPaginationToggle(!resetPaginationToggle);
+            setFilterText('');
+        }
+    };
+    // FILTER
 
     return (
         <>
+            <SearchFilter placeholder={'filtrar por comercial'} setStadoHook={setStadoHook} estado={true} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
             <div className="flex flex-col items-center">
-                <Tables data={modifiedData} columns={[...columns, actions]}
+                <Tables data={filteredItems} columns={[...columns, actions]}
                 />
             </div>
         </>

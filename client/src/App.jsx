@@ -38,6 +38,7 @@ import Productos from './components/Productos/Productos'
 import DeleteProduct from './components/Productos/delete.product'
 import ProductForm from './components/Productos/createdit.Products'
 import InfoProductos from './components/Productos/info.Productos'
+import FacturaForm from './components/Factura/createdit.factura';
 function App() {
 
   return (
@@ -98,6 +99,21 @@ function App() {
 
 
                 {/* FACTURA */}
+                <Route path="/facturas" element={<Productos />} />
+                <Route path="/facturas" element={<Forms />}>
+                  <Route path='add' element={
+                    <ComponentsPrivatization permitted={['comercial_group']} redirect={true}>
+                      <FacturaForm />
+                    </ComponentsPrivatization>
+                  } />
+                  <Route path='edit/:id' element={
+                    <ComponentsPrivatization permitted={['comercial_group']} redirect={true}>
+                      <FacturaForm />
+                    </ComponentsPrivatization>
+                  } />
+                  {/* <Route path='delete/:id' element={<DeleteProduct />} />
+                  <Route path='info/:id' element={<InfoProductos />} /> */}
+                </Route>
 
 
                 {/* COMERCIALES */}
