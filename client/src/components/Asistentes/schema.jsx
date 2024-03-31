@@ -9,7 +9,7 @@ export const schema =
         salario: Yup.number().required('Se requiere un salario').min(1000, 'Debe ser mayor o igual a 1,000'),
         nivelEscolar: Yup.string().required('Se requiere el nivel escolar'),
         email: Yup.string().required('Se requiere un correo').email('Correo invalido'),
-        password: Yup.string().required('Se requiere una contraseña').min(6, 'Debe tener al menos 6 caracteres'),
+        password: Yup.string().required('Se requiere una contraseña').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'La contraseña debe tener al menos 8 caracteres y contener caracteres especiales, letras mayúsculas, letras minúsculas y números'),
 
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden'),
 

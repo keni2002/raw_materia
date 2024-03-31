@@ -92,7 +92,7 @@ export default function ProductForm() {
             }
           }, [isLoading, data]);
           return (
-            <Form>
+            <Form autoComplete='off'>
               <Fields name='nombre' touched={touched} type='text' placeholder='Miel' label='Nombre' />
               <FieldArea name={'descripcion'} label='Descripción' touched={touched} />
               <DDMateria name={'tipo'} label='Tipo' value={values.tipo} />

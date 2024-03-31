@@ -183,18 +183,19 @@ export default function Contratos() {
     return (
         <>
             <SearchFilter placeholder={'filtrar por comercial'} setStadoHook={setStadoHook} estado={!(grupo == 'abogado_group')} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
-            <Tables data={filteredItems} columns={[...columns, actions]}
+            <div className="flex flex-col items-center">
+                <Tables data={filteredItems} columns={[...columns, actions]}
 
-            />
-            {grupo != 'abogado_group' && <Link to='/contratos/add'>
-                <button
-                    title="Agregar un Contrato"
-                    className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
-                >
-                    <Masicon size='40' fill="#fff" />
-                </button>
-            </Link>}
-
+                />
+                {grupo != 'abogado_group' && <Link to='/contratos/add'>
+                    <button
+                        title="Agregar un Contrato"
+                        className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
+                    >
+                        <Masicon size='40' fill="#fff" />
+                    </button>
+                </Link>}
+            </div >
         </>
     )
 }

@@ -12,6 +12,7 @@ import { apiAddress } from '../services/apiAddress.js'
 import { apiContra } from '../services/apiContratos.js'
 import { apinForme } from '../services/apiInforme.js'
 import { apiProd } from '../services/apiProductos.js'
+import { apiFact } from '../services/apiFactura.js'
 export const store = configureStore({
 
     reducer: {
@@ -32,6 +33,8 @@ export const store = configureStore({
         //Productos
         [apiProd.reducerPath]: apiProd.reducer,
 
+        //Facturas
+        [apiFact.reducerPath]: apiFact.reducer,
 
         //Miscelaneos
         [apiAddress.reducerPath]: apiAddress.reducer,
@@ -52,7 +55,9 @@ export const store = configureStore({
             apiSum.middleware,
             apiContra.middleware,
             apinForme.middleware,
-            apiProd.middleware
+            apiProd.middleware,
+            apiFact.middleware,
+
         ])
 })
 

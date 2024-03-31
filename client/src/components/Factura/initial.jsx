@@ -2,6 +2,9 @@
 
 export const initial =
 {
-    productos: [],
+    producto: [],
+    importe: '',
+    fecha_compra: '',
+    contrato: ''
 
 }

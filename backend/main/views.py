@@ -149,3 +149,9 @@ class ProductoViewSet(viewsets.ModelViewSet):
     serializer_class = ProductoSerializer
     permission_classes = (_permissions.IsAuthenticated,
                           _permissions.DjangoModelPermissions)
+    
+class FacturaViewSet(viewsets.ModelViewSet):
+    queryset = Factura.objects.all()
+    serializer_class = FacturaSerializer
+    permission_classes = (_permissions.IsAuthenticated,
+                          _permissions.DjangoModelPermissions)

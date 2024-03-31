@@ -55,7 +55,7 @@ function FormLogin() {
                     <h2 className=" pt-10 text-center text-2xl font-bold  text-gray-900">Iniciar Sesion</h2>
                 </div>
                 <div>
-                    <form action="" onSubmit={formik.handleSubmit} className="space-y-6" method="POST">
+                    <form action="" onSubmit={formik.handleSubmit} className="space-y-6" method="POST" autoComplete='off'>
                         <div>
                             <label className="block text-sm font-medium leading-6 text-gray-900" htmlFor="email">Correo</label>
                             <div className="mt-2">
@@ -79,7 +79,7 @@ function FormLogin() {
                                 <label className="block text-sm font-medium leading-6 text-gray-900" htmlFor="password">Contraseña</label>
                             </div>
                             <div className="mt-2">
-                                <input autoComplete="current-password"
+                                <input autoComplete="off"
                                     className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-950-600 sm:text-sm sm:leading-6"
                                     id="password" name="password" required
                                     type="password"

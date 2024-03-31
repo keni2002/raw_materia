@@ -39,6 +39,7 @@ import DeleteProduct from './components/Productos/delete.product'
 import ProductForm from './components/Productos/createdit.Products'
 import InfoProductos from './components/Productos/info.Productos'
 import FacturaForm from './components/Factura/createdit.factura';
+import Factura from './components/Factura/Factura';
 function App() {
 
   return (
@@ -99,7 +100,7 @@ function App() {
 
 
                 {/* FACTURA */}
-                <Route path="/facturas" element={<Productos />} />
+                <Route path="/facturas" element={<Factura />} />
                 <Route path="/facturas" element={<Forms />}>
                   <Route path='add' element={
                     <ComponentsPrivatization permitted={['comercial_group']} redirect={true}>
