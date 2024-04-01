@@ -3,7 +3,7 @@
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
 
-![Logo](https://github.com/keni2002/raw_materia/blob/main/client/public/dashlogo.png)
+![Logo](https://github.com/keni2002/raw_materia/blob/main/client/public/dashlogo.svg)
 
 # Raw materia (Materias Primas)
 The National Raw Materials Company wants to computerize the processes in its areas. It has commercial departments and legal departments.
