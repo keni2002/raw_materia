@@ -56,5 +56,6 @@ export const {
     useLazyGetFactQuery,
     useLazyGetFactsQuery,
     useCreateFactMutation,
-    useUpdateFactMutation
+    useUpdateFactMutation,
+    useDeleteFactMutation
 } = apiFact

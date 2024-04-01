@@ -40,6 +40,8 @@ import ProductForm from './components/Productos/createdit.Products'
 import InfoProductos from './components/Productos/info.Productos'
 import FacturaForm from './components/Factura/createdit.factura';
 import Factura from './components/Factura/Factura';
+import Forbidden from "./pages/forbidden"
+import DeleteFact from './components/Factura/delete.factura';
 function App() {
 
   return (
@@ -47,10 +49,13 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
+
             <Route path="/" element={<Navigate to='/login' />} />
+            <Route path='/forbidden' element={<Forbidden />} />
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoutes />}>
               <Route element={<Dashboard />} >
+
                 <Route path='/home' element={<Home></Home>}></Route>
                 {/* CONTRATO */}
                 <Route path="/contratos" element={<Contratos />} />
@@ -112,8 +117,7 @@ function App() {
                       <FacturaForm />
                     </ComponentsPrivatization>
                   } />
-                  {/* <Route path='delete/:id' element={<DeleteProduct />} />
-                  <Route path='info/:id' element={<InfoProductos />} /> */}
+                  <Route path='delete/:id' element={<DeleteFact />} />
                 </Route>
 
 

@@ -236,6 +236,17 @@ class AbogadoSerializer(TrabajadorSerializer):
         exclude = ('evaluaciones',)
 
 class FacturaSerializer(serializers.ModelSerializer):
+    productStr = serializers.SerializerMethodField()
+    comercialName = serializers.SerializerMethodField()
+    def get_comercialName(self,obj):
+        c = _models.Comercial.objects.filter(compras=obj)[0]
+        print(c)
+        return f'{c.nombre} {c.apellido}'
+    def get_productStr(self,obj):
+        cadena = ''
+        for i in obj.producto.all():
+            cadena += f'{i.nombre}, '
+        return cadena
     class Meta:
         model = _models.Factura
         fields = '__all__'

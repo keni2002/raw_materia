@@ -36,7 +36,7 @@ export default function FacturaForm() {
       updateFactura({ id, ...values })
         .unwrap()
         .then(() => {
-          navigate('/factura');
+          navigate('/facturas');
           toast.success('Factura actualizado')
         })
         .catch((err) => {
@@ -50,7 +50,7 @@ export default function FacturaForm() {
         .unwrap()
         .then(() => {
           console.log(com_id)
-          navigate('/contratos');
+          navigate('/facturas');
           toast.success('Contrato creado')
         })
         .catch((err) => {
@@ -62,7 +62,11 @@ export default function FacturaForm() {
   useEffect(() => {
 
     if (id) {
-      getFacturaById(id)
+      getFacturaById(id).unwrap().then(() => {
+
+      }).catch((err) => {
+        toast.error(err.data)
+      })
 
     }
 
@@ -70,7 +74,7 @@ export default function FacturaForm() {
   return (
     <>
       <header className='flex justify-between pb-10'>
-        <Link to='/contratos'>
+        <Link to={-1}>
           <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
         </Link>
 
@@ -86,21 +90,22 @@ export default function FacturaForm() {
           useEffect(() => {
 
             if (!isLoading && data) {
-              setFieldValue("periodo_validez", '');
-              setFieldValue("descripcion", data?.descripcion);
-              setFieldValue("suministrador", data?.suministrador);
+              setFieldValue("producto", data.producto);
+              setFieldValue("contrato", data.contrato);
+              setFieldValue("importe", data.importe);
+              setFieldValue("fecha_compra", data.fecha_compra);
             }
           }, [isLoading, data]);
 
           return (
             <Form>
-              <ListaCheck name='producto' type={'checkbox'} label='Productos' />
+              <ListaCheck name='producto' value={values?.producto} type={'checkbox'} label='Productos' />
 
               <DDContr name='contrato' value={values?.contrato} handleChange={handleChange} handleBlur={handleBlur} touched={touched} label='Contrato' />
 
               <Fields name='importe' touched={touched} type='number' label='Importe' min={0} placeholder={'CUP total'} />
               <Fields name='fecha_compra' max={fechaMinima} touched={touched} type='date' label='Fecha de Factura' />
-              <Btn type='submit' disabled={!isValid} label={`${id ? 'Renovar' : 'Registrar'} Contrato`} />
+              <Btn type='submit' disabled={!isValid} label={`${id ? 'Actualizar' : 'Registrar'} Factura`} />
 
             </Form>
           )

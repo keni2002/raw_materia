@@ -53,7 +53,7 @@ export default function ProductForm() {
         })
         .catch((err) => {
           console.log(err)
-          toast.error(err.data.message)
+          toast.error(err.data.detail)
         })
     }
   };

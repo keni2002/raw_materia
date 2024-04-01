@@ -21,7 +21,7 @@ export default function ComponentsPrivatization({ permitted, redirect = false, c
     return checkPerm(permitted, user) || user.is_staff ? (
         <>{children}</>
     ) : redirect === false ? null : (
-        <Navigate to={'/home'} replace />
+        <Navigate to={'/forbidden'} replace />
     );
 };
 

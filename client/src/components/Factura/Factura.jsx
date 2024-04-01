@@ -11,63 +11,61 @@ import Editicon from '../Icons/Editicon'
 import Deleteicon from '../Icons/Deleteicon'
 import fecha from '../utils/fechaHumana'
 import Masicon from "../Icons/Masicon";
-
+import toast from "react-hot-toast";
 export default function Factura() {
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const { user: { dep } } = useSelector(auth_state);
+    const { user: { grupo } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getFacts, { data }] = useLazyGetFactsQuery()
     //restablecer todos los valores
     useEffect(() => {
 
         dispatch(setType('Facturas de Compras'));
-        getFacts();
+        getFacts().unwrap().then(() => {
+
+        }).catch((err) => {
+            toast.error(err.data)
+        })
     }, [])
 
     const columns = [
         {
-            name: "Código",
-            selector: row => row.codigo,
+            name: "ID",
+            selector: row => row.id,
         },
         {
-            name: "Nombre",
-            selector: row => row.nombre,
+            name: "Productos",
+            selector: row => row.productStr,
             sortable: true
         },
         {
-            name: "Tipo",
-            selector: row => row.tipo,
+            name: "Importe",
+            selector: row => row.importe,
             sortable: true
 
         },
         {
-            name: "Calidad",
-            selector: row => row.calidad
+            name: "Fecha de factura",
+            selector: row => fecha(row.fecha_compra)
         },
-
-        {
-            name: "Fecha de Producción",
-            selector: row => fecha(row.fecha_produccion),
-            sortable: true
-        },
+        grupo != 'comercial_group' && {
+            name: "Comercial",
+            selector: row => row.comercialName
+        }
     ]
     //MODIFICAR COLUMNAS ---- actions over 
     const actions = {
         name: 'Acciones',
         cell: row => (
             <div className=' flex  gap-2'>
-                <Link to={`/productos/info/${row.codigo}`}>
-                    <button title="Informacion adicional">
-                        <Infoicon />
-                    </button>
-                </Link>
-                <Link to={`/productos/edit/${row.codigo}`}>
+
+                <Link to={`/facturas/edit/${row.id}`}>
                     <button title="Editar">
                         <Editicon size={24} fill={'#646464'} />
                     </button>
                 </Link>
-                <Link to={`/productos/delete/${row.codigo}`}>
+                <Link to={`/facturas/delete/${row.id}`}>
                     <button title='Eliminar'>
                         <Deleteicon />
                     </button>
@@ -103,7 +101,8 @@ export default function Factura() {
     console.log(data)
     //FILTER
     const filteredItems = modifiedData?.filter(
-        item => item.nombre && item.nombre.toLowerCase().includes(filterText.toLowerCase()),
+        item => item.productStr && item.productStr.toLowerCase().includes(filterText.toLowerCase()) ||
+            item.id && item.id.toLowerCase().includes(filterText.toLowerCase()),
     );
     const handleClear = () => {
         if (filterText) {
@@ -114,7 +113,7 @@ export default function Factura() {
     // FILTER
     return (
         <>
-            <SearchFilter placeholder={'filtrar productos'} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <SearchFilter placeholder={'filtrar Facturas, por facturas y por ID'} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
             <div className="flex flex-col items-center">
 
                 <Tables
