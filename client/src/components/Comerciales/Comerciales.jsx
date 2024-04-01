@@ -10,7 +10,7 @@ import SearchFilter from '../SearchFilter'
 export default function Comerciales() {
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const { user: { dep } } = useSelector(auth_state);
+    const { user: { dep, grupo } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getComercials, { data }] = useLazyGetComsQuery()
     //restablecer todos los valores
