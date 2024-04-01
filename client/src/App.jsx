@@ -42,6 +42,7 @@ import Factura from './components/Factura/Factura';
 import Forbidden from "./pages/forbidden"
 import DeleteFact from './components/Factura/delete.factura';
 import Suministradores from './components/Suministradores/Suministradores';
+import DeleteSum from './components/Suministradores/delete.sum';
 function App() {
 
   return (
@@ -140,7 +141,7 @@ function App() {
                 <Route path='/asistentes' element={<Asistentes />} />
                 <Route path='/asistentes' element={<Forms />}>
                   <Route path='add' element={
-                    <ComponentsPrivatization permitted={['director_group', 'admin_group']} redirect={true}>
+                    <ComponentsPrivatization permitted={['director_group']} redirect={true}>
                       <AsistenteForm />
                     </ComponentsPrivatization>
                   } />
@@ -161,6 +162,8 @@ function App() {
                     // </ComponentsPrivatization>
                   } />
                   <Route path='edit/:id' element={<SuminisForm />} />
+                  <Route path='delete/:id' element={<DeleteSum />} />
+
 
                 </Route>
 

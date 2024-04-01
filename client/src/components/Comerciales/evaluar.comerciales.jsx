@@ -14,7 +14,7 @@ export default function EvaluarCom() {
     const { id } = useParams();
 
     const [getComercialById, { data, isLoading }] = useLazyGetComQuery()
-    const { user: { id: director } } = useSelector(auth_state);
+    const director = JSON.parse(sessionStorage.getItem('user')).id
     const [createEval] = useCreateEvalMutation()
 
     const handleSubmit = (values) => {

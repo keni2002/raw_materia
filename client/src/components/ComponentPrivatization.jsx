@@ -3,16 +3,21 @@ import { auth_state } from "../features/authSlice";
 import { Navigate } from "react-router-dom";
 
 export function checkPerm(permitted, user) {
-    const grupo = user?.grupo
+    const { user: { grupo } } = useSelector(auth_state);
+
     if (Array.isArray(permitted)) {
         for (const i of permitted) {
-            return i == grupo
+            console.log(i)
+            if (i == grupo) {
+                return true
+            }
         }
     } else if (typeof permitted === "string") {
         return user?.grupo.some((role) => role.name === permitted);
     } else {
         return user?.is_staff;
     }
+    return false
 }
 
 export default function ComponentsPrivatization({ permitted, redirect = false, children }) {

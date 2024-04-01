@@ -89,7 +89,7 @@ export default function ContratoForm() {
           useEffect(() => {
 
             if (!isLoading && data) {
-              setFieldValue("periodo_validez", '');
+              setFieldValue("periodo_validez", data?.periodo_validez);
               setFieldValue("descripcion", data?.descripcion);
               setFieldValue("suministrador", data?.suministrador);
             }

@@ -11,7 +11,7 @@ const validate = values => {
     if (!values.email) {
         errors.email = 'Se require correo electrónico';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Correo electronico inválido';
+        errors.email = 'Correo electrónico inválido';
     }
     if (!values.password) {
         errors.password = 'Se require contraseña';

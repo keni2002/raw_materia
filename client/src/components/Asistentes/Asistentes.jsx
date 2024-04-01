@@ -10,7 +10,7 @@ import SearchFilter from '../SearchFilter'
 export default function Asistentes() {
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const { user: { dep } } = useSelector(auth_state);
+    const { user: { dep, grupo } } = useSelector(auth_state);
     const dispatch = useDispatch()
     const [getAsistentes, { data }] = useLazyGetAsistsQuery()
     //restablecer todos los valores
@@ -155,7 +155,7 @@ export default function Asistentes() {
                 <Tables data={filteredItems} columns={[...columns, actions]}
 
                 />
-                <Link to='/asistentes/add'>
+                {(grupo != 'director_group' || grupo != 'admin_group') && <Link to='/asistentes/add'>
                     <button
                         title="Agregar un Asistente"
                         className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
@@ -163,7 +163,7 @@ export default function Asistentes() {
                             <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                         </svg>
                     </button>
-                </Link>
+                </Link>}
             </div>
         </>
     )

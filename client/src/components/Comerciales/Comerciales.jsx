@@ -146,7 +146,7 @@ export default function Comerciales() {
                 <Tables data={filteredItems} columns={[...columns, actions]}
 
                 />
-                <Link to='/comerciales/add'>
+                {(grupo != 'director_group' || grupo != 'admin_group') && <Link to='/comerciales/add'>
                     <button
                         title="Agregar un comercial"
                         className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
@@ -154,7 +154,7 @@ export default function Comerciales() {
                             <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                         </svg>
                     </button>
-                </Link>
+                </Link>}
             </div>
         </>
     )

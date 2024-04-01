@@ -10,7 +10,7 @@ export default function DeleteSum() {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const [getProdById, { data, isLoading }] = useLazyGetSumQuery()
+    const [getSumById, { data, isLoading }] = useLazyGetSumQuery()
     const [deleteSum] = useDeleteSumMutation()
     const handleSubmit = () => {
 

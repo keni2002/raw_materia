@@ -47,11 +47,7 @@ export default function Informes() {
             selector: row => row.comercialyId,
             sortable: true
         },
-        {
-            name: "Estado",
-            selector: row => row.estado,
-            sortable: true
-        },
+
 
         {
             name: "Fecha de Creación",

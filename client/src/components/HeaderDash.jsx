@@ -41,7 +41,7 @@ function HeaderDash({ toggleMenu }) {
             <h1 className="text-2xl font-bold text-gray-900 ml-4">
                 {is_staff && <>Administración</>}
                 {grupo == 'comercial_group' && <>{`Dp. Comercial: ${dep[0]}`}</>}
-                {grupo == 'asistente_group' && <>{`Dp. Comercial: ${dep}`}</>}
+                {grupo == 'asistente_group' && <>{`Dp. Comercial: ${dep[0]}`}</>}
                 {grupo == 'director_group' && <>{`Dp. Comercial: ${dep[0]}`}</>}
                 {/* legales */}
                 {grupo == 'abogado_group' && <>{`Dp.Legal: ${dep[0]}`}</>}

@@ -33,7 +33,7 @@ export default function SuminisForm() {
       updateSum({ id, nombre, clasificacion })
         .unwrap()
         .then((response) => {
-          updateAddress()
+          updateAddress(direccion)
           navigate(-1);
           toast.success('Suministrador actualizado')
         })
@@ -69,7 +69,7 @@ export default function SuminisForm() {
   return (
     <>
       <header className='flex justify-between pb-10'>
-        <Link to={navigate(-1)}>
+        <Link to={-1}>
           <svg height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
         </Link>
 
@@ -85,7 +85,7 @@ export default function SuminisForm() {
           useEffect(() => {
             if (!isLoading && !isLoadDress && datasum && datadress) {
               setFieldValue("nombre", datasum.nombre);
-              setFieldValue("clasificacion", datasum.apellido);
+              setFieldValue("clasificacion", datasum.clasificacion);
               setFieldValue("calle", datadress.calle);
               setFieldValue("numero", datadress.numero);
               setFieldValue("municipio", datadress.municipio);

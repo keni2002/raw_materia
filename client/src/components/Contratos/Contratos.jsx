@@ -75,8 +75,8 @@ export default function Contratos() {
         cell: row => (
 
             <div className=' flex  gap-2'>
-                {(grupo != 'abogado_group' && vence(row.periodo_validez)) ||
-                    (row.estado == 'No aprobado') ?
+                {(grupo == 'comercial_group' && vence(row.periodo_validez)) ||
+                    (row.estado == 'No aprobado' && grupo == 'comercial_group') ?
                     <Link to={`/contratos/renovar/${row.codigo}`}>
                         <button title="Renovar Contrato">
                             <Againicon />
@@ -188,7 +188,7 @@ export default function Contratos() {
                 <Tables data={filteredItems} columns={[...columns, actions]}
 
                 />
-                {grupo != 'abogado_group' && <Link to='/contratos/add'>
+                {grupo == 'comercial_group' && <Link to='/contratos/add'>
                     <button
                         title="Agregar un Contrato"
                         className="fixed bottom-10 right-10  bg-gray-800 rounded-full p-2  shadow-gray-600 shadow-md"
