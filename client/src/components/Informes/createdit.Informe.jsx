@@ -34,10 +34,12 @@ export default function InformeForm({ isInLista }) {
     if (id && isInLista) {
       updateInforme({ id, descripcion: values.descripcion })
         .unwrap()
-        .then(() => {
-          updateContrato({ id, estado: values.estado }).unwrap().then(() => {
+        .then((res) => {
+          updateContrato({ id: res.contrato, estado: values.estado }).unwrap().then(() => {
             navigate(-1);
-            toast.success('Informe creado')
+            toast.success('Informe editado')
+          }).catch((err) => {
+            console.log(err)
           })
         })
         .catch((err) => {

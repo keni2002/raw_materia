@@ -52,7 +52,7 @@ export default function ContratoForm() {
       createContrato({ ...values, comercial: com_id })
         .unwrap()
         .then(() => {
-          console.log(com_id)
+
           navigate('/contratos');
           toast.success('Contrato creado')
         })
@@ -97,7 +97,7 @@ export default function ContratoForm() {
 
           return (
             <Form>
-              {console.log(data)}
+
 
               <Fields name='periodo_validez' min={fechaMinima} touched={touched} type='date' label='Válido hasta' />
 

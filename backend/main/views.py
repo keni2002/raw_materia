@@ -10,7 +10,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import OutstandingToken,BlacklistedToken
 import rest_framework.permissions as _permissions
-from .permission import HasGroupPermission
+
 
 
 class LogoutAllView(APIView):

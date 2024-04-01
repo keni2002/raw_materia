@@ -31,7 +31,7 @@ export default function Informes() {
     const [getInformes, { data, isSuccess }] = useLazyGetInformesQuery()
     //restablecer todos los valores
     useEffect(() => {
-        dispatch(setType('Contratos'));
+        dispatch(setType('Informes'));
         getInformes();
 
     }, [])

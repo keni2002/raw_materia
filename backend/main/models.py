@@ -272,7 +272,7 @@ class Direccion(models.Model):
     municipio = models.CharField(max_length=255)
     provincia = models.CharField(max_length=255)
     def __str__(self):
-        return f'{self.municipio}, {self.provincia}'
+        return f'{self.calle} {self.numero}-{self.municipio}, {self.provincia}'
 
 class Suministrador(models.Model):
     """Los suministradores de la empresa. Esas proporcionan materia prima"""

@@ -56,6 +56,8 @@ export const apiSum = createApi({
 export const {
     useGetSumsQuery,
     useLazyGetSumQuery,
+    useLazyGetSumsQuery,
     useUpdateSumMutation,
-    useCreateSumMutation
+    useCreateSumMutation,
+    useDeleteSumMutation,
 } = apiSum

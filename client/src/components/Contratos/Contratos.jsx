@@ -76,7 +76,7 @@ export default function Contratos() {
 
             <div className=' flex  gap-2'>
                 {(grupo != 'abogado_group' && vence(row.periodo_validez)) ||
-                    (row.estado == '*No aprobado') ?
+                    (row.estado == 'No aprobado') ?
                     <Link to={`/contratos/renovar/${row.codigo}`}>
                         <button title="Renovar Contrato">
                             <Againicon />
@@ -154,7 +154,7 @@ export default function Contratos() {
             modEstado = 'Pendiente'
         }
         else if (estado == 'N') {
-            modEstado = '*No aprobado'
+            modEstado = 'No aprobado'
         }
         else if (estado == 'A') {
             modEstado = 'Aprobado'
@@ -182,6 +182,7 @@ export default function Contratos() {
 
     return (
         <>
+
             <SearchFilter placeholder={'filtrar por comercial'} setStadoHook={setStadoHook} estado={!(grupo == 'abogado_group')} onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
             <div className="flex flex-col items-center">
                 <Tables data={filteredItems} columns={[...columns, actions]}

@@ -180,6 +180,9 @@ class InformeSerializer(serializers.ModelSerializer):
     
 
 class SuministradorSerializer(serializers.ModelSerializer):
+    addrStr = serializers.SerializerMethodField()
+    def get_addrStr(self,obj):
+        return str(obj.direccion)
     class Meta:
         model  = _models.Suministrador
         fields = '__all__'

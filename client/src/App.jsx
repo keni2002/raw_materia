@@ -7,7 +7,6 @@ import { store } from './app/store'
 
 import Comerciales from './components/Comerciales/Comerciales';
 
-import Suministradores from './components/Suministradores';
 import Forms from './components/Forms';
 import ComercialForm from './components/Comerciales/createdit.comerciales';
 import AsistenteForm from './components/Asistentes/createdit.asistentes';
@@ -42,6 +41,7 @@ import FacturaForm from './components/Factura/createdit.factura';
 import Factura from './components/Factura/Factura';
 import Forbidden from "./pages/forbidden"
 import DeleteFact from './components/Factura/delete.factura';
+import Suministradores from './components/Suministradores/Suministradores';
 function App() {
 
   return (
@@ -161,6 +161,7 @@ function App() {
                     // </ComponentsPrivatization>
                   } />
                   <Route path='edit/:id' element={<SuminisForm />} />
+
                 </Route>
 
 

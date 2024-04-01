@@ -52,7 +52,7 @@ function FormLogin() {
                         </svg>
                         <p className="text-2xl font-bold  text-gray-900">Raw Materia</p>
                     </div>
-                    <h2 className=" pt-10 text-center text-2xl font-bold  text-gray-900">Iniciar Sesion</h2>
+                    <h2 className=" pt-10 text-center text-2xl font-bold  text-gray-900">Iniciar Sesión</h2>
                 </div>
                 <div>
                     <form action="" onSubmit={formik.handleSubmit} className="space-y-6" method="POST" autoComplete='off'>
